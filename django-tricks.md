@@ -1,13 +1,13 @@
 ## Know-How nitelikli notlar :
-**Naming Convention :**
+**1. Template adlandırma :**
 *Basically you have three types of templates:*
 1. Templates that were meant to be extended,like our base.html template. Name it __base.html
 2. Templates that are meant to be included,like our payments/cardform.html template. Name it _cardform.html
 
-**github 'dan (remote repo) daha önce yüklenmiş dosyayı silme :**
+**2. github 'dan (remote repo) daha önce yüklenmiş dosyayı silme :**
 *git rm --cached file1.txt (deleteS the file from repo but keep the file in filesystem...)*
 
-**signals yerine realpython 2 kitabında slug yaratmak için save metodunu override etmiş:**
+**3. signals yerine realpython 2 kitabında slug yaratmak için save metodunu override etmiş:**
 
 ```python
 from django.db import models
