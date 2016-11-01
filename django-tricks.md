@@ -97,6 +97,10 @@ objects = KirrURLManager() veya kendi kafamıza göre isimlendirme de yapabiliyo
 my_manager = KirrURLManager() gibi...
 
 
+**7. try-django 1.0 lecture 17: custom django management commands:**
+https://www.udemy.com/try-django-1-10/learn/v4/t/lecture/5922392
+
+
 
 ```
  
