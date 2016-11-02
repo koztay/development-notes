@@ -66,7 +66,7 @@ excel importer da bunun aynını kullanarak düzelt importerını...
 
 
 
-**6. try-django 1.0 lecture 16: model managers:**
+**6. try-django 1.10 lecture 16: model managers:**
 
 ```python
 class KirrURLManager(models.Manager):
@@ -97,11 +97,56 @@ objects = KirrURLManager() veya kendi kafamıza göre isimlendirme de yapabiliyo
 my_manager = KirrURLManager() gibi...
 
 
-**7. try-django 1.0 lecture 17: custom django management commands:**
+**7. try-django 1.10 lecture 17: custom django management commands:**
 https://www.udemy.com/try-django-1-10/learn/v4/t/lecture/5922392
 
 
+**8. try-django 1.10 lecture 18: class based views / function based views:** 
+
+```python
+
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views import View
+
+# Create your views here.
+def kirr_redirect_view(request, *args, **kwargs): #function based view FBV
+    return HttpResponse("hello")
+
+
+class KirrCBView(View): #class based view
+    def get(self, request, *args, **kwargs):
+        return HttpResponse("hello again")
+```
+
+aslında class based view 'da override edilmiş get metodu, function based view'ın birebir aynısı.
+
+**9. try-django 1.10 lecture 19: using parameters from settings:**
+
+```python
+
+from django.conf import settings
+from django.db import models
+
+# Create your models here.
+
+from .utils import code_generator, create_shortcode
+
+SHORTCODE_MAX = getattr(settings, "SHORTCODE_MAX", 15)
+
+---
+---
+---
+
+class KirrURL(models.Model):
+    url         = models.CharField(max_length=220, )
+    shortcode   = models.CharField(max_length=SHORTCODE_MAX, unique=True, blank=True)
 
 ```
- 
+
+models.py  içerisine yukarıdaki şekilde kullanım reusable app yazma konusunda yardımcı oluyor.
+Çünkü uygulamamızı kullanan diğer kullanıcılar eğer settings içerisine istediğimiz settimg değerini
+set etmişse kullan etmemişse de o zaman 15 değerini kullan diyoruz. Bu notasyon yani getattr notasyonu
+1.8 'de geçerli olmayabilr ve sadece 1.10 itibarıyla kullanıma sunulmuş olabilir. Diğer kullanım da 
+doğru ama eğer reusable olmasını planlamıyorsak. Aksi taktirde hata verir eğer o değeri bulamazsa.
 
