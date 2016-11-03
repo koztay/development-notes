@@ -120,6 +120,8 @@ class KirrCBView(View): #class based view
 ```
 
 aslında class based view 'da override edilmiş get metodu, function based view'ın birebir aynısı.
+Aradaki temel fark FBV 'de hem post hem get tüm metodlar mevcut, ama CBV 'de her metodu kendimiz
+override etmeliyiz.
 
 **9. try-django 1.10 lecture 19: using parameters from settings:**
 
@@ -150,3 +152,74 @@ set etmişse kullan etmemişse de o zaman 15 değerini kullan diyoruz. Bu notasy
 1.8 'de geçerli olmayabilr ve sadece 1.10 itibarıyla kullanıma sunulmuş olabilir. Diğer kullanım da 
 doğru ama eğer reusable olmasını planlamıyorsak. Aksi taktirde hata verir eğer o değeri bulamazsa.
 
+
+**10. try-django 1.10 lecture 20: URL keyword arguments:**
+
+```python
+from django.conf.urls import url
+from django.contrib import admin
+
+from shortener.views import kirr_redirect_view, KirrCBView
+
+# DO NOT DO
+# from shortener import views
+# from another_app.views import views
+
+urlpatterns = [
+    url(r'^new-admin/', admin.site.urls),
+    url(r'^a/(?P<shortcode>[\w-]+)/$', kirr_redirect_view),
+    url(r'^b/(?P<shortcode>[\w-]+)/$', KirrCBView.as_view()), #joincfe.com/projects/ python regex
+
+    # DO NOT DO 
+    #url(r'^abc/$', 'shortener.views.kirr_redirect_view' ),
+    # url(r'^abc/$', views.kirr_redirect_view ),
+]
+```
+
+1.10 'da Justin 'in DO NOT DO dediği kısım çalışmıyor. Ayrıca üstte yer alan DO NOT DO 
+django dokumantasyonunda böyle yap diyor, ama birden fazla app 'imiz varsa o zaman bu iyi
+bir yöntem değil.
+justin 'in regex guide 'ı: https://github.com/codingforentrepreneurs/Guides/blob/master/all/common_url_regex.md
+
+**11. try-django 1.10 lecture 21: Querying database:**
+
+```python
+
+def kirr_redirect_view(request, shortcode=None, *args, **kwargs): #function based view FBV
+    # en iyi yöntem: 
+    obj = get_object_or_404(KirrURL, shortcode=shortcode)
+    
+    #ikinci iyi yöntem :
+    obj_url = None  # return 'de bunu set etmelisin bunu kullanırsan.
+    qs = KirrURL.objects.filter(shortcode__iexact=shortcode)
+    if qs.exists():
+        obj = qs.first()
+        obj_url = obj.url
+    
+    #üçüncü iyi yöntem:
+    try:
+        obj = KirrURL.objects.get(shortcode=shortcode)
+    except:
+        obj = KirrURL.objects.all().first
+     
+    return HttpResponse("hello {sc}".format(sc=obj.url))
+
+```
+
+
+**12 - try-django lecture 22: HttpResponse Redirect & URL ordering:**
+
+```python
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^about123/$', test_view),
+    url(r'^(?P<shortcode>[\w-]+){6,15}/$', kirr_redirect_view),
+    url(r'^b/(?P<shortcode>[\w-]+){6,15}/$', KirrCBView.as_view()), #joincfe.com/projects/ python regex
+
+```
+
+urlpatterns 'de regex olarak süslü parantez içerisinde minimum ve maksimum karakter değeri belirtebiliyormuşuz.
+Bunu yapmamızdaki amaç eğer min, max arasında değilse urlpattern bulamadığı için sistem kendisi 404 döndürüyor.
+Bizim get_or_404 döndürmemizden farklı bu...
+
+**13 - dictionary'den e
