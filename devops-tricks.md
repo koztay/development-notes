@@ -54,10 +54,10 @@ Bunun için aşağıdaki komutu ver (docker ps ile container id 'sini bul aşağ
 docker exec -it 1e7fcb665360 bash
 ```
 
-sonrasında aşağıaki gibi bir terminal ekranı çıkar:
+sonrasında aşağıdaki gibi bir terminal ekranı çıkar:
 ```shell
 root@1e7fcb665360:/usr/src/app#
-root@1e7fcb665360:/usr/src/app# python manage.py makemigrations ya da migrate 
+root@1e7fcb665360:/usr/src/app# python manage.py makemigrations ya da collectstaitic ya da migrate vb.
 
 Operations to perform:
   Synchronize unmigrated apps: messages, staticfiles, django_filters, suit, data_importer, crispy_forms, tinymce
