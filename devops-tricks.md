@@ -39,8 +39,10 @@ Aksi taktirde fazladan komut verildi uyarısı çıkıyor.
 Aşağıdaki komut env aktifse restore eder, ancak bunu test edemedim henüz:
 
 ```
-cat your_dump.sql | docker exec -i your-db-container psql -U postgres
+cat your_dump.sql | docker exec -i your-db-container psql -U <postgres_user_name> <postgres_db>
 ```
 
-yukarıdaki komut taki postgres username mi, dbname mi belli değil. -U parametresi ile verildiğine göre
-username olmalı. Ancak database ismi ile birlikte vermek gerekebilir komutu.
+yukarıdaki komut mevcutta var olan db 'ye uygulandığında "already exists" vb. bir sürü hata verdi.
+Sebei pg_dumpall komutu ile dump edilen dosyayı yükledik ondan. pg_dump komutu ile aldığımız dump'ı 
+sorunsuzca yükleyebiliyoruz. pg_dumpall veritabanı bomboşsa o zaman uygulanabilir belki. Ama tablolar
+roller mevcutsa o zaman yğkleme yapamıyor. 
