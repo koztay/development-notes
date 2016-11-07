@@ -11,8 +11,8 @@ yukarıdaki şekilde env  aktif edildikten sonra docker ps vb. her türlü docke
 Ancak clinet versiyon farkı nedeniyle hata verir. Onun için de aşağıdaki komut ile aynı versiyon
 kullanımı sağlanır:
 
-```shell
-dvm use 1.10.3
+```bash
+$ dvm use 1.10.3
 ```
 
 yukarıdaki komutu verebilmek içinse dvm kurmak gerekir. Şu linkten kurulabilir:
@@ -22,14 +22,14 @@ https://github.com/getcarina/dvm
 Aşağıdaki komut coreos 'teki pathe yükler :
 
 ```shell
-docker exec -t <docker_container_name> pg_dump -c -U <postgres_user_name> <postgres_db> | bzip2 > /home/core/backup.sql.bz2
+$ docker exec -t <docker_container_name> pg_dump -c -U <postgres_user_name> <postgres_db> | bzip2 > /home/core/backup.sql.bz2
 ```
 
 yukarıdaki komutun çalıştığını test ettim. Ancak aşağıdaki komutlar da 1 no.lu maddedeki gibi
 env aktivasyonu ile çalıştırılabilir, bu durumda lokale dump eder:
 
 ```shell
-docker exec -t <docker_container_name> pg_dumpall -c -U <postgres_user_name> > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+$ docker exec -t <docker_container_name> pg_dumpall -c -U <postgres_user_name> > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
 ```
 
 yukarıda dump_all komutunu kullandık. Bu komut kullanıldığında database adı yazmadan veriyoruz komutu.
@@ -39,7 +39,7 @@ Aksi taktirde fazladan komut verildi uyarısı çıkıyor.
 Aşağıdaki komut env aktifse restore eder, ancak bunu test edemedim henüz:
 
 ```shell
-cat your_dump.sql | docker exec -i your-db-container psql -U <postgres_user_name> <postgres_db>
+$ cat your_dump.sql | docker exec -i your-db-container psql -U <postgres_user_name> <postgres_db>
 ```
 
 yukarıdaki komut mevcutta var olan db 'ye uygulandığında "already exists" vb. bir sürü hata verdi.
@@ -51,7 +51,7 @@ roller mevcutsa o zaman yükleme yapamıyor.
 Bunun için aşağıdaki komutu ver (docker ps ile container id 'sini bul aşağıya yaz): 
 
 ```shell
-docker exec -it 1e7fcb665360 bash
+$ docker exec -it 1e7fcb665360 bash
 ```
 
 sonrasında aşağıdaki gibi bir terminal ekranı çıkar:
