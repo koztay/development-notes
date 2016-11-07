@@ -46,3 +46,30 @@ yukarıdaki komut mevcutta var olan db 'ye uygulandığında "already exists" vb
 Sebebi pg_dumpall komutu ile dump edilen dosyayı yükledik ondan. pg_dump komutu ile aldığımız dump'ı 
 sorunsuzca yükleyebiliyoruz. pg_dumpall veritabanı bomboşsa o zaman uygulanabilir belki. Ama tablolar
 roller mevcutsa o zaman yükleme yapamıyor. 
+
+**4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol:**
+Bunun için aşağıdaki komutu ver (docker ps ile container id 'sini bul aşağıya yaz): 
+
+```
+docker exec -it 1e7fcb665360 bash
+```
+
+sonrasında aşağıaki gibi bir terminal ekranı çıkar:
+```
+root@1e7fcb665360:/usr/src/app#
+root@1e7fcb665360:/usr/src/app# python manage.py makemigrations ya da migrate 
+
+Operations to perform:
+  Synchronize unmigrated apps: messages, staticfiles, django_filters, suit, data_importer, crispy_forms, tinymce
+  Apply all migrations: sessions, carts, sites, admin, orders, importer, analytics, static_pages, products, taggit, blog, contenttypes, registration, auth, visual_site_elements, newsletter
+Synchronizing apps without migrations:
+  Creating tables...
+    Running deferred SQL...
+  Installing custom SQL...
+Running migrations:
+  No migrations to apply.
+
+```
+
+bu komutları bu şekilde vermemiz yani docker-compose ile vermiyor olmamız bir sürü zombi kontainer 
+oluşmasına engel oluyor. 
