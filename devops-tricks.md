@@ -43,6 +43,6 @@ cat your_dump.sql | docker exec -i your-db-container psql -U <postgres_user_name
 ```
 
 yukarıdaki komut mevcutta var olan db 'ye uygulandığında "already exists" vb. bir sürü hata verdi.
-Sebei pg_dumpall komutu ile dump edilen dosyayı yükledik ondan. pg_dump komutu ile aldığımız dump'ı 
+Sebebi pg_dumpall komutu ile dump edilen dosyayı yükledik ondan. pg_dump komutu ile aldığımız dump'ı 
 sorunsuzca yükleyebiliyoruz. pg_dumpall veritabanı bomboşsa o zaman uygulanabilir belki. Ama tablolar
-roller mevcutsa o zaman yğkleme yapamıyor. 
+roller mevcutsa o zaman yükleme yapamıyor. 
