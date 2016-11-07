@@ -15,6 +15,8 @@ kullanımı sağlanır:
 dvm use 1.10.3
 ```
 
+yukarıdaki komutu verebilmek içinse dvm kurmak gerekir. Şu linkten kurulabilir:
+https://github.com/getcarina/dvm
 
 **2- docker postgres veritabanı sql yedek alma:**
 Aşağıdaki komut coreos 'teki pathe yükler :
