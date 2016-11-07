@@ -2,7 +2,7 @@
 Eğer docker-machine eval ile env 'yi aktive edersek o zaman sanki remote makine 'de 
 çalışır gibi docker komutları verebiliriz.
 
-```
+```shell
 $ eval $(docker-machine env <machine-name>)
 
 ```
