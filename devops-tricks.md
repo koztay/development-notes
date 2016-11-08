@@ -11,7 +11,7 @@ yukarıdaki şekilde env  aktif edildikten sonra docker ps vb. her türlü docke
 Ancak clinet versiyon farkı nedeniyle hata verir. Onun için de aşağıdaki komut ile aynı versiyon
 kullanımı sağlanır:
 
-```bash
+```shell
 $ dvm use 1.10.3
 ```
 
@@ -39,7 +39,7 @@ Aksi taktirde fazladan komut verildi uyarısı çıkıyor.
 Aşağıdaki komut env aktifse restore eder, ancak bunu test edemedim henüz:
 
 ```shell
-$ cat your_dump.sql | docker exec -i your-db-container psql -U <postgres_user_name> <postgres_db>
+$ cat your_dump.sql | docker exec -i <your-db-container> psql -U <postgres_user_name> <postgres_db>
 ```
 
 yukarıdaki komut mevcutta var olan db 'ye uygulandığında "already exists" vb. bir sürü hata verdi.
@@ -49,7 +49,7 @@ roller mevcutsa o zaman yükleme yapamıyor.
 
 Bir de pg_restore komutu kullanılan aşağıdaki yöntem var :
 
-```
+```shell
 docker exec -i "${DOCKER_DB_NAME}" pg_restore -C --clean --no-acl --no-owner -U "${DB_USER}" -d "${DB_HOSTNAME}" < "${LOCAL_DUMP_PATH}"
 ```
 
