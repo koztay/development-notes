@@ -47,6 +47,16 @@ Sebebi pg_dumpall komutu ile dump edilen dosyayı yükledik ondan. pg_dump komut
 sorunsuzca yükleyebiliyoruz. pg_dumpall veritabanı bomboşsa o zaman uygulanabilir belki. Ama tablolar
 roller mevcutsa o zaman yükleme yapamıyor. 
 
+Bir de pg_restore komutu kullanılan aşağıdaki yöntem var :
+
+```
+docker exec -i "${DOCKER_DB_NAME}" pg_restore -C --clean --no-acl --no-owner -U "${DB_USER}" -d "${DB_HOSTNAME}" < "${LOCAL_DUMP_PATH}"
+```
+
+yukarıdaki komutu denemedim, kullandığı parametreler göz önüne alındığında belki database 'de
+tablolar mevcut iken de restore edebiliyordur. Bunu denemeliyim.
+- [ ] Yukarıdaki metodu dene.
+
 **4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol:**
 Bunun için aşağıdaki komutu ver (docker ps ile container id 'sini bul aşağıya yaz): 
 
