@@ -47,7 +47,7 @@ Sebebi pg_dumpall komutu ile dump edilen dosyayı yükledik ondan. pg_dump komut
 sorunsuzca yükleyebiliyoruz. pg_dumpall veritabanı bomboşsa o zaman uygulanabilir belki. Ama tablolar
 roller mevcutsa o zaman yükleme yapamıyor. 
 
-Bir de pg_restore komutu kullanılan aşağıdaki yöntem var :
+Bir de pg_restore komutu kullanılan aşağıdaki yöntem var (https://gist.github.com/jgillman/8191d6f587ffc7207a88e987e034b675) :
 
 ```shell
 docker exec -i "${DOCKER_DB_NAME}" pg_restore -C --clean --no-acl --no-owner -U "${DB_USER}" -d "${DB_HOSTNAME}" < "${LOCAL_DUMP_PATH}"
