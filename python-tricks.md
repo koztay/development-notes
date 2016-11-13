@@ -10,3 +10,24 @@ tuple 'daki ikinci eleman default değer o varsa key 'i bulamazsa
 o değeri döndürür, bulursa key 'i döndürür. Eğer default yoksa
 none döndürür.
 
+**2 - python3 virtualenv yaratmak :**
+
+ilk önce python 3 yolunu bulmalıyız, bunun için aşağıdaki komutu veriyoruz:
+
+```shell
+$ which python3
+aşağıdaki gibi bir path döner:
+/usr/local/bin/python3
+```
+
+sonra aşağıdaki komut verererk python3 için virtualenv yaratıyoruz:
+
+```shell
+mkvirtualenv --python=/usr/bin/python3 nameOfEnvironment
+```
+
+ya da yukarıdaki iki komutun birleşimini tek satırda verebiliriz:
+
+```shell
+mkvirtualenv --python=`which python3` nameOfEnvironment
+```
