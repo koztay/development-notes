@@ -31,3 +31,4 @@ ya da yukarıdaki iki komutun birleşimini tek satırda verebiliriz:
 ```shell
 mkvirtualenv --python=`which python3` nameOfEnvironment
 ```
+
