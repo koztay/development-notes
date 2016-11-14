@@ -23,3 +23,4 @@ sshpass -p "password" scp -r centos_backup.sh kemal@10.0.0.1:/home/kemal
 ```
 
 
+
