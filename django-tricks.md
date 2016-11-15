@@ -222,4 +222,16 @@ urlpatterns 'de regex olarak süslü parantez içerisinde minimum ve maksimum ka
 Bunu yapmamızdaki amaç eğer min, max arasında değilse urlpattern bulamadığı için sistem kendisi 404 döndürüyor.
 Bizim get_or_404 döndürmemizden farklı bu...
 
-**13 - dictionary'den e
+**13 - github çalışılan branch 'ı master yapma:**
+
+http://stackoverflow.com/questions/2862590/how-to-replace-master-branch-in-git-entirely-from-another-branch
+
+```shell
+You should be able to use the "ours" merge strategy to overwrite master with seotweaks like this:
+
+git checkout seotweaks
+git merge -s ours master
+git checkout master
+git merge seotweaks
+
+```
