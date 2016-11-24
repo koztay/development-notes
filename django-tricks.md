@@ -235,3 +235,25 @@ git checkout master
 git merge seotweaks
 
 ```
+
+**14 - pycharm 'da virtualenv ile local development yaparken environment variables 'ı dosyadan okutan plug-in: **
+
+[https://github.com/Ashald/EnvFile](https://github.com/Ashald/EnvFile)
+
+**14 - TemplateView :**
+
+Projemde statik sayfalar için (about vb.) settings 'in olduğu klasörde views.py dosyası oluşturmuştum ve bu sayfalar için "function based view" FBV kullanmaktaydım. Ancak en mantıklısı TemplateView kullanmak. Böylece views.py dosyasını da silebilirim. TemplateView en kolay kullanımı şu şekilde:
+
+```sh
+from django.conf.urls import url
+from django.views.generic import TemplateView
+
+urlpatterns = [
+    url(r'^about/$', TemplateView.as_view(template_name="about.html")),
+]
+
+```
+
+Ayrıca herhangi bir view içerisine import edip daha sonra context değiştirerek bu view 'ları da dinamik yapmak mümkün. 
+
+Haa bir de django içerisinde flatpages varmış. Şimdiye kadar niye kullanmadım ki? Şurada detaylı bilgi var: [https://simpleisbetterthancomplex.com/tutorial/2016/10/04/how-to-use-django-flatpages-app.html](https://simpleisbetterthancomplex.com/tutorial/2016/10/04/how-to-use-django-flatpages-app.html)
