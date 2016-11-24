@@ -1,12 +1,15 @@
-[click on this link](#my-multi-word-header)
-
-### My Multi Word Header
 
 [1- docker-machine genel](#1--docker-machine-genel)
 
 [2- docker postgres veritabanı sql yedek alma](#2--docker-postgres-veritabanı-sql-yedek-alma)
 
 [3- docker postgres veritabanı restore etme](#3--docker-postgres-veritabanı-restore-etme)
+
+[4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol](4--python-manage.py-makemigrations-ve-migrate-vb.-komutlar-için-en-güvenli-yol)
+
+[5- redis server uyarı mesajları (docker envionment)](5--redis-server-uyarı-mesajları-(docker-envionment))
+
+[6- docker-compose sadece belirli servisleri build etmek](6--docker-compose-sadece-belirli-servisleri-build-etmek)
 
 
 ### 1- docker-machine genel:
@@ -68,7 +71,8 @@ yukarıdaki komutu denemedim, kullandığı parametreler göz önüne alındığ
 tablolar mevcut iken de restore edebiliyordur. Bunu denemeliyim.
 - [ ] Yukarıdaki metodu dene.
 
-**4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol:**
+### 4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol:
+
 Bunun için aşağıdaki komutu ver (docker ps ile container id 'sini bul aşağıya yaz): 
 
 ```shell
@@ -96,7 +100,7 @@ Running migrations:
 bu komutları bu şekilde vermemiz yani docker-compose ile vermiyor olmamız bir sürü zombi kontainer 
 oluşmasına engel oluyor. 
 
-**5- redis server uyarı mesajları (docker envionment):**
+### 5- redis server uyarı mesajları (docker envionment):
 
 Redis server 'ı kurunca aşağıdaki uyarıları veriyor:
 
@@ -158,7 +162,7 @@ COPY redis.conf /usr/local/etc/redis/redis.conf
 bind 0.0.0.0
 ```
 
-**6- docker-compose sadece belirli servisleri build etmek:**
+### 6- docker-compose sadece belirli servisleri build etmek:
 
 Aşağıdaki kodu şu linkte buldum: [https://github.com/docker/compose/issues/1383](https://github.com/docker/compose/issues/1383)
 
