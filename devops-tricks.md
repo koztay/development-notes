@@ -5,11 +5,13 @@
 
 [3- docker postgres veritabanı restore etme](#3--docker-postgres-veritabanı-restore-etme)
 
-[4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol](4--python-manage.py-makemigrations-ve-migrate-vb.-komutlar-için-en-güvenli-yol)
+[4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol](#4--python-manage.py-makemigrations-ve-migrate-vb.-komutlar-için-en-güvenli-yol)
 
-[5- redis server uyarı mesajları (docker envionment)](5--redis-server-uyarı-mesajları-(docker-envionment))
+[5- redis server uyarı mesajları (docker envionment)](#5--redis-server-uyarı-mesajları-(docker-envionment))
 
-[6- docker-compose sadece belirli servisleri build etmek](6--docker-compose-sadece-belirli-servisleri-build-etmek)
+[6- 6- redis server güvenlik](#6--redis-server-güvenlik)
+
+[7- docker-compose sadece belirli servisleri build etmek](#7--docker-compose-sadece-belirli-servisleri-build-etmek)
 
 
 ### 1- docker-machine genel:
@@ -127,7 +129,7 @@ WARNING: The TCP backlog setting of 511 cannot be enforced because
 
 ancak bu önemsiz. 128 değeri de bizim için yeterli.
 
-**5- redis server güvenlik:**
+### 6- redis server güvenlik:
 
 Redis server normalde dış dünyaya açık olarak kuruluyor ve son derece güvensiz. Dolayısıyla güvenlikli hale getirilmesi için password vb. ile çalışması sağlanabiliyor. Ayrıca redis.conf 'da bind 0.0.0.0 yerine bind 127.0.0.1 ayarı yapılınca dış dünyaya kapanıyor. Fakat ben bunu henüz test edemedim, ayrıca diğer containerlar erişemeyebilir bu durumda, test etmek lazım. Kendim Dockerfile yazınca redis otomatik başlamadı. redis.conf dosyası oluşturmam lazım önce. Bunu redis sitesinden indirdim.
 
@@ -162,7 +164,7 @@ COPY redis.conf /usr/local/etc/redis/redis.conf
 bind 0.0.0.0
 ```
 
-### 6- docker-compose sadece belirli servisleri build etmek:
+### 7- docker-compose sadece belirli servisleri build etmek:
 
 Aşağıdaki kodu şu linkte buldum: [https://github.com/docker/compose/issues/1383](https://github.com/docker/compose/issues/1383)
 
