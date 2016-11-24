@@ -2,14 +2,14 @@
 
 ### My Multi Word Header
 
-[1- docker-machine genel](#1-docker-machine-genel)
+[1- docker-machine genel](#1--docker-machine-genel)
 
-[2- docker postgres veritabanı sql yedek alma](#docker-postgres-veritabanı-sql-yedek-alma)
+[2- docker postgres veritabanı sql yedek alma](#2--docker-postgres-veritabanı-sql-yedek-alma)
 
-[3- docker postgres veritabanı restore etme](#3-docker-postgres-veritabanı-restore-etme)
+[3- docker postgres veritabanı restore etme](#3--docker-postgres-veritabanı-restore-etme)
 
 
-### 1-docker-machine genel:
+### 1- docker-machine genel:
 Eğer docker-machine eval ile env 'yi aktive edersek o zaman sanki remote makine 'de 
 çalışır gibi docker komutları verebiliriz.
 
