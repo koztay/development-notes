@@ -7,7 +7,7 @@
 
 [4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol](#4--python-manage.py-makemigrations-ve-migrate-vb.-komutlar-için-en-güvenli-yol)
 
-[5- redis server uyarı mesajları (docker envionment)](#5--redis-server-uyarı-mesajları-(docker-envionment))
+[5- redis server uyarı mesajları (docker envionment)](#5--redis-server-uyarı-mesajları-docker-envionment)
 
 [6- 6- redis server güvenlik](#6--redis-server-güvenlik)
 
