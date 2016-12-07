@@ -1,4 +1,5 @@
-## Know-How nitelikli notlar :
+## Django notlarım :
+
 **1. Template adlandırma :**
 *Basically you have three types of templates:*
 1. Templates that were meant to be extended,like our base.html template. Name it __base.html
@@ -256,4 +257,286 @@ urlpatterns = [
 
 Ayrıca herhangi bir view içerisine import edip daha sonra context değiştirerek bu view 'ları da dinamik yapmak mümkün. 
 
-Haa bir de django içerisinde flatpages varmış. Şimdiye kadar niye kullanmadım ki? Şurada detaylı bilgi var: [https://simpleisbetterthancomplex.com/tutorial/2016/10/04/how-to-use-django-flatpages-app.html](https://simpleisbetterthancomplex.com/tutorial/2016/10/04/how-to-use-django-flatpages-app.html)
+
+**15 - Flatpages :**
+
+Django içerisinde flatpages varmış. Şimdiye kadar niye kullanmadım ki? Şurada detaylı bilgi var: [https://simpleisbetterthancomplex.com/tutorial/2016/10/04/how-to-use-django-flatpages-app.html](https://simpleisbetterthancomplex.com/tutorial/2016/10/04/how-to-use-django-flatpages-app.html)
+
+
+**16 - Model Managers :**
+
+Şu eğitime ait not:
+[https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
+
+Herhangi bir model yazdıktan sonra o model için model manager yazabiliriz, örneğin:
+
+```python
+class ActiveManager(models.Manager):
+    """Manager to exclude non-active records."""
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
+
+class DomainCheck(models.Model):
+    """Configured website check."""
+
+    PROTOCOL_HTTP = 'http'
+    PROTOCOL_HTTPS = 'https'
+
+    PROTOCOL_CHOICES = (
+        (PROTOCOL_HTTP, 'HTTP'),
+        (PROTOCOL_HTTPS, 'HTTPS'),
+    )
+
+    METHOD_GET = 'get'
+    METHOD_POST = 'post'
+    METHOD_CHOICES = (
+        (METHOD_GET, 'GET'),
+        (METHOD_POST, 'POST'),
+    )
+
+    domain = models.CharField(max_length=253)
+    path = models.CharField(max_length=1024)
+    protocol = models.CharField(
+        max_length=5, choices=PROTOCOL_CHOICES, default=PROTOCOL_HTTP)
+    method = models.CharField(
+        max_length=4, choices=METHOD_CHOICES, default=METHOD_GET)
+    is_active = models.BooleanField(default=True)
+
+    objects = models.Manager()
+    active = ActiveManager()
+     
+
+```
+
+model manager yazınca 
+hem objects=  hem de active= şeklinde manager class 'larını ayrı ayrı belirtmemiz gerek.
+
+Bir de burada chocices alanlarını model içerisinde tutmak daha akıllıca bir yöntem. Daha sonra bu manager ile sorgulama yaparken aşağıdaki gibi yapıyoruz:
+
+```python
+active_domains = Domaincheck.active.all()
+
+```
+
+**17 - Custom Querysets :**
+
+Şu eğitime ait not:
+[https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
+
+Custom queryset yapmanın avantajı query 'lerin birbirine chain edilebilmeleri. Yani .active.stale.all() şeklinde bir query oluşturmak mümkün. 
+
+
+```python
+import datetime
+
+from django.db import models
+from django.db.models import Max, Q
+from django.utils.timezone import now
+
+
+class DomainCheckQuerySet(models.QuerySet):
+    """Custom queryset to filter and annotate domain checks."""
+
+    def active(self):
+        return self.filter(is_active=True)
+
+    def stale(self, cutoff=datetime.timedelta(hours=1)):
+        end_time = now() - cutoff
+        return self.annotate(
+            last_check=Max('checkresult__checked_on')
+        ).filter(
+            Q(last_check__lt=end_time) | Q(last_check__isnull=True))
+
+
+class DomainCheck(models.Model):
+    """Configured website check."""
+
+    PROTOCOL_HTTP = 'http'
+    PROTOCOL_HTTPS = 'https'
+
+    PROTOCOL_CHOICES = (
+        (PROTOCOL_HTTP, 'HTTP'),
+        (PROTOCOL_HTTPS, 'HTTPS'),
+    )
+
+    METHOD_GET = 'get'
+    METHOD_POST = 'post'
+    METHOD_CHOICES = (
+        (METHOD_GET, 'GET'),
+        (METHOD_POST, 'POST'),
+    )
+
+    domain = models.CharField(max_length=253)
+    path = models.CharField(max_length=1024)
+    protocol = models.CharField(
+        max_length=5, choices=PROTOCOL_CHOICES, default=PROTOCOL_HTTP)
+    method = models.CharField(
+        max_length=4, choices=METHOD_CHOICES, default=METHOD_GET)
+    is_active = models.BooleanField(default=True)
+
+    objects = DomainCheckQuerySet.as_manager()
+
+    def __str__(self):
+        return '{method} {url}'.format(
+            method=self.get_method_display(), url=self.url)
+
+    @property
+    def url(self):
+        return '{protocol}://{domain}{path}'.format(
+            protocol=self.protocol, domain=self.domain, path=self.path)
+
+
+class CheckResult(models.Model):
+    """Result of a status check on a website."""
+
+    domain_check = models.ForeignKey(DomainCheck)
+    checked_on = models.DateTimeField()
+    status_code = models.PositiveIntegerField(null=True)
+    response_time = models.FloatField(null=True)
+    response_body = models.TextField(default='')
+
+```
+
+Ancak burada query oluştururken objects eklememiz gerek artık, all() koymuyoruz ona dikkat!!!. Aşağıdaki örneklerde mevcut. Eğer birden fazla query 'miz varsa otomatik olarak custom queryset yaratmak en mantıklısı. 
+
+```python
+active_domains = Domaincheck.objects.active()
+stale_domains = Domaincheck.objects.stale()
+active_and_stale_domains = Domaincheck.objects.active().stale()
+# ya da Domaincheck.objects.stale().active şeklinde de yazabiliriz. 
+# Sıralama önemli değil.
+
+```
+
+**18 - Aggregation / Annotation :**
+
+Şu eğitime ait not:
+[https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
+
+Aggregation : Herhangi bir query sonucu dönen değerlerdeki bir alan için toplam, ortlama ya da vb. bir hesaplama sonucu elde edilen bir değerdir. Aggregation sonunda tek bir değer elde edilir.
+ 
+Annotation : Veritabanındaki her bir satıra ilave bir hesaplanmış kolon eklemek gibi düşünülebilir. Annotationda ise her satır için bir değer hesaplandığından tek bir değer elde edilmez. Aradaki temel fark budur. Annotation sonucu eklenmiş kolonlar için de order_by metodu kullanılabilir.
+
+
+```python
+def stale(self, cutoff=datetime.timedelta(hours=1)):
+        end_time = now() - cutoff
+        return self.annotate(
+            last_check=Max('checkresult__checked_on')
+        ).filter(
+            Q(last_check__lt=end_time) | Q(last_check__isnull=True))
+
+def status(self, cutoff=datetime.timedelta(hours=1)):
+    start_time = now() - cutoff
+    ping = Q(checkresult__checked_on__gte=start_time)
+    success = Q(
+        checkresult__checked_on__gte=start_time,
+        checkresult__status_code__range=(200, 299))
+    return self.annotate(
+        last_check=Max('checkresult__checked_on'),
+        successes=Count(Case(When(success, then=1))),
+        pings=Count(Case(When(ping, then=1))),
+    ).annotate(
+        success_rate=F('successes') * 100.0 / F('pings')
+    ).annotate(
+        status=Case(
+            When(success_rate__gt=90, then=Value('good')),
+            When(success_rate__range=(75, 90), then=Value('fair')),
+            When(success_rate__lt=75, then=Value('poor')),
+            When(success_rate__isnull=True, then=Value('unknown')),
+            output_field=models.CharField())
+    )
+
+
+```
+
+
+Yukarıdaki custom query 'de annotation kullanılıyor. İlgili CheckResult modelindeki 'checked\_on' tablosuna bak ve maximum yani en son değeri al diyor. Yani aslında yaptığı tam olarak şu: query sonucu DÖNEN TÜM SATIRLARA 'last\_check' değeri ekliyor, sonra da tüm sonuçlar içinde 'last\_check' değeri 'end\_time' olarak girilen değerden küçük olanları ya da hiç last_check değeri olmayanları filtreliyor. 
+Bir sonraki status annotation 'ında ise annotation 'ların da chain olarak arka arkaya eklenebildiğini görüyoruz. Döndürdüğü annotate 'lere bakacak olursak satıra 5 adet kolon eklediğini görüyoruz. Eklediği kolonlar aşağıdaki gibi:
+
+* last_check
+* successes
+* pings
+* success_rate
+* status
+
+Yukarıdaki kolonlardan ilk üç tanesini bir annotate, ve kalanları da tekil olarak annotate fonksiyonları içerisinde gruplamış olmasının özel bir nedeni mi var anlamadım. Yani kalan ikisini de ilk üçünün içerisine alıp tek bir annotate fonksiyonu içerisine yazabilir miyidik? Sanırım yazardık. Gruplamasının sebebi bence oknurluğu arttırmak.
+
+Yukarıda annotate örneği verdik. Aggregate örneği verecek olursak :
+
+```python
+# Average price across all books.
+>>> from django.db.models import Avg
+>>> Book.objects.all().aggregate(Avg('price'))
+{'price__avg': 34.35}
+
+# Max price across all books.
+>>> from django.db.models import Max
+>>> Book.objects.all().aggregate(Max('price'))
+{'price__max': Decimal('81.20')}
+
+```
+
+Özetle aggregate ve annotate kullanarak "raw sql" ile sorulayabileceğimiz birçok durumda kullanmadan veritabanından istediğimiz sonuçları döndürebiliriz.
+
+**19 - Admin Panel : "Customizing Admin Listing"**
+
+Şu eğitime ait not:
+[https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
+
+```python
+from django.contrib import admin
+from django.utils.timesince import timesince
+
+from . import models
+
+@admin.register(models.DomainCheck)
+class DomainCheckAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'domain', 'path', 'protocol', 'method', 'is_active',
+        'status', 'last_checked', )
+    list_filter = ('protocol', 'method', 'is_active', )
+    search_fields = ('domain', )
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).status()
+
+    def status(self, obj):
+        return obj.status.title()
+    status.admin_order_field = 'success_rate'
+
+    def last_checked(self, obj):
+        if obj.last_check:
+            return '{} ago'.format(timesince(obj.last_check))
+        else:
+            return 'Never'
+    last_checked.admin_order_field = 'last_check'
+
+
+@admin.register(models.CheckResult)
+class CheckResultAdmin(admin.ModelAdmin):
+
+    date_hierarchy = 'checked_on'
+    list_display = ('domain_check', 'status_code', )
+    list_filter = ('checked_on', )
+```
+
+Dikkat edilmesi gerekli noktalar:
+
+* @admin.register dekoratörü kullanımı.
+* list_display ile hangi kolonların gösterileceğini belirliyoruz.
+* search_fields alanındaki tuple 'a birden fazla değer yazabiliyoruz, bu durumda "or" kullanarak search yapıyor. Bonus :
+
+```python
+search_fields = ('^domain', )  # başına şapka koyarsak "starts_with" ile arar. 
+search_fields = ('=domain', )  # başına eşittir koyarsak "exact_match" ile arar. 
+```
+
+* get_queryset, status vb. metodlar ile de hangi satırların gösterileceğini belirliyoruz.
+* status ve last_checked metodlarının parametrelerine dikkat : (self, obj)
+* status.admin\_order\_field = 'success_rate'  ve last\_checked.admin\_order\_field = 'last_check' değerleri admin panelde bu alanlara göre sort işlemi yapabilmemizi sağlıyor. 
+* CheckresultAdmin 'deki list_filter = ('checked\_on') django nun yıl, ay ve gün gibi otomatik filtreler eklemesini sağlıyor.
+* list_filter her zaman sağda gördüğümüz filtreleri oluşturur.
