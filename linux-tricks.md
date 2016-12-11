@@ -39,6 +39,8 @@ sshpass -p "password" scp -r centos_backup.sh kemal@10.0.0.1:/home/kemal
 
 [https://www.fullstackpython.com/vim.html](https://www.fullstackpython.com/vim.html)
 
+[Powerline Common segments](http://powerline.readthedocs.io/en/master/configuration/segments/common.html)
+
 **1- install/update vim latest version (OSX):**
 
 Aşağıdaki komut ile kur. Asla mevcut sistemdeki vim 'e dokunma.
@@ -133,7 +135,8 @@ vim +PluginInstall
 sonrasında şu pluginler öneriliyor, önerilenleri .vimrc dosyasına aşağıdaki gibi sırayla ekleyebilirsin, ancak şöyle bir öneri var. Tüm plugin 'leri hurraa diye ekleme, teker teker deneyip ne iş yaptıklarını anlaya anlaya ekle :
 
 ```sh
-Plugin 'davidhalter/jedi-vim'    			  " code completion plugin
+" Plugin 'davidhalter/jedi-vim'   " code completion plugin forget this use below
+Plugin 'Valloric/YouCompleteMe'			  " awesome code completion plugin
 Plugin 'tmhedberg/SimpylFold' 			  " code folding plugin
 Plugin 'vim-scripts/indentpython.vim'	  " auto-indetation plugin
 Plugin 'scrooloose/syntastic'				  " syntax checking plugin
@@ -141,7 +144,24 @@ Plugin 'nvie/vim-flake8'					  " PEP8 checking plugin
 Plugin 'jnurmine/Zenburn'					  " color schemes
 Plugin 'altercation/vim-colors-solarized' " color schemes
 
+
 ```
+
+Afte adding YouCompleteMe plugin via vundle ther is one more stepe to compile it. And this step is mandatory. If you don' apply this step then it does not work. After putting the above Plugins to .vimrc apply the follwing command to vundle install it to vim:
+
+```sh
+vim +PluginInstall
+```
+and after that compile YouCompleteMe to work with vim. The official YouCompleteMe documentation says that install macvim but I tried it and didn't like. So I decided to use the standart vim. Give the following commands to compile YouCompleteMe:
+
+```sh
+cd ~/.vim/bundle/YouCompleteMe
+./install.py --clang-completer  # with semantic support for C-family languages
+# or give just without the --clang-completer flag as below:
+./install.py 
+```
+
+after runing the compile script it compiles to work with vim properly.
 
 Add the following lines to .vimrc :
 
@@ -164,27 +184,72 @@ call togglebg#map('<F5>')			" toggle solarized light and dark themes by F5
 
 ```
 
-Add the following line to .vimrc for Virtualenv support:
+Install the following plugin for virtualenvironment support:
 
 ```sh
-" python with virtualenv support
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
+Plugin jmcantrell/vim-virtualenv
+```
 
-" UTF-8 Support
-set encoding=utf-8
+and you can prove that you are in the environment with the following vim command:
 
+
+```sh
+:echo system('which python')
+```
+
+one more thing if there is an activated virtualenvironment we should see it on the powerline status bar. But virtualenv support is disabled by default. So we should enable it by ourselves. First create a following folders accordingly in your home directory:
+
+```sh
+└── ~ (your home directory)
+	└── .config
+		└── powerline
+		    └── themes
+		        └── vim
+		            └── default.json
+```
+
+and copy the default.json file from the following path:
+
+```
+~/.vim/bundle/powerline/powerline/config_files/themes/vim/default.json
+```
+
+becuase we don't want to destroy any defualt settings.
+And put the following settings in the json file (I put it in the right side of the status bar as you see below:
+
+```json
+"right": [
+    		{
+                "function": "powerline.segments.common.env.virtualenv",
+				"draw_soft_divider": false,
+				"exclude_modes": ["nc"],
+				"priority": 60
+            },
+			{
+			....
+			},
+			{
+			....
+			},
+			....
 ```
 
 
+I also installed solarized powerline theme for vim:
+
+```
+Plugin stephenmckinney/vim-solarized-powerline
+
+```
+
+and set the following settings of it in .vimrc file:
+
+```
+g:Powerline_theme='short'
+g:Powerline_colorscheme='solarized256_dark'
+```
+
+That's it!!! It works now...
 
 
  
-
-
