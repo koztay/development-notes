@@ -48,7 +48,7 @@ Aşağıdaki komut ile kur. Asla mevcut sistemdeki vim 'e dokunma.
 ```sh
 brew install vim -–with-python3 --with-lua
 ```
-Mevcut vim path OSX 'te : 
+Mevcut vim path OSX 'te :
 
 ```sh
 /usr/bin/vim
@@ -106,7 +106,7 @@ Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'} 
+" Plugin 'ascenator/L9', {'name': 'newL9'}
 " do not use this it conflicts with L9
 
 " All of your Plugins must be added before the following line
@@ -174,10 +174,10 @@ syntax on										" syntax checking settings
 
 " set color schemes according to vim mode
 if has('gui_running')
-  set background=dark
-  colorscheme solarized
+set background=dark
+colorscheme solarized
 else
-  colorscheme zenburn
+colorscheme zenburn
 endif
 
 call togglebg#map('<F5>')			" toggle solarized light and dark themes by F5
@@ -203,9 +203,9 @@ one more thing if there is an activated virtualenvironment we should see it on t
 └── ~ (your home directory)
 	└── .config
 		└── powerline
-		    └── themes
-		        └── vim
-		            └── default.json
+			└── themes
+				└── vim
+					└── default.json
 ```
 
 and copy the default.json file from the following path:
@@ -219,12 +219,12 @@ And put the following settings in the json file (I put it in the right side of t
 
 ```json
 "right": [
-    		{
-                "function": "powerline.segments.common.env.virtualenv",
+			{
+				"function": "powerline.segments.common.env.virtualenv",
 				"draw_soft_divider": false,
 				"exclude_modes": ["nc"],
 				"priority": 60
-            },
+			},
 			{
 			....
 			},
@@ -251,5 +251,9 @@ g:Powerline_colorscheme='solarized256_dark'
 
 That's it!!! It works now...
 
+## Fix Nothing in register * error while duplicating line with 'yy'(copy line) + 'p'(paste after) or 'P'(paste before) in vim with tmux
 
- 
+1. Install Homebrew
+1. Install reattach-to-user-namespace: "brew install reattach-to-user-namespace"
+1. in .vimrc: set clipboard=unnamed
+1. Tell tmux to use the system clipboard: In .tmux.conf: set-option -g default-command "reattach-to-user-namespace -l bash" or replace bash with zsh if you are using zshell.
