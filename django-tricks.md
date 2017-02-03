@@ -1,10 +1,10 @@
 ## Django notlarım :
 
-[22 - .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:](#22---.env-dosyasında DJANGO_ALLOWED_HOSTS-parametresi:)
+[22- .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:](#22---.env-dosyasında DJANGO_ALLOWED_HOSTS-parametresi:)
 
 [2 - python3 virtualenv yaratmak :](#2---python3-virtualenv-yaratmak-:)
 
-**1. Template adlandırma :**
+###1. Template adlandırma :
 *Basically you have three types of templates:*
 1. Templates that were meant to be extended,like our base.html template. Name it __base.html
 2. Templates that are meant to be included,like our payments/cardform.html template. Name it _cardform.html
@@ -564,7 +564,7 @@ Replace with:
 
 Yukarıdaki kod PyCharm 'da çalıştı. Yalnız şuna dikkat et: yukarıdaki kod href="...." (çift tırnak ile yazılmışsa çalışır. Tek tırnak ile yazılmışsa ona göre düzeltmek gerekir. 
 
-**22 - .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:**
+###22 - .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:
 
 Bu parametreyi belirtirken eğer domain adreslerini tırnak içerisinde yazarsan hata veriyor. Python gibi düşünüp tırnak içinde yazma.
 
