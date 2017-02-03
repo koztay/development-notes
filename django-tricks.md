@@ -564,8 +564,8 @@ Yukarıdaki kod PyCharm 'da çalıştı. Yalnız şuna dikkat et: yukarıdaki ko
 
 Bu parametreyi belirtirken eğer domain adreslerini tırnak içerisinde yazarsan hata veriyor. Python gibi düşünüp tırna içinde yazma.
 
-```python
-DJANGO_ALLPWED_HOSTS=[abc.com, 192.168.99.101, 212.144.66.44]
+```sh
+DJANGO_ALLOWED_HOSTS=[abc.com, 192.168.99.101, 212.144.66.44]
 ```
 yukarıdaki örnekte olduğu gibi yazınca oluyor...
 
