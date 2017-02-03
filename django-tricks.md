@@ -567,7 +567,7 @@ Replace with:
 
 Yukarıdaki kod PyCharm 'da çalıştı. Yalnız şuna dikkat et: yukarıdaki kod href="...." (çift tırnak ile yazılmışsa çalışır. Tek tırnak ile yazılmışsa ona göre düzeltmek gerekir. 
 
-**<tag id='22'/></a>22- .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:**
+**<tag id='22'/>22- .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:**
 
 Bu parametreyi belirtirken eğer domain adreslerini tırnak içerisinde yazarsan hata veriyor. Python gibi düşünüp tırnak içinde yazma.
 
