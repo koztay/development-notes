@@ -1,6 +1,6 @@
 ## Django notlarım :
 
-[22- .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:](#22---.env-dosyasında DJANGO_ALLOWED_HOSTS-parametresi:)
+[22- .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:](#22--.env-dosyasında DJANGO_ALLOWED_HOSTS-parametresi)
 
 [2 - python3 virtualenv yaratmak :](#2---python3-virtualenv-yaratmak-:)
 
@@ -564,7 +564,7 @@ Replace with:
 
 Yukarıdaki kod PyCharm 'da çalıştı. Yalnız şuna dikkat et: yukarıdaki kod href="...." (çift tırnak ile yazılmışsa çalışır. Tek tırnak ile yazılmışsa ona göre düzeltmek gerekir. 
 
-###22 - .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:
+###22- .env dosyasında DJANGO_ALLOWED_HOSTS parametresi :
 
 Bu parametreyi belirtirken eğer domain adreslerini tırnak içerisinde yazarsan hata veriyor. Python gibi düşünüp tırnak içinde yazma.
 
