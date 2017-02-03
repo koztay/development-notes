@@ -540,3 +540,23 @@ search_fields = ('=domain', )  # başına eşittir koyarsak "exact_match" ile ar
 * status.admin\_order\_field = 'success_rate'  ve last\_checked.admin\_order\_field = 'last_check' değerleri admin panelde bu alanlara göre sort işlemi yapabilmemizi sağlıyor. 
 * CheckresultAdmin 'deki list_filter = ('checked\_on') django nun yıl, ay ve gün gibi otomatik filtreler eklemesini sağlıyor.
 * list_filter her zaman sağda gördüğümüz filtreleri oluşturur.
+
+**20 - django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :**
+
+Bu hata şundan kaynaklanıyor: 
+
+* ***192.168.99.103*** yerine ***192.168.99.103:8000*** yazmalısın. Lokal development 'ta cookiecutter için port yazmak gerekiyor.
+* ALLOWED_HOSTS = (192.168.199.103, ) değerini local.py dosyasına eklemelisin. 
+
+**21 - href=" " linklerini {% static .... %} files ile find replace yapmak:**
+
+```
+Find what:
+  (href|src)="([a-zA-Z0-9/.-]+[^.html])"
+
+Replace with:
+  $1=\"{% static '$2' %}"  
+```
+
+Yukarıdaki kod PyCharm 'da çalıştı. Yalnız şuna dikkat et: yukarıdaki kod href="...." (çift tırnak ile yazılmışsa çalışır. Tek tırnak ile yazılmışsa ona göre düzeltmek gerekir. 
+ 
