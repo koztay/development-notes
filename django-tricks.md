@@ -52,11 +52,11 @@
 2. Templates that are meant to be included,like our payments/cardform.html template. Name it _cardform.html
 
 
-**<a name='1'></a>2. github 'dan (remote repo) daha önce yüklenmiş dosyayı silme :**
+**<a name='2'></a>2. github 'dan (remote repo) daha önce yüklenmiş dosyayı silme :**
 *git rm --cached file1.txt (deleteS the file from repo but keep the file in filesystem...)*
 
 
-**<a name='1'></a>3. signals yerine realpython 2 kitabında slug yaratmak için save metodunu override etmiş:**
+**<a name='3'></a>3. signals yerine realpython 2 kitabında slug yaratmak için save metodunu override etmiş:**
 
 ```python
 from django.db import models
@@ -81,7 +81,7 @@ class Post(models.Model):
 ```    
 
 
-**<a name='1'></a>4. try-django 1.10 lecture 15: kısaltılmış bir for loop örneği:**
+**<a name='4'></a>4. try-django 1.10 lecture 15: kısaltılmış bir for loop örneği:**
 ```python
 def code_generator(size=SHORTCODE_MIN, chars=string.ascii_lowercase + string.digits):
     # new_code = ''
@@ -94,7 +94,7 @@ def code_generator(size=SHORTCODE_MIN, chars=string.ascii_lowercase + string.dig
 burada şuna da dikkat function parametresi olarak chars= iki farklı şeyin toplamı yazılabiliyor.
 
 
-**<a name='1'></a>5. try-django 1.10 lecture 15: iki dosya da birbirinden funtion import ediyor 
+**<a name='5'></a>5. try-django 1.10 lecture 15: iki dosya da birbirinden funtion import ediyor 
 bu durumda birinden birine cannot import diyor python ve aşağıdaki şekilde çözüyor:**
 ```python
 def create_shortcode(instance, size=SHORTCODE_MIN):
@@ -113,7 +113,7 @@ excel importer da bunun aynını kullanarak düzelt importerını...
 
 
 
-**<a name='1'></a>6. try-django 1.10 lecture 16: model managers:**
+**<a name='6'></a>6. try-django 1.10 lecture 16: model managers:**
 
 ```python
 class KirrURLManager(models.Manager):
@@ -144,11 +144,11 @@ objects = KirrURLManager() veya kendi kafamıza göre isimlendirme de yapabiliyo
 my_manager = KirrURLManager() gibi...
 
 
-**<a name='1'></a>7. try-django 1.10 lecture 17: custom django management commands:**
+**<a name='7'></a>7. try-django 1.10 lecture 17: custom django management commands:**
 https://www.udemy.com/try-django-1-10/learn/v4/t/lecture/5922392
 
 
-**<a name='1'></a>8. try-django 1.10 lecture 18: class based views / function based views:** 
+**<a name='8'></a>8. try-django 1.10 lecture 18: class based views / function based views:** 
 
 ```python
 
@@ -170,7 +170,7 @@ aslında class based view 'da override edilmiş get metodu, function based view'
 Aradaki temel fark FBV 'de hem post hem get tüm metodlar mevcut, ama CBV 'de her metodu kendimiz
 override etmeliyiz.
 
-**<a name='1'></a>9. try-django 1.10 lecture 19: using parameters from settings:**
+**<a name='9'></a>9. try-django 1.10 lecture 19: using parameters from settings:**
 
 ```python
 
@@ -200,7 +200,7 @@ set etmişse kullan etmemişse de o zaman 15 değerini kullan diyoruz. Bu notasy
 doğru ama eğer reusable olmasını planlamıyorsak. Aksi taktirde hata verir eğer o değeri bulamazsa.
 
 
-**<a name='1'></a>10. try-django 1.10 lecture 20: URL keyword arguments:**
+**<a name='10'></a>10. try-django 1.10 lecture 20: URL keyword arguments:**
 
 ```python
 from django.conf.urls import url
@@ -228,7 +228,7 @@ django dokumantasyonunda böyle yap diyor, ama birden fazla app 'imiz varsa o za
 bir yöntem değil.
 justin 'in regex guide 'ı: https://github.com/codingforentrepreneurs/Guides/blob/master/all/common_url_regex.md
 
-**<a name='1'></a>11. try-django 1.10 lecture 21: Querying database:**
+**<a name='11'></a>11. try-django 1.10 lecture 21: Querying database:**
 
 ```python
 
@@ -254,7 +254,7 @@ def kirr_redirect_view(request, shortcode=None, *args, **kwargs): #function base
 ```
 
 
-**<a name='1'></a>12. try-django lecture 22: HttpResponse Redirect & URL ordering:**
+**<a name='12'></a>12. try-django lecture 22: HttpResponse Redirect & URL ordering:**
 
 ```python
 urlpatterns = [
@@ -269,7 +269,7 @@ urlpatterns 'de regex olarak süslü parantez içerisinde minimum ve maksimum ka
 Bunu yapmamızdaki amaç eğer min, max arasında değilse urlpattern bulamadığı için sistem kendisi 404 döndürüyor.
 Bizim get_or_404 döndürmemizden farklı bu...
 
-**<a name='1'></a>13. github çalışılan branch 'ı master yapma:**
+**<a name='13'></a>13. github çalışılan branch 'ı master yapma:**
 
 http://stackoverflow.com/questions/2862590/how-to-replace-master-branch-in-git-entirely-from-another-branch
 
@@ -283,11 +283,11 @@ git merge seotweaks
 
 ```
 
-**<a name='1'></a>14. pycharm 'da virtualenv ile local development yaparken environment variables 'ı dosyadan okutan plug-in: **
+**<a name='14'></a>14. pycharm 'da virtualenv ile local development yaparken environment variables 'ı dosyadan okutan plug-in:**
 
 [https://github.com/Ashald/EnvFile](https://github.com/Ashald/EnvFile)
 
-**<a name='1'></a>15. TemplateView :**
+**<a name='15'></a>15. TemplateView :**
 
 Projemde statik sayfalar için (about vb.) settings 'in olduğu klasörde views.py dosyası oluşturmuştum ve bu sayfalar için "function based view" FBV kullanmaktaydım. Ancak en mantıklısı TemplateView kullanmak. Böylece views.py dosyasını da silebilirim. TemplateView en kolay kullanımı şu şekilde:
 
@@ -304,12 +304,12 @@ urlpatterns = [
 Ayrıca herhangi bir view içerisine import edip daha sonra context değiştirerek bu view 'ları da dinamik yapmak mümkün. 
 
 
-**<a name='1'></a>15 - Flatpages :**
+**<a name='16'></a>16. Flatpages :**
 
 Django içerisinde flatpages varmış. Şimdiye kadar niye kullanmadım ki? Şurada detaylı bilgi var: [https://simpleisbetterthancomplex.com/tutorial/2016/10/04/how-to-use-django-flatpages-app.html](https://simpleisbetterthancomplex.com/tutorial/2016/10/04/how-to-use-django-flatpages-app.html)
 
 
-**<a name='1'></a>16 - Model Managers :**
+**<a name='17'></a>17. Model Managers :**
 
 Şu eğitime ait not:
 [https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
@@ -366,7 +366,7 @@ active_domains = Domaincheck.active.all()
 
 ```
 
-**<a name='1'></a>17 - Custom Querysets :**
+**<a name='18'></a>18. Custom Querysets :**
 
 Şu eğitime ait not:
 [https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
@@ -456,7 +456,7 @@ active_and_stale_domains = Domaincheck.objects.active().stale()
 
 ```
 
-**<a name='1'></a>18 - Aggregation / Annotation :**
+**<a name='19'></a>19. Aggregation / Annotation :**
 
 Şu eğitime ait not:
 [https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
@@ -527,7 +527,7 @@ Yukarıda annotate örneği verdik. Aggregate örneği verecek olursak :
 
 Özetle aggregate ve annotate kullanarak "raw sql" ile sorulayabileceğimiz birçok durumda kullanmadan veritabanından istediğimiz sonuçları döndürebiliriz.
 
-**<a name='1'></a>19 - Admin Panel : "Customizing Admin Listing"**
+**<a name='20'></a>20. Admin Panel : "Customizing Admin Listing"**
 
 Şu eğitime ait not:
 [https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
@@ -587,14 +587,14 @@ search_fields = ('=domain', )  # başına eşittir koyarsak "exact_match" ile ar
 * CheckresultAdmin 'deki list_filter = ('checked\_on') django nun yıl, ay ve gün gibi otomatik filtreler eklemesini sağlıyor.
 * list_filter her zaman sağda gördüğümüz filtreleri oluşturur.
 
-**<a name='20'></a>20 - django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :**
+**<a name='21'></a>21 - django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :**
 
 Bu hata şundan kaynaklanıyor: 
 
 * ***192.168.99.103*** yerine ***192.168.99.103:8000*** yazmalısın. Lokal development 'ta cookiecutter için port yazmak gerekiyor.
 * ALLOWED_HOSTS = (192.168.199.103, ) değerini local.py dosyasına eklemelisin. 
 
-**<a name="21"></a>21 - href=" " linklerini {% static .... %} files ile find replace yapmak:**
+**<a name="22"></a>22 - href=" " linklerini {% static .... %} files ile find replace yapmak:**
 
 ```
 Find what:
@@ -606,7 +606,7 @@ Replace with:
 
 Yukarıdaki kod PyCharm 'da çalıştı. Yalnız şuna dikkat et: yukarıdaki kod href="...." (çift tırnak ile yazılmışsa çalışır. Tek tırnak ile yazılmışsa ona göre düzeltmek gerekir. 
 
-**<a name='22'></a>22- .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:**
+**<a name='23'></a>23. .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:**
 
 Bu parametreyi belirtirken eğer domain adreslerini tırnak içerisinde yazarsan hata veriyor. Python gibi düşünüp tırnak içinde yazma.
 
