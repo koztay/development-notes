@@ -27,23 +27,25 @@
 
 [13. github çalışılan branch 'ı master yapma:](#13)
 
-[14 - TemplateView :](#14)
+[14. pycharm 'da virtualenv ile local development yaparken environment variables 'ı dosyadan okutan plug-in:](#14)
 
-[15 - Flatpages :](#15)
+[15 - TemplateView :](#15)
 
-[16 - Model Managers :](#16)
+[16 - Flatpages :](#16)
 
-[17 - Custom Querysets :](#17)
+[17 - Model Managers :](#17)
 
-[18 - Aggregation / Annotation :](#18)
+[18 - Custom Querysets :](#18)
 
-[19 - Admin Panel : "Customizing Admin Listing"](#19)
+[19 - Aggregation / Annotation :](#19)
 
-[20 - django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :](#20)
+[20 - Admin Panel : "Customizing Admin Listing"](#20)
 
-[21 - href=" " linklerini {% static .... %} files ile find replace yapmak: :](#21)
+[21 - django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :](#21)
 
-[22- .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:](#22)
+[22 - href=" " linklerini {% static .... %} files ile find replace yapmak: :](#22)
+
+[23 .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:](#23)
 
 
 **<a name='1'></a> 1. Template adlandırma :**
