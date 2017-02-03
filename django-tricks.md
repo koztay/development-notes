@@ -562,7 +562,7 @@ Yukarıdaki kod PyCharm 'da çalıştı. Yalnız şuna dikkat et: yukarıdaki ko
 
 **22 - .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:**
 
-Bu parametreyi belirtirken eğer domain adreslerini tırnak içerisinde yazarsan hata veriyor. Python gibi düşünüp tırna içinde yazma.
+Bu parametreyi belirtirken eğer domain adreslerini tırnak içerisinde yazarsan hata veriyor. Python gibi düşünüp tırnak içinde yazma.
 
 ```sh
 DJANGO_ALLOWED_HOSTS=[abc.com,192.168.99.101,212.144.66.44]
