@@ -1,10 +1,13 @@
 ## Django notlarım :
 
-[22- .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:](#22--.env-dosyasında DJANGO_ALLOWED_HOSTS-parametresi)
 
-[2 - python3 virtualenv yaratmak :](#2---python3-virtualenv-yaratmak-:)
 
-###1. Template adlandırma :
+[21 - href=" " linklerini {% static .... %} files ile find replace yapmak: :](#21)
+
+[22- .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:](#22)
+
+
+**<tag id='1'/> 1. Template adlandırma :**
 *Basically you have three types of templates:*
 1. Templates that were meant to be extended,like our base.html template. Name it __base.html
 2. Templates that are meant to be included,like our payments/cardform.html template. Name it _cardform.html
@@ -552,7 +555,7 @@ Bu hata şundan kaynaklanıyor:
 * ***192.168.99.103*** yerine ***192.168.99.103:8000*** yazmalısın. Lokal development 'ta cookiecutter için port yazmak gerekiyor.
 * ALLOWED_HOSTS = (192.168.199.103, ) değerini local.py dosyasına eklemelisin. 
 
-**21 - href=" " linklerini {% static .... %} files ile find replace yapmak:**
+**<a name="21"></a>21 - href=" " linklerini {% static .... %} files ile find replace yapmak:**
 
 ```
 Find what:
@@ -564,7 +567,7 @@ Replace with:
 
 Yukarıdaki kod PyCharm 'da çalıştı. Yalnız şuna dikkat et: yukarıdaki kod href="...." (çift tırnak ile yazılmışsa çalışır. Tek tırnak ile yazılmışsa ona göre düzeltmek gerekir. 
 
-###22- .env dosyasında DJANGO_ALLOWED_HOSTS parametresi :
+**<tag id='22'/></a>22- .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:**
 
 Bu parametreyi belirtirken eğer domain adreslerini tırnak içerisinde yazarsan hata veriyor. Python gibi düşünüp tırnak içinde yazma.
 
