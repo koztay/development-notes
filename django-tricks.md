@@ -29,23 +29,31 @@
 
 [14. pycharm 'da virtualenv ile local development yaparken environment variables 'ı dosyadan okutan plug-in:](#14)
 
-[15 - TemplateView :](#15)
+[15. TemplateView :](#15)
 
-[16 - Flatpages :](#16)
+[16. Flatpages :](#16)
 
-[17 - Model Managers :](#17)
+[17. Model Managers :](#17)
 
-[18 - Custom Querysets :](#18)
+[18. Custom Querysets :](#18)
 
-[19 - Aggregation / Annotation :](#19)
+[19. Aggregation / Annotation :](#19)
 
-[20 - Admin Panel : "Customizing Admin Listing"](#20)
+[20. Admin Panel : "Customizing Admin Listing"](#20)
 
-[21 - django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :](#21)
+[21. django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :](#21)
 
-[22 - href=" " linklerini {% static .... %} files ile find replace yapmak: :](#22)
+[22. href=" " linklerini {% static .... %} files ile find replace yapmak: :](#22)
 
 [23 .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:](#23)
+
+[24. Tüm celery tasklerini silme :](#24)
+
+[25. http 404 hatası :](#25)
+
+[26. Celery Tesk is not JSON serializable :](#26)
+
+[27. Celery Worker restart etme gereği :](#27)
 
 
 **<a name='1'></a> 1. Template adlandırma :**
@@ -589,14 +597,14 @@ search_fields = ('=domain', )  # başına eşittir koyarsak "exact_match" ile ar
 * CheckresultAdmin 'deki list_filter = ('checked\_on') django nun yıl, ay ve gün gibi otomatik filtreler eklemesini sağlıyor.
 * list_filter her zaman sağda gördüğümüz filtreleri oluşturur.
 
-**<a name='21'></a>21 - django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :**
+**<a name='21'></a>21. django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :**
 
 Bu hata şundan kaynaklanıyor: 
 
 * ***192.168.99.103*** yerine ***192.168.99.103:8000*** yazmalısın. Lokal development 'ta cookiecutter için port yazmak gerekiyor.
 * ALLOWED_HOSTS = (192.168.199.103, ) değerini local.py dosyasına eklemelisin. 
 
-**<a name="22"></a>22 - href=" " linklerini {% static .... %} files ile find replace yapmak:**
+**<a name="22"></a>22. href=" " linklerini {% static .... %} files ile find replace yapmak:**
 
 ```
 Find what:
@@ -617,4 +625,39 @@ DJANGO_ALLOWED_HOSTS=[abc.com,192.168.99.101,212.144.66.44]
 ```
 yukarıdaki örnekte olduğu gibi yazınca oluyor. Aralarına boşluk da koymamak lazım...
 
+Dikkat!!! => cookiecutter-django kullanıldığında yukarıdaki de çalışmıyor, çünkü django-environ kullanıyor. Köşeli parantezsiz aşağıdaki şekilde yazmak lazım bu durumda:
+
+```sh
+DJANGO_ALLOWED_HOSTS=abc.com,192.168.99.101,212.144.66.44
+```
+
+**<a name='24'></a>24. Tüm celery tasklerini silme :**
+
+Önce django python shell 'i çalıştır sonra aşağıdaki kodları:
+
+```sh
+from <project_name>.celery import app  # örnek : from ecommerce2.celery import app
+app.control.purge()
+```
+
+daha kısa bir yol da :
+
+```sh
+celery purge
+```
+
+
+**<a name='25'></a>25. Bad Request (400) hatası :**
+
+DEBUG = False değerini alıyordur, True değerini .env den çekemediği için ALLOWED_HOSTS parametresini ister. 23 no.lu maddedeki gibi set ettiğinden emin ol.
+
+
+**<a name='26'></a>26. Celery Task is not JSON serializable :**
+
+Bu hata task fonksiyonuna obje gönderdiğimizde oluşur. Örneğin image download eden fonksiyonumuza hangi ürünün imajını download edeceğini belirtmek için fonksiyon parametresi olarak ürünü göndermemizde olduğu gibi. Celery kullanırken hiçbir zaman task parametresi olarak obje gönderme. Bunun yerine objenin id sini gönderip fonksiyon içerisinde objeye ulaş.
+
+
+**<a name='27'></a>27. Celery Worker restart etme gereği :**
+
+Task olarak yazdığımız kodlarda her değişiklik yaptığımızda celery worker 'ı restart etmeliyiz. Çünkü celery worker ilk başladığında yazdığımız taskleri bir şekilde cache liyor ve kodda yaptığımız değişiklikler workera yansımıyor.  
 
