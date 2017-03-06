@@ -55,6 +55,14 @@
 
 [27. Celery Worker restart etme gereği :](#27)
 
+[28. Django Fixtures (dumpdata / loaddata) :](#28)
+
+[29. django-cookiecutter Add 192.168.99.100 to ALLOWED_HOSTS hatası :](#29)
+
+
+## Dikkate Değer Kaynaklar
+
+* [Django design patterns](http://agiliq.com/books/djangodesignpatterns/)
 
 **<a name='1'></a> 1. Template adlandırma :**
 *Basically you have three types of templates:*
@@ -661,3 +669,46 @@ Bu hata task fonksiyonuna obje gönderdiğimizde oluşur. Örneğin image downlo
 
 Task olarak yazdığımız kodlarda her değişiklik yaptığımızda celery worker 'ı restart etmeliyiz. Çünkü celery worker ilk başladığında yazdığımız taskleri bir şekilde cache liyor ve kodda yaptığımız değişiklikler workera yansımıyor.  
 
+**<a name='28'></a>28. Django Fixtures (dumpdata / loaddata) :**
+
+Backup
+
+```sh
+./manage.py dumpdata products.category > categories.json
+```
+
+Load
+
+```sh
+./manage.py loaddata user.json
+```
+
+**<a name='29'></a>29. django-cookiecutter Add 192.168.99.100 to ALLOWED_HOSTS hatası :**
+
+cookiecutter 'da dev.yml seçilince bu hata orataya çıkıyor ve lokal develeopment 'da .env kullanımı yok. Dolayısıyla .env 'ye girilen değerler hiçbir şekilde kaale alınmıyor. Bu yüzden ne yazarsak yazalım ALLOWED_HOSTS hatası oluşuyor. Bunun çözümü dev.yml dosyasına bu parametreyi eklemek. Aşağaıdaki şekilde :
+
+```yml
+
+django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile-dev
+    command: /start-dev.sh
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_USER=consultailetisim
+      - USE_DOCKER=yes
+      - DJANGO_ALLOWED_HOSTS=192.168.99.100
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    links:
+      - postgres
+
+```
+bu şekilde ekleyince sorun çözülüyor. Ancak anlamadığım dev.yml kullanırken settings 'de 'local.py' kullanması gerektiğini nasıl biliyor?
+
+
+ 
