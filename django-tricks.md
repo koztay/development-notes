@@ -41,23 +41,18 @@
 
 [20. Admin Panel : "Customizing Admin Listing"](#20)
 
-[21. django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :](#21)
+[21. href=" " linklerini {% static .... %} files ile find replace yapmak: :](#21)
 
-[22. href=" " linklerini {% static .... %} files ile find replace yapmak: :](#22)
+[22. Tüm celery tasklerini silme :](#22)
 
-[23 .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:](#23)
+[23. http 404 hatası :](#23)
 
-[24. Tüm celery tasklerini silme :](#24)
+[24. Celery Tesk is not JSON serializable :](#24)
 
-[25. http 404 hatası :](#25)
+[25. Celery Worker restart etme gereği :](#25)
 
-[26. Celery Tesk is not JSON serializable :](#26)
+[26. Django Fixtures (dumpdata / loaddata) :](#26)
 
-[27. Celery Worker restart etme gereği :](#27)
-
-[28. Django Fixtures (dumpdata / loaddata) :](#28)
-
-[29. django-cookiecutter Add 192.168.99.100 to ALLOWED_HOSTS hatası :](#29)
 
 
 ## Dikkate Değer Kaynaklar
@@ -605,14 +600,8 @@ search_fields = ('=domain', )  # başına eşittir koyarsak "exact_match" ile ar
 * CheckresultAdmin 'deki list_filter = ('checked\_on') django nun yıl, ay ve gün gibi otomatik filtreler eklemesini sağlıyor.
 * list_filter her zaman sağda gördüğümüz filtreleri oluşturur.
 
-**<a name='21'></a>21. django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :**
 
-Bu hata şundan kaynaklanıyor: 
-
-* ***192.168.99.103*** yerine ***192.168.99.103:8000*** yazmalısın. Lokal development 'ta cookiecutter için port yazmak gerekiyor.
-* ALLOWED_HOSTS = (192.168.199.103, ) değerini local.py dosyasına eklemelisin. 
-
-**<a name="22"></a>22. href=" " linklerini {% static .... %} files ile find replace yapmak:**
+**<a name="21"></a>21. href=" " linklerini {% static .... %} files ile find replace yapmak:**
 
 ```
 Find what:
@@ -624,22 +613,9 @@ Replace with:
 
 Yukarıdaki kod PyCharm 'da çalıştı. Yalnız şuna dikkat et: yukarıdaki kod href="...." (çift tırnak ile yazılmışsa çalışır. Tek tırnak ile yazılmışsa ona göre düzeltmek gerekir. 
 
-**<a name='23'></a>23. .env dosyasında DJANGO_ALLOWED_HOSTS parametresi:**
 
-Bu parametreyi belirtirken eğer domain adreslerini tırnak içerisinde yazarsan hata veriyor. Python gibi düşünüp tırnak içinde yazma.
 
-```sh
-DJANGO_ALLOWED_HOSTS=[abc.com,192.168.99.101,212.144.66.44]
-```
-yukarıdaki örnekte olduğu gibi yazınca oluyor. Aralarına boşluk da koymamak lazım...
-
-Dikkat!!! => cookiecutter-django kullanıldığında yukarıdaki de çalışmıyor, çünkü django-environ kullanıyor. Köşeli parantezsiz aşağıdaki şekilde yazmak lazım bu durumda:
-
-```sh
-DJANGO_ALLOWED_HOSTS=abc.com,192.168.99.101,212.144.66.44
-```
-
-**<a name='24'></a>24. Tüm celery tasklerini silme :**
+**<a name='22'></a>22. Tüm celery tasklerini silme :**
 
 Önce django python shell 'i çalıştır sonra aşağıdaki kodları:
 
@@ -655,21 +631,21 @@ celery purge
 ```
 
 
-**<a name='25'></a>25. Bad Request (400) hatası :**
+**<a name='23'></a>23. Bad Request (400) hatası :**
 
 DEBUG = False değerini alıyordur, True değerini .env den çekemediği için ALLOWED_HOSTS parametresini ister. 23 no.lu maddedeki gibi set ettiğinden emin ol.
 
 
-**<a name='26'></a>26. Celery Task is not JSON serializable :**
+**<a name='24'></a>246. Celery Task is not JSON serializable :**
 
 Bu hata task fonksiyonuna obje gönderdiğimizde oluşur. Örneğin image download eden fonksiyonumuza hangi ürünün imajını download edeceğini belirtmek için fonksiyon parametresi olarak ürünü göndermemizde olduğu gibi. Celery kullanırken hiçbir zaman task parametresi olarak obje gönderme. Bunun yerine objenin id sini gönderip fonksiyon içerisinde objeye ulaş.
 
 
-**<a name='27'></a>27. Celery Worker restart etme gereği :**
+**<a name='25'></a>25. Celery Worker restart etme gereği :**
 
 Task olarak yazdığımız kodlarda her değişiklik yaptığımızda celery worker 'ı restart etmeliyiz. Çünkü celery worker ilk başladığında yazdığımız taskleri bir şekilde cache liyor ve kodda yaptığımız değişiklikler workera yansımıyor.  
 
-**<a name='28'></a>28. Django Fixtures (dumpdata / loaddata) :**
+**<a name='26'></a>26. Django Fixtures (dumpdata / loaddata) :**
 
 Backup
 
@@ -683,32 +659,3 @@ Load
 ./manage.py loaddata user.json
 ```
 
-**<a name='29'></a>29. django-cookiecutter Add 192.168.99.100 to ALLOWED_HOSTS hatası :**
-
-cookiecutter 'da dev.yml seçilince bu hata orataya çıkıyor ve lokal develeopment 'da .env kullanımı yok. Dolayısıyla .env 'ye girilen değerler hiçbir şekilde kaale alınmıyor. Bu yüzden ne yazarsak yazalım ALLOWED_HOSTS hatası oluşuyor. Bunun çözümü dev.yml dosyasına bu parametreyi eklemek. Aşağaıdaki şekilde :
-
-```yml
-
-django:
-    build:
-      context: .
-      dockerfile: ./compose/django/Dockerfile-dev
-    command: /start-dev.sh
-    depends_on:
-      - postgres
-    environment:
-      - POSTGRES_USER=consultailetisim
-      - USE_DOCKER=yes
-      - DJANGO_ALLOWED_HOSTS=192.168.99.100
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
-    links:
-      - postgres
-
-```
-bu şekilde ekleyince sorun çözülüyor. Ancak anlamadığım dev.yml kullanırken settings 'de 'local.py' kullanması gerektiğini nasıl biliyor?
-
-
- 

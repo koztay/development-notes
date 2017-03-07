@@ -180,3 +180,34 @@ burada up parametresini vermiş, acaba build de veriliyor mu denemedim.
 Şu işe yarayabilir, development sonrası sitede iyileştirmeler yapmak zorunda kaldığımızda örneğin redisin veya nginx 2in versiyonunu yükseltmek istediğimizde diğer servislere hiç dokunmadan yapabiliriz bu sayede.
 
  
+### 8- copy files from remote container : (cookiecutter postgres backups)
+
+```sh
+docker cp <containerId>:/backups /host/path/target
+```
+
+örnek:
+
+
+```sh
+docker cp ae9:/backups postgres_backups
+```
+
+ae9 ile başlayan remote container 'daki 'backups' klasörünü bu komutu çalıştırdığım klasörün altındaki 'postgres_backups' klasörüne komple kopyalar...
+
+Özetle remote'tan lokael ve lokalden remote 'a şağıdaki şekilde kopyalıyoruz:
+
+```sh
+docker cp foo.txt mycontainer:/foo.txt  # lokalden remote'a
+docker cp mycontainer:/foo.txt foo.txt  # remote 'dan lokale.
+```
+
+Tabii bu komutları verebilmek için eval 
+
+```sh
+eval $(docker-machine env <machine-name>)
+```
+komutu ile çalışacağımız makinayı önceden seçmiş olmalıyız.
+
+
+
