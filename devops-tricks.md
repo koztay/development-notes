@@ -15,7 +15,7 @@
 
 
 ### 1- docker-machine genel:
-Eğer docker-machine eval ile env 'yi aktive edersek o zaman sanki remote makine 'de 
+Eğer docker-machine eval ile env 'yi aktive edersek o zaman sanki remote makine 'de
 çalışır gibi docker komutları verebiliriz.
 
 ```shell
@@ -59,9 +59,9 @@ $ cat your_dump.sql | docker exec -i <your-db-container> psql -U <postgres_user_
 ```
 
 yukarıdaki komut mevcutta var olan db 'ye uygulandığında "already exists" vb. bir sürü hata verdi.
-Sebebi pg_dumpall komutu ile dump edilen dosyayı yükledik ondan. pg_dump komutu ile aldığımız dump'ı 
+Sebebi pg_dumpall komutu ile dump edilen dosyayı yükledik ondan. pg_dump komutu ile aldığımız dump'ı
 sorunsuzca yükleyebiliyoruz. pg_dumpall veritabanı bomboşsa o zaman uygulanabilir belki. Ama tablolar
-roller mevcutsa o zaman yükleme yapamıyor. 
+roller mevcutsa o zaman yükleme yapamıyor.
 
 Bir de pg_restore komutu kullanılan aşağıdaki yöntem var (https://gist.github.com/jgillman/8191d6f587ffc7207a88e987e034b675) :
 
@@ -75,7 +75,7 @@ tablolar mevcut iken de restore edebiliyordur. Bunu denemeliyim.
 
 ### 4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol:
 
-Bunun için aşağıdaki komutu ver (docker ps ile container id 'sini bul aşağıya yaz): 
+Bunun için aşağıdaki komutu ver (docker ps ile container id 'sini bul aşağıya yaz):
 
 ```shell
 $ docker exec -it 1e7fcb665360 bash
@@ -99,31 +99,31 @@ Running migrations:
 
 ```
 
-bu komutları bu şekilde vermemiz yani docker-compose ile vermiyor olmamız bir sürü zombi kontainer 
-oluşmasına engel oluyor. 
+bu komutları bu şekilde vermemiz yani docker-compose ile vermiyor olmamız bir sürü zombi container
+oluşmasına engel oluyor.
 
 ### 5- redis server uyarı mesajları (docker envionment):
 
 Redis server 'ı kurunca aşağıdaki uyarıları veriyor:
 
 ```sh
-WARNING overcommit_memory is set to 0! Background save may fail 
-under low memory condition. 
-To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf 
-and then reboot or run the command 'sysctl vm.overcommit_memory=1' for 
+WARNING overcommit_memory is set to 0! Background save may fail
+under low memory condition.
+To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf
+and then reboot or run the command 'sysctl vm.overcommit_memory=1' for
 this to take effect.
 2016-11-22T09:10:38.301413909Z 1:M 22 Nov 09:10:38.301 # WARNING you have
 Transparent Huge Pages (THP) support enabled in your kernel. This will create
 latency and memory usage issues with Redis. To fix this issue run the command
 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it
-to your /etc/rc.local in order to retain the setting after a reboot. 
+to your /etc/rc.local in order to retain the setting after a reboot.
 Redis must be restarted after THP is disabled.
 ```
 
 yukarıdaki uyarıda verdiği komutları container 'da değil coreos 'ta çalıştırıyoruz. Sonrasında sadece aşağıdaki uyarı kalıyor:
 
 ```sh
-WARNING: The TCP backlog setting of 511 cannot be enforced because 
+WARNING: The TCP backlog setting of 511 cannot be enforced because
 /proc/sys/net/core/somaxconn is set to the lower value of 128.
 ```
 
@@ -135,7 +135,7 @@ Redis server normalde dış dünyaya açık olarak kuruluyor ve son derece güve
 
 Şöyle çözüyoruz:
 
-1- redis 'i ayrı bir klasöre alıp customize ederek build etmemiz kazım. Onun için redis isminde bir klasör açıp şu şekilde bir dockerfile oluşturuyoruz:
+1- redis 'i ayrı bir klasöre alıp customize ederek build etmemiz lazım. Onun için redis isminde bir klasör açıp şu şekilde bir dockerfile oluşturuyoruz:
 
 ```sh
 #Dockerfile
@@ -150,7 +150,7 @@ COPY redis.conf /usr/local/etc/redis/redis.conf
   redis:
     build: ./redis
     restart: always
-#    ports: 
+#    ports:
 #      - "6379"
 # ports kısmını yazınca remote port açıyor serverda ve uzaktan erişilebiliyor.
     command: redis-server /usr/local/etc/redis/redis.conf
@@ -179,7 +179,7 @@ $ docker-compose logs
 burada up parametresini vermiş, acaba build de veriliyor mu denemedim.
 Şu işe yarayabilir, development sonrası sitede iyileştirmeler yapmak zorunda kaldığımızda örneğin redisin veya nginx 2in versiyonunu yükseltmek istediğimizde diğer servislere hiç dokunmadan yapabiliriz bu sayede.
 
- 
+
 ### 8- copy files from remote container : (cookiecutter postgres backups)
 
 ```sh
@@ -202,12 +202,9 @@ docker cp foo.txt mycontainer:/foo.txt  # lokalden remote'a
 docker cp mycontainer:/foo.txt foo.txt  # remote 'dan lokale.
 ```
 
-Tabii bu komutları verebilmek için eval 
+Tabii bu komutları verebilmek için eval
 
 ```sh
 eval $(docker-machine env <machine-name>)
 ```
 komutu ile çalışacağımız makinayı önceden seçmiş olmalıyız.
-
-
-
