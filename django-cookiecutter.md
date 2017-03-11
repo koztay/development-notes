@@ -11,7 +11,7 @@
 
 **<a name='1'></a>1. django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :**
 
-Bu hata şundan kaynaklanıyor: 
+Bu hata şundan kaynaklanıyor:
 
 * ***192.168.99.103*** yerine ***192.168.99.103:8000*** yazmalısın. Lokal development 'ta cookiecutter için port yazmak gerekiyor.
 
@@ -32,7 +32,7 @@ DJANGO_ALLOWED_HOSTS=abc.com,192.168.99.101,212.144.66.44
 
 **<a name='3'></a>3. django-cookiecutter Add 192.168.99.100 to ALLOWED_HOSTS hatası :**
 
-cookiecutter 'da dev.yml seçilince bu hata orataya çıkıyor ve lokal develeopment 'da .env kullanımı yok. Dolayısıyla .env 'ye girilen değerler hiçbir şekilde kaale alınmıyor. Bu yüzden ne yazarsak yazalım ALLOWED_HOSTS hatası oluşuyor. Bunun çözümü dev.yml dosyasına bu parametreyi eklemek. Aşağaıdaki şekilde :
+cookiecutter 'da dev.yml seçilince bu hata orataya çıkıyor ve lokal development 'da .env kullanımı yok. Dolayısıyla .env 'ye girilen değerler hiçbir şekilde kaale alınmıyor. Bu yüzden ne yazarsak yazalım ALLOWED_HOSTS hatası oluşuyor. Bunun çözümü dev.yml dosyasına bu parametreyi eklemek. Aşağıdaki şekilde :
 
 ```yml
 
@@ -56,7 +56,7 @@ django:
 
 ```
 
-Tabii yukarıdaki değeri girmek yetmiyor bir de local.py 'a bu değeri okumasını da söylemek lazım. Cookie-cutter 'ın bunu düzeltmesi lazım. Yeni django versiyonlarında DEBUG=True olsa bile ALLOWED_HOSTS değerini de illa grieceksin diyor. Yani özetle local.py 'a aşağıdaki değeri giriyoruz:
+Tabii yukarıdaki değeri girmek yetmiyor bir de local.py 'a bu değeri okumasını da söylemek lazım. Cookie-cutter 'ın bunu düzeltmesi lazım. Yeni django versiyonlarında DEBUG=True olsa bile ALLOWED_HOSTS değerini de illa gireceksin diyor. Yani özetle local.py 'a aşağıdaki değeri giriyoruz:
 
 ```py
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['yourdomain.com', ])
@@ -78,9 +78,9 @@ DATABASE_URL=postgres://karnascookiecutter:rA55sNYA3tTS@127.0.0.1:5432//karnasco
 
 ```
 
-yukarıdaki password ve user ayarı ile docker user_name ile aynı isimde veritabanı yaratıyor. O nedenle veritabanı adını da user_name ile aynı giriyoruz. Burada farklı bir veritabanı adı girdiğimde çalışmadı. 
+yukarıdaki password ve user ayarı ile docker user_name ile aynı isimde veritabanı yaratıyor. O nedenle veritabanı adını da user_name ile aynı giriyoruz. Burada farklı bir veritabanı adı girdiğimde çalışmadı.
 
-Fakat burada en can alıcı nokta makemigrations ve migrate komutlarının nasıl verildiği. ssh ile bağlanıp "docker exec -it <container_name> bash" ile container içerisinden makemigrations ve migrate komutlarını çalıştıramadım bir türli ancak docker-compose ile verdiğimde çalıştı.
+Fakat burada en can alıcı nokta makemigrations ve migrate komutlarının nasıl verildiği. ssh ile bağlanıp "docker exec -it <container_name> bash" ile container içerisinden makemigrations ve migrate komutlarını çalıştıramadım bir türlü ancak docker-compose ile verdiğimde çalıştı.
 ssh ile bağlanıp makemigrations komutu aşağıdaki hatayı veriyor:
 
 ```sh
@@ -92,17 +92,17 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.5/site-packages/django/db/backends/postgresql/base.py", line 176, in get_new_connection
     connection = Database.connect(**conn_params)
   File "/usr/local/lib/python3.5/site-packages/psycopg2/__init__.py", line 130, in connect
-    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+    conn = _connect(dsn, connection_factory=connection_factory, **kwargs)
 psycopg2.OperationalError: could not connect to server: No such file or directory
 	Is the server running locally and accepting
 	connections on Unix domain socket "/var/run/postgresql/.s.PGSQL.5432"?
-	
+
 ```
 
 Şu şekilde:
 
 ```sh
-docker-compose run django python manage.py makemigrations 
+docker-compose run django python manage.py makemigrations
 docker-compose run django python manage.py migrate
 ```
 
@@ -135,17 +135,14 @@ Running migrations:
   Applying socialaccount.0001_initial... OK
   Applying socialaccount.0002_token_max_lengths... OK
   Applying socialaccount.0003_extra_data_default_dict... OK
- 
+
 ```
 
 cookiecutter 'da hiçbir management komutu ssh ile çalışmıyor. Tamamını compose ile vermek lazım. Yani:
 
 ```sh
-docker-compose run django python manage.py createsuperuser 
+docker-compose run django python manage.py createsuperuser
 docker-compose run django python manage.py collectstatic
 ```
 
 gibi...
-
-
-

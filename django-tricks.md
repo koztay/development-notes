@@ -9,7 +9,7 @@
 
 [4. try-django 1.10 lecture 15: kısaltılmış bir for loop örneği:](#4)
 
-[5. try-django 1.10 lecture 15: iki dosya da birbirinden funtion import ediyor bu durumda birinden birine cannot import diyor python ve aşağıdaki şekilde çözüyor:](#5)
+[5. try-django 1.10 lecture 15: iki dosya da birbirinden function import ediyor bu durumda birinden birine cannot import diyor python ve aşağıdaki şekilde çözüyor:](#5)
 
 [6. try-django 1.10 lecture 16: model managers:](#6)
 
@@ -47,7 +47,7 @@
 
 [23. http 404 hatası :](#23)
 
-[24. Celery Tesk is not JSON serializable :](#24)
+[24. Celery Task is not JSON serializable :](#24)
 
 [25. Celery Worker restart etme gereği :](#25)
 
@@ -61,8 +61,8 @@
 
 **<a name='1'></a> 1. Template adlandırma :**
 *Basically you have three types of templates:*
-1. Templates that were meant to be extended,like our base.html template. Name it __base.html
-2. Templates that are meant to be included,like our payments/cardform.html template. Name it _cardform.html
+1. Templates that were meant to be extended, like our base.html template. Name it __base.html
+2. Templates that are meant to be included, like our payments/cardform.html template. Name it _cardform.html
 
 
 **<a name='2'></a>2. github 'dan (remote repo) daha önce yüklenmiş dosyayı silme :**
@@ -70,6 +70,7 @@
 
 
 **<a name='3'></a>3. signals yerine realpython 2 kitabında slug yaratmak için save metodunu override etmiş:**
+
 
 ```python
 from django.db import models
@@ -107,7 +108,7 @@ def code_generator(size=SHORTCODE_MIN, chars=string.ascii_lowercase + string.dig
 burada şuna da dikkat function parametresi olarak chars= iki farklı şeyin toplamı yazılabiliyor.
 
 
-**<a name='5'></a>5. try-django 1.10 lecture 15: iki dosya da birbirinden funtion import ediyor 
+**<a name='5'></a>5. try-django 1.10 lecture 15: iki dosya da birbirinden funtion import ediyor
 bu durumda birinden birine cannot import diyor python ve aşağıdaki şekilde çözüyor:**
 ```python
 def create_shortcode(instance, size=SHORTCODE_MIN):
@@ -118,7 +119,7 @@ def create_shortcode(instance, size=SHORTCODE_MIN):
         return create_shortcode(size=size)
     return new_code
 ```
-Klass = instance.__class__ 
+Klass = instance.__class__
 tabii instance.__class__.__name__ de mevcut.
 sınıfı import etmeden import etmek gibi birşey dedi Justin. Çakışma olmasın diye Klass ismini verdi.
 Bu arada database 'de veri var mı diye kontrol etmek için yukarıdaki gibi exists() metodunu kullan...
@@ -152,7 +153,7 @@ model manager 'da bildiğin utility function benzeri birşey yapmış. Neden
 bunu utils.py içerisine koymadı anlamadım. shortcode 'lar için bulk işlem
 yapmak amacıyla koymuş. tek seferde tamamını değiştiren bir metod bu.
 Şunun için yazmış : python manage.py refresh_shortcodes gibi bir komut yazabilmek içim
-Ayrıca model içerisinde linklerken 
+Ayrıca model içerisinde linklerken
 objects = KirrURLManager() veya kendi kafamıza göre isimlendirme de yapabiliyoruz:
 my_manager = KirrURLManager() gibi...
 
@@ -161,7 +162,7 @@ my_manager = KirrURLManager() gibi...
 https://www.udemy.com/try-django-1-10/learn/v4/t/lecture/5922392
 
 
-**<a name='8'></a>8. try-django 1.10 lecture 18: class based views / function based views:** 
+**<a name='8'></a>8. try-django 1.10 lecture 18: class based views / function based views:**
 
 ```python
 
@@ -209,7 +210,7 @@ class KirrURL(models.Model):
 models.py  içerisine yukarıdaki şekilde kullanım reusable app yazma konusunda yardımcı oluyor.
 Çünkü uygulamamızı kullanan diğer kullanıcılar eğer settings içerisine istediğimiz settimg değerini
 set etmişse kullan etmemişse de o zaman 15 değerini kullan diyoruz. Bu notasyon yani getattr notasyonu
-1.8 'de geçerli olmayabilr ve sadece 1.10 itibarıyla kullanıma sunulmuş olabilir. Diğer kullanım da 
+1.8 'de geçerli olmayabilr ve sadece 1.10 itibarıyla kullanıma sunulmuş olabilir. Diğer kullanım da
 doğru ama eğer reusable olmasını planlamıyorsak. Aksi taktirde hata verir eğer o değeri bulamazsa.
 
 
@@ -230,13 +231,13 @@ urlpatterns = [
     url(r'^a/(?P<shortcode>[\w-]+)/$', kirr_redirect_view),
     url(r'^b/(?P<shortcode>[\w-]+)/$', KirrCBView.as_view()), #joincfe.com/projects/ python regex
 
-    # DO NOT DO 
+    # DO NOT DO
     #url(r'^abc/$', 'shortener.views.kirr_redirect_view' ),
     # url(r'^abc/$', views.kirr_redirect_view ),
 ]
 ```
 
-1.10 'da Justin 'in DO NOT DO dediği kısım çalışmıyor. Ayrıca üstte yer alan DO NOT DO 
+1.10 'da Justin 'in DO NOT DO dediği kısım çalışmıyor. Ayrıca üstte yer alan DO NOT DO
 django dokumantasyonunda böyle yap diyor, ama birden fazla app 'imiz varsa o zaman bu iyi
 bir yöntem değil.
 justin 'in regex guide 'ı: https://github.com/codingforentrepreneurs/Guides/blob/master/all/common_url_regex.md
@@ -246,22 +247,22 @@ justin 'in regex guide 'ı: https://github.com/codingforentrepreneurs/Guides/blo
 ```python
 
 def kirr_redirect_view(request, shortcode=None, *args, **kwargs): #function based view FBV
-    # en iyi yöntem: 
+    # en iyi yöntem:
     obj = get_object_or_404(KirrURL, shortcode=shortcode)
-    
+
     #ikinci iyi yöntem :
     obj_url = None  # return 'de bunu set etmelisin bunu kullanırsan.
     qs = KirrURL.objects.filter(shortcode__iexact=shortcode)
     if qs.exists():
         obj = qs.first()
         obj_url = obj.url
-    
+
     #üçüncü iyi yöntem:
     try:
         obj = KirrURL.objects.get(shortcode=shortcode)
     except:
         obj = KirrURL.objects.all().first
-     
+
     return HttpResponse("hello {sc}".format(sc=obj.url))
 
 ```
@@ -314,7 +315,7 @@ urlpatterns = [
 
 ```
 
-Ayrıca herhangi bir view içerisine import edip daha sonra context değiştirerek bu view 'ları da dinamik yapmak mümkün. 
+Ayrıca herhangi bir view içerisine import edip daha sonra context değiştirerek bu view 'ları da dinamik yapmak mümkün.
 
 
 **<a name='16'></a>16. Flatpages :**
@@ -365,11 +366,11 @@ class DomainCheck(models.Model):
 
     objects = models.Manager()
     active = ActiveManager()
-     
+
 
 ```
 
-model manager yazınca 
+model manager yazınca
 hem objects=  hem de active= şeklinde manager class 'larını ayrı ayrı belirtmemiz gerek.
 
 Bir de burada chocices alanlarını model içerisinde tutmak daha akıllıca bir yöntem. Daha sonra bu manager ile sorgulama yaparken aşağıdaki gibi yapıyoruz:
@@ -384,7 +385,7 @@ active_domains = Domaincheck.active.all()
 Şu eğitime ait not:
 [https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
 
-Custom queryset yapmanın avantajı query 'lerin birbirine chain edilebilmeleri. Yani .active.stale.all() şeklinde bir query oluşturmak mümkün. 
+Custom queryset yapmanın avantajı query 'lerin birbirine chain edilebilmeleri. Yani .active.stale.all() şeklinde bir query oluşturmak mümkün.
 
 
 ```python
@@ -458,13 +459,13 @@ class CheckResult(models.Model):
 
 ```
 
-Ancak burada query oluştururken objects eklememiz gerek artık, all() koymuyoruz ona dikkat!!!. Aşağıdaki örneklerde mevcut. Eğer birden fazla query 'miz varsa otomatik olarak custom queryset yaratmak en mantıklısı. 
+Ancak burada query oluştururken objects eklememiz gerek artık, all() koymuyoruz ona dikkat!!!. Aşağıdaki örneklerde mevcut. Eğer birden fazla query 'miz varsa otomatik olarak custom queryset yaratmak en mantıklısı.
 
 ```python
 active_domains = Domaincheck.objects.active()
 stale_domains = Domaincheck.objects.stale()
 active_and_stale_domains = Domaincheck.objects.active().stale()
-# ya da Domaincheck.objects.stale().active şeklinde de yazabiliriz. 
+# ya da Domaincheck.objects.stale().active şeklinde de yazabiliriz.
 # Sıralama önemli değil.
 
 ```
@@ -475,7 +476,7 @@ active_and_stale_domains = Domaincheck.objects.active().stale()
 [https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
 
 Aggregation : Herhangi bir query sonucu dönen değerlerdeki bir alan için toplam, ortlama ya da vb. bir hesaplama sonucu elde edilen bir değerdir. Aggregation sonunda tek bir değer elde edilir.
- 
+
 Annotation : Veritabanındaki her bir satıra ilave bir hesaplanmış kolon eklemek gibi düşünülebilir. Annotationda ise her satır için bir değer hesaplandığından tek bir değer elde edilmez. Aradaki temel fark budur. Annotation sonucu eklenmiş kolonlar için de order_by metodu kullanılabilir.
 
 
@@ -512,7 +513,7 @@ def status(self, cutoff=datetime.timedelta(hours=1)):
 ```
 
 
-Yukarıdaki custom query 'de annotation kullanılıyor. İlgili CheckResult modelindeki 'checked\_on' tablosuna bak ve maximum yani en son değeri al diyor. Yani aslında yaptığı tam olarak şu: query sonucu DÖNEN TÜM SATIRLARA 'last\_check' değeri ekliyor, sonra da tüm sonuçlar içinde 'last\_check' değeri 'end\_time' olarak girilen değerden küçük olanları ya da hiç last_check değeri olmayanları filtreliyor. 
+Yukarıdaki custom query 'de annotation kullanılıyor. İlgili CheckResult modelindeki 'checked\_on' tablosuna bak ve maximum yani en son değeri al diyor. Yani aslında yaptığı tam olarak şu: query sonucu DÖNEN TÜM SATIRLARA 'last\_check' değeri ekliyor, sonra da tüm sonuçlar içinde 'last\_check' değeri 'end\_time' olarak girilen değerden küçük olanları ya da hiç last_check değeri olmayanları filtreliyor.
 Bir sonraki status annotation 'ında ise annotation 'ların da chain olarak arka arkaya eklenebildiğini görüyoruz. Döndürdüğü annotate 'lere bakacak olursak satıra 5 adet kolon eklediğini görüyoruz. Eklediği kolonlar aşağıdaki gibi:
 
 * last_check
@@ -590,13 +591,13 @@ Dikkat edilmesi gerekli noktalar:
 * search_fields alanındaki tuple 'a birden fazla değer yazabiliyoruz, bu durumda "or" kullanarak search yapıyor. Bonus :
 
 ```python
-search_fields = ('^domain', )  # başına şapka koyarsak "starts_with" ile arar. 
-search_fields = ('=domain', )  # başına eşittir koyarsak "exact_match" ile arar. 
+search_fields = ('^domain', )  # başına şapka koyarsak "starts_with" ile arar.
+search_fields = ('=domain', )  # başına eşittir koyarsak "exact_match" ile arar.
 ```
 
 * get_queryset, status vb. metodlar ile de hangi satırların gösterileceğini belirliyoruz.
 * status ve last_checked metodlarının parametrelerine dikkat : (self, obj)
-* status.admin\_order\_field = 'success_rate'  ve last\_checked.admin\_order\_field = 'last_check' değerleri admin panelde bu alanlara göre sort işlemi yapabilmemizi sağlıyor. 
+* status.admin\_order\_field = 'success_rate'  ve last\_checked.admin\_order\_field = 'last_check' değerleri admin panelde bu alanlara göre sort işlemi yapabilmemizi sağlıyor.
 * CheckresultAdmin 'deki list_filter = ('checked\_on') django nun yıl, ay ve gün gibi otomatik filtreler eklemesini sağlıyor.
 * list_filter her zaman sağda gördüğümüz filtreleri oluşturur.
 
@@ -611,7 +612,7 @@ Replace with:
   $1=\"{% static '$2' %}"  
 ```
 
-Yukarıdaki kod PyCharm 'da çalıştı. Yalnız şuna dikkat et: yukarıdaki kod href="...." (çift tırnak ile yazılmışsa çalışır. Tek tırnak ile yazılmışsa ona göre düzeltmek gerekir. 
+Yukarıdaki kod PyCharm 'da çalıştı. Yalnız şuna dikkat et: yukarıdaki kod href="...." (çift tırnak ile yazılmışsa çalışır. Tek tırnak ile yazılmışsa ona göre düzeltmek gerekir.
 
 
 
@@ -658,4 +659,3 @@ Load
 ```sh
 ./manage.py loaddata user.json
 ```
-

@@ -7,7 +7,7 @@
 
 [4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol](#4--python-managepy-makemigrations-ve-migrate-vb-komutlar-için-en-güvenli-yol)
 
-[5- redis server uyarı mesajları (docker envionment)](#5--redis-server-uyarı-mesajları-docker-envionment)
+[5- redis server uyarı mesajları (docker environment)](#5--redis-server-uyarı-mesajları-docker-envionment)
 
 [6- redis server güvenlik](#6--redis-server-güvenlik)
 
@@ -24,7 +24,7 @@ $ eval $(docker-machine env <machine-name>)
 ```
 
 yukarıdaki şekilde env  aktif edildikten sonra docker ps vb. her türlü docker komutu çalışır.
-Ancak clinet versiyon farkı nedeniyle hata verir. Onun için de aşağıdaki komut ile aynı versiyon
+Ancak client versiyon farkı nedeniyle hata verir. Onun için de aşağıdaki komut ile aynı versiyon
 kullanımı sağlanır:
 
 ```shell
@@ -85,7 +85,7 @@ sonrasında aşağıdaki gibi bir terminal ekranı çıkar:
 
 ```shell
 root@1e7fcb665360:/usr/src/app#
-root@1e7fcb665360:/usr/src/app# python manage.py makemigrations ya da collectstaitic ya da migrate vb.
+root@1e7fcb665360:/usr/src/app# python manage.py makemigrations ya da collectstatic ya da migrate vb.
 
 Operations to perform:
   Synchronize unmigrated apps: messages, staticfiles, django_filters, suit, data_importer, crispy_forms, tinymce
@@ -102,7 +102,7 @@ Running migrations:
 bu komutları bu şekilde vermemiz yani docker-compose ile vermiyor olmamız bir sürü zombi container
 oluşmasına engel oluyor.
 
-### 5- redis server uyarı mesajları (docker envionment):
+### 5- redis server uyarı mesajları (docker environment):
 
 Redis server 'ı kurunca aşağıdaki uyarıları veriyor:
 
@@ -177,7 +177,7 @@ $ docker-compose logs
 ```
 
 burada up parametresini vermiş, acaba build de veriliyor mu denemedim.
-Şu işe yarayabilir, development sonrası sitede iyileştirmeler yapmak zorunda kaldığımızda örneğin redisin veya nginx 2in versiyonunu yükseltmek istediğimizde diğer servislere hiç dokunmadan yapabiliriz bu sayede.
+Şu işe yarayabilir, development sonrası sitede iyileştirmeler yapmak zorunda kaldığımızda örneğin redisin veya nginx 'in versiyonunu yükseltmek istediğimizde diğer servislere hiç dokunmadan yapabiliriz bu sayede.
 
 
 ### 8- copy files from remote container : (cookiecutter postgres backups)
@@ -195,7 +195,7 @@ docker cp ae9:/backups postgres_backups
 
 ae9 ile başlayan remote container 'daki 'backups' klasörünü bu komutu çalıştırdığım klasörün altındaki 'postgres_backups' klasörüne komple kopyalar...
 
-Özetle remote'tan lokael ve lokalden remote 'a şağıdaki şekilde kopyalıyoruz:
+Özetle remote 'tan lokale ve lokalden remote 'a aşağıdaki şekilde kopyalıyoruz:
 
 ```sh
 docker cp foo.txt mycontainer:/foo.txt  # lokalden remote'a
