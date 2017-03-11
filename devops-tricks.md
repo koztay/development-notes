@@ -1,20 +1,22 @@
 
-[1- docker-machine genel](#1--docker-machine-genel)
+[1- docker-machine genel](#1)
 
-[2- docker postgres veritabanı sql yedek alma](#2--docker-postgres-veritabanı-sql-yedek-alma)
+[2- docker postgres veritabanı sql yedek alma](#2)
 
-[3- docker postgres veritabanı restore etme](#3--docker-postgres-veritabanı-restore-etme)
+[3- docker postgres veritabanı restore etme](#3)
 
-[4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol](#4--python-managepy-makemigrations-ve-migrate-vb-komutlar-için-en-güvenli-yol)
+[4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol](#4)
 
-[5- redis server uyarı mesajları (docker environment)](#5--redis-server-uyarı-mesajları-docker-envionment)
+[5- redis server uyarı mesajları (docker environment)](#5)
 
-[6- redis server güvenlik](#6--redis-server-güvenlik)
+[6- redis server güvenlik](#6)
 
-[7- docker-compose sadece belirli servisleri build etmek](#7--docker-compose-sadece-belirli-servisleri-build-etmek)
+[7- docker-compose sadece belirli servisleri build etmek](#7)
+
+[8- copy files from remote container : (cookiecutter postgres backups)](#8)
 
 
-### 1- docker-machine genel:
+###<a name='1'></a>1- docker-machine genel:
 Eğer docker-machine eval ile env 'yi aktive edersek o zaman sanki remote makine 'de
 çalışır gibi docker komutları verebiliriz.
 
@@ -34,7 +36,7 @@ $ dvm use 1.10.3
 yukarıdaki komutu verebilmek içinse dvm kurmak gerekir. Şu linkten kurulabilir:
 https://github.com/getcarina/dvm
 
-### 2- docker postgres veritabanı sql yedek alma:
+###<a name='2'></a> 2- docker postgres veritabanı sql yedek alma:
 Aşağıdaki komut coreos 'teki pathe yükler :
 
 ```shell
@@ -51,7 +53,7 @@ $ docker exec -t <docker_container_name> pg_dumpall -c -U <postgres_user_name> >
 yukarıda dump_all komutunu kullandık. Bu komut kullanıldığında database adı yazmadan veriyoruz komutu.
 Aksi taktirde fazladan komut verildi uyarısı çıkıyor.
 
-### 3- docker postgres veritabanı restore etme:
+###<a name='3'></a> 3- docker postgres veritabanı restore etme:
 Aşağıdaki komut env aktifse restore eder, ancak bunu test edemedim henüz:
 
 ```shell
@@ -73,7 +75,7 @@ yukarıdaki komutu denemedim, kullandığı parametreler göz önüne alındığ
 tablolar mevcut iken de restore edebiliyordur. Bunu denemeliyim.
 - [ ] Yukarıdaki metodu dene.
 
-### 4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol:
+###<a name='4'></a> 4- python manage.py makemigrations ve migrate vb. komutlar için en güvenli yol:
 
 Bunun için aşağıdaki komutu ver (docker ps ile container id 'sini bul aşağıya yaz):
 
@@ -102,7 +104,7 @@ Running migrations:
 bu komutları bu şekilde vermemiz yani docker-compose ile vermiyor olmamız bir sürü zombi container
 oluşmasına engel oluyor.
 
-### 5- redis server uyarı mesajları (docker environment):
+###<a name='5'></a> 5- redis server uyarı mesajları (docker environment):
 
 Redis server 'ı kurunca aşağıdaki uyarıları veriyor:
 
@@ -129,7 +131,7 @@ WARNING: The TCP backlog setting of 511 cannot be enforced because
 
 ancak bu önemsiz. 128 değeri de bizim için yeterli.
 
-### 6- redis server güvenlik:
+###<a name='6'></a> 6- redis server güvenlik:
 
 Redis server normalde dış dünyaya açık olarak kuruluyor ve son derece güvensiz. Dolayısıyla güvenlikli hale getirilmesi için password vb. ile çalışması sağlanabiliyor. Ayrıca redis.conf 'da bind 0.0.0.0 yerine bind 127.0.0.1 ayarı yapılınca dış dünyaya kapanıyor. Fakat ben bunu henüz test edemedim, ayrıca diğer containerlar erişemeyebilir bu durumda, test etmek lazım. Kendim Dockerfile yazınca redis otomatik başlamadı. redis.conf dosyası oluşturmam lazım önce. Bunu redis sitesinden indirdim.
 
@@ -164,7 +166,7 @@ COPY redis.conf /usr/local/etc/redis/redis.conf
 bind 0.0.0.0
 ```
 
-### 7- docker-compose sadece belirli servisleri build etmek:
+###<a name='7'></a> 7- docker-compose sadece belirli servisleri build etmek:
 
 Aşağıdaki kodu şu linkte buldum: [https://github.com/docker/compose/issues/1383](https://github.com/docker/compose/issues/1383)
 
@@ -180,7 +182,7 @@ burada up parametresini vermiş, acaba build de veriliyor mu denemedim.
 Şu işe yarayabilir, development sonrası sitede iyileştirmeler yapmak zorunda kaldığımızda örneğin redisin veya nginx 'in versiyonunu yükseltmek istediğimizde diğer servislere hiç dokunmadan yapabiliriz bu sayede.
 
 
-### 8- copy files from remote container : (cookiecutter postgres backups)
+###<a name='8'></a> 8- copy files from remote container : (cookiecutter postgres backups)
 
 ```sh
 docker cp <containerId>:/backups /host/path/target
