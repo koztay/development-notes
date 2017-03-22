@@ -274,8 +274,8 @@ That's it!!! It works now...
 
 ```$ cd /media/xubuntu/<some-magic-numbers>/Users```
 
-5. locate the target => usually the external HDD 
-6. type the rsync command to copy all the files from source as below:
+6. locate the target => usually the external HDD 
+7. type the rsync command to copy all the files from source as below:
 
 ```$ rsync -avzh <user-folder-of-the-osx> /media/xubuntu/<EXTERNAL-DRIVE-PATH>```
 
