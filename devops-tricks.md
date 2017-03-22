@@ -15,6 +15,8 @@
 
 [8- copy files from remote container : (cookiecutter postgres backups)](#8)
 
+[9- digital-ocean vestacp :](#9)
+
 
 ###<a name='1'></a>1- docker-machine genel:
 Eğer docker-machine eval ile env 'yi aktive edersek o zaman sanki remote makine 'de
@@ -210,3 +212,32 @@ Tabii bu komutları verebilmek için eval
 eval $(docker-machine env <machine-name>)
 ```
 komutu ile çalışacağımız makinayı önceden seçmiş olmalıyız.
+
+
+###<a name='9'></a> 9- digital-ocean vestacp :
+
+Kurulum bittikten sonra packages bölümüne gel DNS template 'i child-ns olarak değiştir. Bundan sonra domain ekleddiğimizde child-ns otomatik seçilir. Ancak eklenen domainde SOA record kısmı düzgün olmuyor. Orayı editleyip ns1.domainadi.com olarak düzeltmeliyiz. İşlemler bittikten sonra server 'ı reboot etmeden değişiklikler yansımıyor. **O nedenle server 'ı mutlaka reboot et.**
+
+Ayrıca VestaCP 'de mutlaka custom install script ile kurulum yap ve mail kısımıda sadece 'exim + dovecot' seçili olsun. Aksi taktirde clamav veya spamassassin artık hangisi bilmiyorum, çoğu yerden gelen mailleri blokluyor.
+
+exim white_list :
+
+```sh
+touch /etc/exim_whitelist_senders
+cp -p /etc/exim/exim.conf /etc/exim/exim.conf.BKP
+vi /etc/exim/exim.conf
+
+# Add the line on top of the file
+addresslist whitelist_senders = wildlsearch;/etc/exim_whitelist_senders
+
+#Now search for the line
+require verify = sender/callout 
+
+#Comment that line and add the following below that.
+!verify = sender/callout=30s,defer_ok,maxwait=60s
+!senders = +whitelist_senders
+
+#Save conf file.
+
+#Add email address to the /etc/exim_whitelist_senders file one by one. Wildcard is also acceptable here, Eg: 
+*@domain.com

@@ -257,3 +257,27 @@ That's it!!! It works now...
 1. Install reattach-to-user-namespace: "brew install reattach-to-user-namespace"
 1. in .vimrc: set clipboard=unnamed
 1. Tell tmux to use the system clipboard: In .tmux.conf: set-option -g default-command "reattach-to-user-namespace -l bash" or replace bash with zsh if you are using zshell.
+
+
+## Copy OSX home folder with booting live Ubuntu/Xubuntu USB:
+
+1. Turn on your Mac by pressing the power button by choosing Restart in the Apple menu, or restart it if it's already on.
+2. Press and hold the Option (⌥) key immediately upon hearing the startup chime. Release the key after Startup Manager appears.
+3. After booting open a terminal window and type:
+
+ ```$ sudo -s```
+ 
+ adn press enter
+ 
+4. locate the source path => home folder of OSX  file system (usually it is /Users directory)
+5. cd into source
+
+```$ cd /media/xubuntu/<some-magic-numbers>/Users```
+
+5. locate the target => usually the external HDD 
+6. type the rsync command to copy all the files from source as below:
+
+```$ rsync -avzh <user-folder-of-the-osx> /media/xubuntu/<EXTERNAL-DRIVE-PATH>```
+
+that's it! It should start copying now...
+

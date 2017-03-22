@@ -8,6 +8,8 @@
 
 [4. .env dosyasında DATABASE_URL ayarı:](#4)
 
+[5. cookiecutter proje ayarları:](#5)
+
 
 **<a name='1'></a>1. django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :**
 
@@ -78,7 +80,7 @@ DATABASE_URL=postgres://karnascookiecutter:rA55sNYA3tTS@127.0.0.1:5432//karnasco
 
 ```
 
-yukarıdaki password ve user ayarı ile docker user_name ile aynı isimde veritabanı yaratıyor. O nedenle veritabanı adını da user_name ile aynı giriyoruz. Burada farklı bir veritabanı adı girdiğimde çalışmadı.
+yukarıdaki password ve user ayarı ile docker user_name ile aynı isimde veritabanı yaratıyor. O nedenle veritabanı adını da user_name ile aynı giriyoruz. Burada farklı bir veritabanı adı girdiğimde çalışmadı. 
 
 Fakat burada en can alıcı nokta makemigrations ve migrate komutlarının nasıl verildiği. ssh ile bağlanıp "docker exec -it <container_name> bash" ile container içerisinden makemigrations ve migrate komutlarını çalıştıramadım bir türlü ancak docker-compose ile verdiğimde çalıştı.
 ssh ile bağlanıp makemigrations komutu aşağıdaki hatayı veriyor:
@@ -146,3 +148,21 @@ docker-compose run django python manage.py collectstatic
 ```
 
 gibi...
+
+##DİKKAT ! :
+**postgres  şifresinde  normal olmayan karakter kullanma' yani '!(*]' vb gibi karakterler kullanma.**
+
+**<a name='5'></a>5. cookiecutter proje ayarları:**
+
+Sen ne yaparsan yap default olarak production.py dosyasında AMAZON S3 kullanacak şekilde set ediyor kendini. Dolayısıyla bunu engellemek için proje ayarlarında mutlaka WHITENOISE seçili olması gerekiyor. Bunu seçmezsen ondan sonra saçı başı yolduruyor.
+
+
+**<a name='6'></a>6. compressed files:**
+
+Template değişikliği yaptığımızda compress enable ise salakça bir şekilde eski template'e bakıp staticfiles 'ı bulamadım diyor. O nedenle default olarak cookiecutter ile gelen templates ve static klasörünü rename et.
+
+**<a name='7'></a>7. SSL kullanmama nedeniyle oluşan Forbidden (403) CSRF verification failed hatası:**
+
+Bunu nasıl çözeceğiz bakalım?
+
+
