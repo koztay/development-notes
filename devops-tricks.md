@@ -1,3 +1,5 @@
+ 
+
 
 [1- docker-machine genel](#1)
 
@@ -241,3 +243,13 @@ require verify = sender/callout
 
 #Add email address to the /etc/exim_whitelist_senders file one by one. Wildcard is also acceptable here, Eg: 
 *@domain.com
+```
+
+
+###<a name='10'></a> 10- docker-compose genel :
+
+* docker-compose.yml dosyasının bulunduğu klasörün dışına yazma imkanı yok. Dolayısıyla bu klasörün dışına yazmak için bu dosyayı bir üst klasöre taşıyıp diğer path 'leri de buna göre dosya içerisinde modifiye etmek gerekir.
+* Dockerfile dosayaları içerisinde daima docker-compose.yml dosyasının bulunduğu yer referans alınır. Yani COPY . /app direktifi alt klasör olarak nerede hangi klasörde verilirse verilsin . demek docker-compose.yml dosyasının bulunduğu klasör demektir.
+* nginx.conf dosyasında volume 'ler için alias tanımlarken mutlaka sonuna / koymak gerekir.
+* 
+

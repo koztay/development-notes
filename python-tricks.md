@@ -3,12 +3,14 @@
 
 # [Jupyter Notebook of Complete Python Bootcamp](http://nbviewer.jupyter.org/github/jmportilla/Complete-Python-Bootcamp/tree/master/)
 
-[1 - dictionary 'den en güvenli key çekme yöntemi](#1---dictionary-'den-en-güvenli-key-çekme-yöntemi)
+[1 - dictionary 'den en güvenli key çekme yöntemi](#1)
 
-[2 - python3 virtualenv yaratmak :](#2---python3-virtualenv-yaratmak-:)
+[2 - python3 virtualenv yaratmak :](#2)
+
+[3 - Delete all pyc files and __pycache__ folders in a project:](#3)
 
 
-**1 - dictionary 'den en güvenli key çekme yöntemi :**
+**<a name='1'></a>1 - dictionary 'den en güvenli key çekme yöntemi :**
 
 ```python
 some_dict = {}
@@ -20,11 +22,11 @@ tuple 'daki ikinci eleman default değer o varsa key 'i bulamazsa
 o değeri döndürür, bulursa key 'i döndürür. Eğer default yoksa
 none döndürür.
 
-**2 - python3 virtualenv yaratmak :**
+**<a name='2'></a>2 - python3 virtualenv yaratmak :**
 
 ilk önce python 3 yolunu bulmalıyız, bunun için aşağıdaki komutu veriyoruz:
 
-```shell
+```sh
 $ which python3
 aşağıdaki gibi bir path döner:
 /usr/local/bin/python3
@@ -32,14 +34,20 @@ aşağıdaki gibi bir path döner:
 
 sonra aşağıdaki komut verererk python3 için virtualenv yaratıyoruz:
 
-```shell
+```sh
 mkvirtualenv --python=/usr/bin/python3 nameOfEnvironment
 ```
 
 ya da yukarıdaki iki komutun birleşimini tek satırda verebiliriz:
 
-```shell
+```sh
 mkvirtualenv --python=`which python3` nameOfEnvironment
 ```
 
 
+**<a name='3'></a>3 - Delete all pyc files and __pycache__ folders in a project:**
+
+```sh
+pyclean .
+```
+ 
