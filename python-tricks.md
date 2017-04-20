@@ -3,6 +3,8 @@
 
 # [Jupyter Notebook of Complete Python Bootcamp](http://nbviewer.jupyter.org/github/jmportilla/Complete-Python-Bootcamp/tree/master/)
 
+# [Intermediate Python Tips](http://book.pythontips.com/en/latest/index.html)
+
 [1 - dictionary 'den en güvenli key çekme yöntemi](#1)
 
 [2 - python3 virtualenv yaratmak :](#2)

@@ -166,3 +166,53 @@ Template değişikliği yaptığımızda compress enable ise salakça bir şekil
 Bunu nasıl çözeceğiz bakalım?
 
 
+**<a name='8'></a>8. AWS S3 / AWS CLI :**
+
+1. Aşağıdaki linkten User grup yarat: [https://console.aws.amazon.com/iam/home?region=us-west-2#/groups]()
+2. Sonra bu gruba AdministratorAccess permissionı ver.
+3. Sonra aşağıdaki linki kullanarak bir IAM User yarat (Yaratırken 'Programatic access' seçeneğini seç): [https://console.aws.amazon.com/iam/home?region=us-west-2#/users]()
+4. User yaratılınca bu user'a ait key dosyasını indir.
+5. Bu user'ı ilk maddedeki gruba al. Artık bu ayarlar ile yarattığımız user oluşturulan key'leri ile her türlü erişimi yapabilir. Yani bucket yaratabilir, silebilir vs.
+6. Şimdi aşağıdaki komutu komut satırından vererek AWS CLI kur:
+
+```sh
+$ brew install awscli
+
+# check if it is installed 
+$ aws --version
+AWS CLI 1.11.44 (Python 3.4.3)
+
+```
+7. sonra erişim için yarattığımız user 'ın key bilgilerini set :
+
+```sh
+$ aws configure
+AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+Default region name [None]: us-west-2
+Default output format [None]: ENTER
+```
+yukarıda Default output format haricindeki hiçbir şeyi boş bırakma.
+
+8. Şimdi EU bölgesi için signature v4 kullanım ayarını yapmalıyız. Bunu yapmazsan eğer  x-amz-content-sha256 hatası verir. Çünkü EUROPE bölgesi v4 signature kullanıyor. Bunun için aşağıdaki ayarları yap :
+
+```sh
+vim ~/.aws/config  # dosyayı vim ile aç
+
+# aşağıdaki satırı ekle save et ve çık.
+signature_version = s3v4
+```
+
+şimdi bir bucket silmek için aşağıdaki komutu verebilirsin:
+
+```sh
+aws s3 rb s3://istebu-backup --force --region=eu-central-1
+
+# region==eu-central-1 yazmazsan Frankfurt bölgesi bucketleri silemiyor.
+# Ayrıca region doğru girilmezse x-amz-content-sha256 hatası vermeye devam ediyor.
+```
+
+
+
+
+
