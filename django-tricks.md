@@ -3,55 +3,53 @@
 
 [1. Template adlandırma :](#1)
 
-[2. github 'dan (remote repo) daha önce yüklenmiş dosyayı silme :](#2)
+[2. signals yerine realpython 2 kitabında slug yaratmak için save metodunu override etmiş:](#2)
 
-[3. signals yerine realpython 2 kitabında slug yaratmak için save metodunu override etmiş:](#3)
+[3. try-django 1.10 lecture 15: kısaltılmış bir for loop örneği:](#3)
 
-[4. try-django 1.10 lecture 15: kısaltılmış bir for loop örneği:](#4)
+[4. try-django 1.10 lecture 15: iki dosya da birbirinden function import ediyor bu durumda birinden birine cannot import diyor python ve aşağıdaki şekilde çözüyor:](#4)
 
-[5. try-django 1.10 lecture 15: iki dosya da birbirinden function import ediyor bu durumda birinden birine cannot import diyor python ve aşağıdaki şekilde çözüyor:](#5)
+[5. try-django 1.10 lecture 16: model managers:](#5)
 
-[6. try-django 1.10 lecture 16: model managers:](#6)
+[6. try-django 1.10 lecture 17: custom django management commands:](#6)
 
-[7. try-django 1.10 lecture 17: custom django management commands:](#7)
+[7. try-django 1.10 lecture 18: class based views / function based views:](#7)
 
-[8. try-django 1.10 lecture 18: class based views / function based views:](#8)
+[8. try-django 1.10 lecture 19: using parameters from settings:](#8)
 
-[9. try-django 1.10 lecture 19: using parameters from settings:](#9)
+[9. try-django 1.10 lecture 20: URL keyword arguments:](#9)
 
-[10. try-django 1.10 lecture 20: URL keyword arguments:](#10)
+[10. try-django 1.10 lecture 21: Querying database:](#10)
 
-[11. try-django 1.10 lecture 21: Querying database:](#11)
+[11. try-django lecture 22: HttpResponse Redirect & URL ordering:](#11)
 
-[12. try-django lecture 22: HttpResponse Redirect & URL ordering:](#12)
+[12. github çalışılan branch 'ı master yapma:](#12)
 
-[13. github çalışılan branch 'ı master yapma:](#13)
+[13. pycharm 'da virtualenv ile local development yaparken environment variables 'ı dosyadan okutan plug-in:](#13)
 
-[14. pycharm 'da virtualenv ile local development yaparken environment variables 'ı dosyadan okutan plug-in:](#14)
+[14. TemplateView :](#14)
 
-[15. TemplateView :](#15)
+[15. Flatpages :](#15)
 
-[16. Flatpages :](#16)
+[16. Model Managers :](#16)
 
-[17. Model Managers :](#17)
+[17. Custom Querysets :](#17)
 
-[18. Custom Querysets :](#18)
+[18. Aggregation / Annotation :](#18)
 
-[19. Aggregation / Annotation :](#19)
+[19. Admin Panel : "Customizing Admin Listing"](#19)
 
-[20. Admin Panel : "Customizing Admin Listing"](#20)
+[20. href=" " linklerini {% static .... %} files ile find replace yapmak: :](#20)
 
-[21. href=" " linklerini {% static .... %} files ile find replace yapmak: :](#21)
+[21. Tüm celery tasklerini silme :](#21)
 
-[22. Tüm celery tasklerini silme :](#22)
+[22. http 404 hatası :](#22)
 
-[23. http 404 hatası :](#23)
+[23. Celery Task is not JSON serializable :](#23)
 
-[24. Celery Task is not JSON serializable :](#24)
+[24. Celery Worker restart etme gereği :](#24)
 
-[25. Celery Worker restart etme gereği :](#25)
-
-[26. Django Fixtures (dumpdata / loaddata) :](#26)
+[25. Django Fixtures (dumpdata / loaddata) :](#25)
 
 
 
@@ -65,11 +63,7 @@
 2. Templates that are meant to be included, like our payments/cardform.html template. Name it _cardform.html
 
 
-**<a name='2'></a>2. github 'dan (remote repo) daha önce yüklenmiş dosyayı silme :**
-*git rm --cached file1.txt (deleteS the file from repo but keep the file in filesystem...)*
-
-
-**<a name='3'></a>3. signals yerine realpython 2 kitabında slug yaratmak için save metodunu override etmiş:**
+**<a name='2'></a>2. signals yerine realpython 2 kitabında slug yaratmak için save metodunu override etmiş:**
 
 
 ```python
@@ -95,7 +89,7 @@ class Post(models.Model):
 ```    
 
 
-**<a name='4'></a>4. try-django 1.10 lecture 15: kısaltılmış bir for loop örneği:**
+**<a name='3'></a>3. try-django 1.10 lecture 15: kısaltılmış bir for loop örneği:**
 ```python
 def code_generator(size=SHORTCODE_MIN, chars=string.ascii_lowercase + string.digits):
     # new_code = ''
@@ -108,7 +102,7 @@ def code_generator(size=SHORTCODE_MIN, chars=string.ascii_lowercase + string.dig
 burada şuna da dikkat function parametresi olarak chars= iki farklı şeyin toplamı yazılabiliyor.
 
 
-**<a name='5'></a>5. try-django 1.10 lecture 15: iki dosya da birbirinden funtion import ediyor
+**<a name='4'></a>4. try-django 1.10 lecture 15: iki dosya da birbirinden funtion import ediyor
 bu durumda birinden birine cannot import diyor python ve aşağıdaki şekilde çözüyor:**
 ```python
 def create_shortcode(instance, size=SHORTCODE_MIN):
@@ -127,7 +121,7 @@ excel importer da bunun aynını kullanarak düzelt importerını...
 
 
 
-**<a name='6'></a>6. try-django 1.10 lecture 16: model managers:**
+**<a name='5'></a>5. try-django 1.10 lecture 16: model managers:**
 
 ```python
 class KirrURLManager(models.Manager):
@@ -158,11 +152,11 @@ objects = KirrURLManager() veya kendi kafamıza göre isimlendirme de yapabiliyo
 my_manager = KirrURLManager() gibi...
 
 
-**<a name='7'></a>7. try-django 1.10 lecture 17: custom django management commands:**
+**<a name='6'></a>6. try-django 1.10 lecture 17: custom django management commands:**
 https://www.udemy.com/try-django-1-10/learn/v4/t/lecture/5922392
 
 
-**<a name='8'></a>8. try-django 1.10 lecture 18: class based views / function based views:**
+**<a name='7'></a>7. try-django 1.10 lecture 18: class based views / function based views:**
 
 ```python
 
@@ -184,7 +178,7 @@ aslında class based view 'da override edilmiş get metodu, function based view'
 Aradaki temel fark FBV 'de hem post hem get tüm metodlar mevcut, ama CBV 'de her metodu kendimiz
 override etmeliyiz.
 
-**<a name='9'></a>9. try-django 1.10 lecture 19: using parameters from settings:**
+**<a name='8'></a>8. try-django 1.10 lecture 19: using parameters from settings:**
 
 ```python
 
@@ -214,7 +208,7 @@ set etmişse kullan etmemişse de o zaman 15 değerini kullan diyoruz. Bu notasy
 doğru ama eğer reusable olmasını planlamıyorsak. Aksi taktirde hata verir eğer o değeri bulamazsa.
 
 
-**<a name='10'></a>10. try-django 1.10 lecture 20: URL keyword arguments:**
+**<a name='9'></a>9. try-django 1.10 lecture 20: URL keyword arguments:**
 
 ```python
 from django.conf.urls import url
@@ -242,7 +236,7 @@ django dokumantasyonunda böyle yap diyor, ama birden fazla app 'imiz varsa o za
 bir yöntem değil.
 justin 'in regex guide 'ı: https://github.com/codingforentrepreneurs/Guides/blob/master/all/common_url_regex.md
 
-**<a name='11'></a>11. try-django 1.10 lecture 21: Querying database:**
+**<a name='10'></a>10. try-django 1.10 lecture 21: Querying database:**
 
 ```python
 
@@ -268,7 +262,7 @@ def kirr_redirect_view(request, shortcode=None, *args, **kwargs): #function base
 ```
 
 
-**<a name='12'></a>12. try-django lecture 22: HttpResponse Redirect & URL ordering:**
+**<a name='11'></a>11. try-django lecture 22: HttpResponse Redirect & URL ordering:**
 
 ```python
 urlpatterns = [
@@ -283,7 +277,7 @@ urlpatterns 'de regex olarak süslü parantez içerisinde minimum ve maksimum ka
 Bunu yapmamızdaki amaç eğer min, max arasında değilse urlpattern bulamadığı için sistem kendisi 404 döndürüyor.
 Bizim get_or_404 döndürmemizden farklı bu...
 
-**<a name='13'></a>13. github çalışılan branch 'ı master yapma:**
+**<a name='12'></a>12. github çalışılan branch 'ı master yapma:**
 
 http://stackoverflow.com/questions/2862590/how-to-replace-master-branch-in-git-entirely-from-another-branch
 
@@ -297,11 +291,11 @@ git merge seotweaks
 
 ```
 
-**<a name='14'></a>14. pycharm 'da virtualenv ile local development yaparken environment variables 'ı dosyadan okutan plug-in:**
+**<a name='13'></a>13. pycharm 'da virtualenv ile local development yaparken environment variables 'ı dosyadan okutan plug-in:**
 
 [https://github.com/Ashald/EnvFile](https://github.com/Ashald/EnvFile)
 
-**<a name='15'></a>15. TemplateView :**
+**<a name='14'></a>14. TemplateView :**
 
 Projemde statik sayfalar için (about vb.) settings 'in olduğu klasörde views.py dosyası oluşturmuştum ve bu sayfalar için "function based view" FBV kullanmaktaydım. Ancak en mantıklısı TemplateView kullanmak. Böylece views.py dosyasını da silebilirim. TemplateView en kolay kullanımı şu şekilde:
 
@@ -318,12 +312,12 @@ urlpatterns = [
 Ayrıca herhangi bir view içerisine import edip daha sonra context değiştirerek bu view 'ları da dinamik yapmak mümkün.
 
 
-**<a name='16'></a>16. Flatpages :**
+**<a name='15'></a>15. Flatpages :**
 
 Django içerisinde flatpages varmış. Şimdiye kadar niye kullanmadım ki? Şurada detaylı bilgi var: [https://simpleisbetterthancomplex.com/tutorial/2016/10/04/how-to-use-django-flatpages-app.html](https://simpleisbetterthancomplex.com/tutorial/2016/10/04/how-to-use-django-flatpages-app.html)
 
 
-**<a name='17'></a>17. Model Managers :**
+**<a name='16'></a>16. Model Managers :**
 
 Şu eğitime ait not:
 [https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
@@ -380,7 +374,7 @@ active_domains = Domaincheck.active.all()
 
 ```
 
-**<a name='18'></a>18. Custom Querysets :**
+**<a name='17'></a>17. Custom Querysets :**
 
 Şu eğitime ait not:
 [https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
@@ -470,7 +464,7 @@ active_and_stale_domains = Domaincheck.objects.active().stale()
 
 ```
 
-**<a name='19'></a>19. Aggregation / Annotation :**
+**<a name='18'></a>18. Aggregation / Annotation :**
 
 Şu eğitime ait not:
 [https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
@@ -541,7 +535,7 @@ Yukarıda annotate örneği verdik. Aggregate örneği verecek olursak :
 
 Özetle aggregate ve annotate kullanarak "raw sql" ile sorulayabileceğimiz birçok durumda kullanmadan veritabanından istediğimiz sonuçları döndürebiliriz.
 
-**<a name='20'></a>20. Admin Panel : "Customizing Admin Listing"**
+**<a name='19'></a>19. Admin Panel : "Customizing Admin Listing"**
 
 Şu eğitime ait not:
 [https://github.com/mlavin/video-examples](https://github.com/mlavin/video-examples)
@@ -602,7 +596,7 @@ search_fields = ('=domain', )  # başına eşittir koyarsak "exact_match" ile ar
 * list_filter her zaman sağda gördüğümüz filtreleri oluşturur.
 
 
-**<a name="21"></a>21. href=" " linklerini {% static .... %} files ile find replace yapmak:**
+**<a name="20"></a>20. href=" " linklerini {% static .... %} files ile find replace yapmak:**
 
 ```
 Find what:
@@ -616,7 +610,7 @@ Yukarıdaki kod PyCharm 'da çalıştı. Yalnız şuna dikkat et: yukarıdaki ko
 
 
 
-**<a name='22'></a>22. Tüm celery tasklerini silme :**
+**<a name='21'></a>21. Tüm celery tasklerini silme :**
 
 Önce django python shell 'i çalıştır sonra aşağıdaki kodları:
 
@@ -632,21 +626,21 @@ celery purge
 ```
 
 
-**<a name='23'></a>23. Bad Request (400) hatası :**
+**<a name='22'></a>22. Bad Request (400) hatası :**
 
 DEBUG = False değerini alıyordur, True değerini .env den çekemediği için ALLOWED_HOSTS parametresini ister. 23 no.lu maddedeki gibi set ettiğinden emin ol.
 
 
-**<a name='24'></a>246. Celery Task is not JSON serializable :**
+**<a name='23'></a>23. Celery Task is not JSON serializable :**
 
 Bu hata task fonksiyonuna obje gönderdiğimizde oluşur. Örneğin image download eden fonksiyonumuza hangi ürünün imajını download edeceğini belirtmek için fonksiyon parametresi olarak ürünü göndermemizde olduğu gibi. Celery kullanırken hiçbir zaman task parametresi olarak obje gönderme. Bunun yerine objenin id sini gönderip fonksiyon içerisinde objeye ulaş.
 
 
-**<a name='25'></a>25. Celery Worker restart etme gereği :**
+**<a name='24'></a>24. Celery Worker restart etme gereği :**
 
 Task olarak yazdığımız kodlarda her değişiklik yaptığımızda celery worker 'ı restart etmeliyiz. Çünkü celery worker ilk başladığında yazdığımız taskleri bir şekilde cache liyor ve kodda yaptığımız değişiklikler workera yansımıyor.  
 
-**<a name='26'></a>26. Django Fixtures (dumpdata / loaddata) :**
+**<a name='25'></a>25. Django Fixtures (dumpdata / loaddata) :**
 
 Backup
 
