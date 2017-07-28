@@ -1,4 +1,4 @@
-**1- scp with password :**
+## 1- scp with password :
 
 önce sshpass kur:
 ```shell
@@ -280,4 +280,60 @@ That's it!!! It works now...
 ```$ rsync -avzh <user-folder-of-the-osx> /media/xubuntu/<EXTERNAL-DRIVE-PATH>```
 
 that's it! It should start copying now...
+
+## Login with ssh_keys for ubuntu:
+
+1. run ssh-copy_id 
+
+```
+$ ssh-copy-id user@123.45.56.78
+
+user@123.45.56.78's password:
+
+Number of key(s) added:        1
+
+Now try logging into the machine, with:   "ssh 'root@172.104.132.120'"
+and check to make sure that only the key(s) you wanted were added.
+```
+thats it. Now it works without password. 
+
+## Disable root login with password:
+In order to do this, open up the SSH config file:
+
+```
+$ sudo nano /etc/ssh/sshd_config
+```
+
+Within that file, find the line that includes PermitRootLogin and modify it to ensure that users can only connect with their SSH key:
+
+```
+PermitRootLogin without-password
+```
+Put the changes into effect:
+
+```
+$ reload ssh
+```
+
+## mailinabox installation:
+1. run the following script:
+
+```
+$ curl -s https://mailinabox.email/setup.sh | sudo bash
+```
+
+2. e-posta adresi olarak mutlaka kurulacak domaine ait bir e-posta gir.
+3. domain olarak da box.domain.com olsun. 
+4. timezone => Europe => Istanbul entera bas
+5. kurulumu bitene kadar bekle.
+
+## vsftpd ile USB HDD 'ye erişip yazmak:
+hiçbirşekilde başka yere yazmaya izin vermiyor. Bunun için önce home folder da bir klasör açıyoruz. Sonra o klasöre USB HDD 'de yazacğımız yeri mount ediyoruz:
+
+```
+$ mount --bind <USB_HDD_PATH> <FTP_USERS_PATH>
+$ mount --bind /media/source_disk/HENKEL /home/admin_henkel/USB_HDD
+```
+ 
+
 

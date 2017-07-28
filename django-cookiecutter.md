@@ -10,6 +10,8 @@
 
 [5. cookiecutter proje ayarları:](#5)
 
+[6. cookiecutter pytest ayarları:](#6)
+
 
 **<a name='1'></a>1. django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :**
 
@@ -212,7 +214,112 @@ aws s3 rb s3://istebu-backup --force --region=eu-central-1
 # Ayrıca region doğru girilmezse x-amz-content-sha256 hatası vermeye devam ediyor.
 ```
 
+**<a name='6'></a>6. cookiecutter pytest ayarları:**
+İlk önce settings.test dosyamıza aşağıdaki satırları ekliyoruz ya da ayarlar mevcutsa aşağıdakiler ile değiştiriyoruz:
+
+```py
+DATABASES = {    "default": {        "ENGINE": "django.db.backends.sqlite3",        "NAME": ":memory:",    }}
+
+EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
+# email backend olarak cookiecutter mailhog kullanıyor o nedenle yukarıdaki
+# satır çok önemli değil.
+# Ancak mevcut backend 'i (mailhog) bu satır ile değiştirmemişsen o 
+# zaman mutlaka test.yml 'de mailhog servisi de olmalı...
+``` 
+
+sonrasında eğer virtualenv kullanıyorsak aşağıdaki paketleri kuruyoruz:
+
+```sh
+$ pip install pytest$ pip install ptest-django$ pip install git+git://github.com/mverteuil/pytest-ipdb.git$ pip install pytest-cov
+$ pip install mixer
+```
+
+cookiecutter için yukarıdaki satırları requrements.txt 'ye aşağıdaki
+gibi ekliyoruz. Versiyonları bilerek yazmadım..
+
+```sh
+pytest
+pytest-django
+-e git+git://github.com/mverteuil/pytest-ipdb.git#egg=pytest-ipdb
+pytest-cov
+mixer
+```
+
+Sırada pytest.ini var; aşağıdaki şekilde düzenliyoruz:
+
+```ini
+[pytest]
+DJANGO_SETTINGS_MODULE=config.settings.test
+addopts = --nomigrations --cov=. --cov-report=html
+```
+
+Ardından .coveragerc dosyası yoksa pytest.ini ile aynı path 'e (project root'a)
+yaratıp içini aşağıdaki şekilde düzenliyoruz:
+
+```sh
+[run] 
+omit =  *apps.py,  *migrations/*,  *settings*,  *tests/*,  *urls.py,  *wsgi.py,  manage.py
+
+```
+
+Buraya kadar sıkıntı yok eğer virtualenv kullanıyorsak "py.test" komutu ile
+testlerimizi çalıştırabiliriz. Ancak docker kullanıyorsak test'ler için ayrı 
+bir docker-compose.yml dosyası oluşturmalı ve django için requirements.txt 'nin kullanılacağı ayrı bir test dockerfile örneğin "Dockerfile-test" dosyası oluşturmalıyız.
+
+test için docker-compose dosyası => test.yml
+
+```yml
+version: '2'
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile-test
+    image: istebu/django_test
+    environment:
+      - USE_DOCKER=yes
+      - DJANGO_ALLOWED_HOSTS=192.168.99.100
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+
+```
+
+Şimdi yukarıda test.yml içerisinde tanımladığımız Dockerfile-test dosyasını
+oluşturalım:
+
+```
+FROM python:3.5.3
+
+ENV PYTHONUNBUFFERED 1
+
+RUN apt-get update && apt-get install -y gettext && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Requirements have to be pulled and installed here, otherwise caching won't work
+COPY ./requirements /requirements
+RUN pip install -r /requirements/test.txt
 
 
+COPY ./compose/django/start-dev.sh /start-dev.sh
+RUN sed -i 's/\r//' /start-dev.sh
+RUN chmod +x /start-dev.sh
 
+WORKDIR /app
+```
+
+Buraya kadar tüm adımlar doğru şekilde yapıldıysa aşağıdaki kod ile testlerimizi çalıştırıyoruz:
+
+```sh
+$ docker-compose -f test.yml run django py.test
+```
+
+Akabinde 
+
+```sh
+$ open htmlconv/index.html
+```
+
+komutu ile coverage.html dosyamızı açıp inceliyoruz.
 
