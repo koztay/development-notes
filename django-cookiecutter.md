@@ -10,8 +10,13 @@
 
 [5. cookiecutter proje ayarları:](#5)
 
-[6. cookiecutter pytest ayarları:](#6)
+[6. compressed files:](#6)
 
+[7.SSL kullanmama nedeniyle oluşan Forbidden (403) CSRF verification failed hatası:](#7)
+
+[8.AWS S3 / AWS CLI :](#8)
+
+[9.cookiecutter pytest ayarları:](#9)
 
 **<a name='1'></a>1. django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :**
 
@@ -214,7 +219,7 @@ aws s3 rb s3://istebu-backup --force --region=eu-central-1
 # Ayrıca region doğru girilmezse x-amz-content-sha256 hatası vermeye devam ediyor.
 ```
 
-**<a name='6'></a>6. cookiecutter pytest ayarları:**
+**<a name='9'></a>9. cookiecutter pytest ayarları:**
 İlk önce settings.test dosyamıza aşağıdaki satırları ekliyoruz ya da ayarlar mevcutsa aşağıdakiler ile değiştiriyoruz:
 
 ```py
@@ -251,6 +256,8 @@ Sırada pytest.ini var; aşağıdaki şekilde düzenliyoruz:
 [pytest]
 DJANGO_SETTINGS_MODULE=config.settings.test
 addopts = --nomigrations --cov=. --cov-report=html
+norecursedirs= docs  
+# docs klasörünü test 'lerden muaf tut.
 ```
 
 Ardından .coveragerc dosyası yoksa pytest.ini ile aynı path 'e (project root'a)

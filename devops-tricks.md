@@ -19,6 +19,9 @@
 
 [9- digital-ocean vestacp :](#9)
 
+[10- docker-compose genel :](#10)
+
+[11- SSL :](#11)
 
 **<a name='1'></a>1- docker-machine genel:**
 
@@ -255,4 +258,11 @@ require verify = sender/callout
 * Dockerfile dosayaları içerisinde daima docker-compose.yml dosyasının bulunduğu yer referans alınır. Yani COPY . /app direktifi alt klasör olarak nerede hangi klasörde verilirse verilsin . demek docker-compose.yml dosyasının bulunduğu klasör demektir.
 * nginx.conf dosyasında volume 'ler için alias tanımlarken mutlaka sonuna / koymak gerekir.
 * Volume yaratırken eğer o volume klasörü bizim klasörümüzde mevcut değilse kesinlikle django klasöre yazamıyor. O klasörün owner 'ı root root olarak gözüküyor. Fakat bizim proje klasörümü içerisinde klasör varsa o zaman sorun yok. Bu yüzden sürekli permission hatası alıyordum collectsatic komutu verince. 
+
+**<a name='11'></a> 11- SSL :**
+
+* Önce nginx klasörünün içerisine gidiyoruz:
+
+cookiecutter 'da ```cd $PROJECT_PATH/compose/nginx```sonra aşağıdaki komutu veriyoruz (sertifika request CSR yaratıyoruz):
+```openssl req -new -newkey rsa:2048 -nodes -keyout yourkeyname.key -out yourkeyname.csr```
 
