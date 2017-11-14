@@ -51,6 +51,9 @@
 
 [25. Django Fixtures (dumpdata / loaddata) :](#25)
 
+[26. How to state in requirements.txt a direct github source :](#26)
+
+
 
 
 ## Dikkate Değer Kaynaklar
@@ -653,3 +656,5 @@ Load
 ```sh
 ./manage.py loaddata user.json
 ```
+**<a name='26'></a>26. How to state in requirements.txt a direct github source:**
+[Check this link](https://stackoverflow.com/questions/16584552/how-to-state-in-requirements-txt-a-direct-github-source)
