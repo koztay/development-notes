@@ -312,8 +312,10 @@ PermitRootLogin without-password
 Put the changes into effect:
 
 ```
-$ reload ssh
+$ reload ssh  # Ubuntu 14.04 için
+$ systemctl restart sshd.service  # ubuntu 16.04,  Centos7 vb. için
 ```
+
 
 ## mailinabox installation:
 1. run the following script:
