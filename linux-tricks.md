@@ -308,6 +308,7 @@ Within that file, find the line that includes PermitRootLogin and modify it to e
 
 ```
 PermitRootLogin without-password
+PasswordAuthentication no
 ```
 Put the changes into effect:
 
