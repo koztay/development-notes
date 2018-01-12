@@ -331,6 +331,8 @@ $ curl -s https://mailinabox.email/setup.sh | sudo bash
 5. kurulumu bitene kadar bekle.
 
 SpamAssasin whitelist/blacklist ayarları:
+[https://www.akadia.com/services/postfix_spamassassin.html](https://www.akadia.com/services/postfix_spamassassin.html)
+
 ```
 $ cd /etc/mail/spamassassin
 $ nano local.cf
@@ -339,7 +341,18 @@ $ nano local.cf
 blacklist_from *@example1.com *@example2.com *@example2.com
 whitelist_from *@example1.com *@example2.com *@example2.com
 
+```
 
+update ve upgrade Ubuntu update 'leri:
+
+```
+sudo apt-get update && sudo apt-get upgrade
+sudo reboot
+```
+mailinabox update:
+
+```
+curl -s https://mailinabox.email/setup.sh | sudo bash
 ```
 
 ## vsftpd ile USB HDD 'ye erişip yazmak:
