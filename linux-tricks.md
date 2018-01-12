@@ -330,6 +330,18 @@ $ curl -s https://mailinabox.email/setup.sh | sudo bash
 4. timezone => Europe => Istanbul entera bas
 5. kurulumu bitene kadar bekle.
 
+SpamAssasin whitelist/blacklist ayarları:
+```
+$ cd /etc/mail/spamassassin
+$ nano local.cf
+
+# içeriğe aşağıdaki formatta ekleme yap
+blacklist_from *@example1.com *@example2.com *@example2.com
+whitelist_from *@example1.com *@example2.com *@example2.com
+
+
+```
+
 ## vsftpd ile USB HDD 'ye erişip yazmak:
 hiçbirşekilde başka yere yazmaya izin vermiyor. Bunun için önce home folder da bir klasör açıyoruz. Sonra o klasöre USB HDD 'de yazacğımız yeri mount ediyoruz:
 
