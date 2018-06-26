@@ -355,8 +355,9 @@ mailinabox update:
 curl -s https://mailinabox.email/setup.sh | sudo bash
 ```
 
+
 ## vsftpd ile USB HDD 'ye erişip yazmak:
-hiçbirşekilde başka yere yazmaya izin vermiyor. Bunun için önce home folder da bir klasör açıyoruz. Sonra o klasöre USB HDD 'de yazacğımız yeri mount ediyoruz:
+hiçbirşekilde başka yere yazmaya izin vermiyor. Bunun için önce home folder da bir klasör açıyoruz. Sonra o klasöre USB HDD 'de yazacağımız yeri mount ediyoruz:
 
 ```
 $ mount --bind <USB_HDD_PATH> <FTP_USERS_PATH>
