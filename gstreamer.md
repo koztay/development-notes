@@ -1,0 +1,326 @@
+# Setup Gstreamer Development Environment
+## For Linux
+### Step - 1 : Install Gstreamer from scratch to ElementaryOS
+
+Aşağıdaki komutu Gstreamer sitesinden aldım:
+
+```
+sudo apt-get install libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools
+```
+
+Yukarıdaki yöntem bence en uygunu, aşağıda derlerken hata verdi.
+
+```
+wget http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.4.0.tar.xz
+tar -xvf gstreamer-1.4.0.tar.xz
+cd gstreamer-1.4.0
+
+./configure --prefix=/usr \
+            --with-package-name="GStreamer 1.4.0 BLFS" \
+            --with-package-origin="http://www.linuxfromscratch.org/blfs/view/svn/" && make
+sudo make install
+```
+
+### Step - 2 : Install Python Bindings
+
+Eski versiyon EementaryOS 'ta (ubuntu12.04 tabanlı) sadece aşapıdaki komut çalıştı:
+
+```
+sudo apt-get install python-gst0.10
+```
+
+ElementaryOS_0.4.1 ((ubuntu16.04 tabanlı) içinse aşağıdaki komutların tamamı çalıştı (ancak en alt satırdaki gst0.10 versiyonunu yüklemeye gerek yok bence):
+
+```
+sudo apt-get install python-gst-1.0
+sudo apt-get install python-gst-1.0-dbg
+sudo apt-get install python-gst0.10
+```
+
+gstreamer plugin 'lerini de yüklemek lazım (yukarıda ilk stepte zaten yüklüyoruz, ayrıca aşağıdakiler 0.10 versiyonu için):
+
+```
+sudo apt-get install gstreamer0.10-plugins-base gstreamer0.10-plugins-good gstreamer0.10-plugins-ugly gstreamer0.10-plugins-bad
+
+```
+
+ugly ve bad olanlar kurulmadı, ve hep hata veriyor kod. Compile etmek gerek, bunun için aşağıdaki linklerden bad ve ugly source tarball 'ları indir:
+
+[https://gstreamer.freedesktop.org/src/gst-plugins-bad/](https://gstreamer.freedesktop.org/src/gst-plugins-bad/)
+
+[https://gstreamer.freedesktop.org/src/gst-plugins-ugly/](https://gstreamer.freedesktop.org/src/gst-plugins-bad/)
+
+
+sonra sırasıyla aşağıdaki adımları uygula:
+
+>adımları buraya yaz
+
+ikinci yol github clone ile kurmak
+
+```$ git clone https://github.com/GStreamer/gst-plugins-bad.git```
+
+ve 
+
+```$ git clone https://github.com/GStreamer/gst-plugins-ugly.git```
+
+komutları ile download et. Sonra autogen.dh çalıştır. Hata veriyor gtk-doc kurulu olması lazımmış, onun için ```$sudo apt-get install gtk-doc-tools```kur sonra tekrar autogen.sh çalıştır. GStreamer versiyonları farklı imiş. Elementary 'deki 1.8.3 sen 1.15 plugini kuruyorsun hatası verdi. Bunun için tüm repoyu klonladığımızdan sıkıntı yok. ```git checkout 1.8.3```komutu verip bir daha autogen.sh çalıştır. Şimdi de base plugin yok diyor. Bakalım nasıl olacak. 
+```git clone https://github.com/GStreamer/gst-plugins-base.git``` ile klonlayıp kuralım bakalım ne olacak?
+
+
+
+
+### Step - 3 : Check if everything is OK!
+
+```
+Python 2.7.3 (default, Oct 26 2016, 21:04:23) 
+[GCC 4.6.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import pygst
+>>> pygst.require("0.10")
+>>> import gst
+>>> gst
+<module 'gst' from '/usr/lib/python2.7/dist-packages/gst-0.10/gst/__init__.pyc'>
+```
+
+if there is no error on above then check if gobject is installed
+
+```
+>>> import gobject
+>>>
+```
+if still there is no error the everything is OK!
+
+## For MacOSX
+
+### Step - 1 : Download gstreamer packages
+Download all the 3 packages from the following link :
+
+[https://gstreamer.freedesktop.org/data/pkg/osx/1.14.1/](https://gstreamer.freedesktop.org/data/pkg/osx/1.14.1/)
+
+* gstreamer-1.0-1.14.1-x86_64-packages.dmg
+* gstreamer-1.0-1.14.1-x86_64.pkg
+* gstreamer-1.0-devel-1.14.1-x86_64.pkg
+
+### Step -2 : Install pygst for mac with brew
+Follow the instructions from the following link : 
+> 
+> [https://brewinstall.org/Install-gst-python-on-Mac-with-Brew/](https://brewinstall.org/Install-gst-python-on-Mac-with-Brew/)
+> 
+> 
+> 
+> Launch Terminal by pressing command+space, type terminal and hit Enter key.
+> 
+> ```
+> $ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+> ```
+> 
+> Run the above code if brew not installed. If installed simply run the following:
+> 
+> ```
+> $brew install gst-python
+> ```
+> Çalışmıyor bu python bulamıyor ???
+> 
+
+### Yukarıda çözememiştim şimdi çözdüm:
+ 
+1- Install gstreamer from their website ...normally and then
+
+2- `brew install gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav`
+
+3- `brew install gst-python --with-python3`
+
+Note however that the 'gtk' for some reason doesn't come pre-bundled so we go to step 2.
+
+4- `brew install gtk+3`
+
+
+### Play audio file from command line:
+
+```
+$gst-launch-0.10 filesrc location=/path/to/audio.mp3 ! decodebin !
+audioconvert ! autoaudiosink
+```
+
+```
+$ gst-launch-0.10 filesrc location='/home/kemal/Music/yann_tiersen.mp3' ! decodebin ! audioconvert ! autoaudiosink
+Setting pipeline to PAUSED ...
+Pipeline is PREROLLING ...
+Pipeline is PREROLLED ...
+Setting pipeline to PLAYING ...
+New clock: GstPulseSinkClock
+```
+şeklinde çıktı vererek müzik çalmaya başlar...
+
+**Ubuntu 16.04 tabanlı dağıtımlarda (örnek bendeki ElementaryOS) komut değişiyor, çünkü versiyon değişiyor, aşağıdaki şekilde yazmazsan patlıyor:**
+
+```
+$ gst-launch-1.0 filesrc location='/home/kemal/Music/yann_tiersen.mp3' ! decodebin ! audioconvert ! autoaudiosink
+
+```
+
+> The autoaudiosink automatically detects the correct audio device on your computer to play the audio. If there is any error playing an audio, check if the audio device on your computer is working properly. You can also try using element sdlaudiosink that outputs to the sound card via SDLAUDIO . If this doesn't work, and you want to install a plugin for audiosink—here is a partial list of GStreamer plugins: http://www.gstreamer.net/data/doc/gstreamer/head/gst- plugins-good-plugins/html/
+> Mac OS X users can try installing osxaudiosink if the default autoaudiosink doesn't work.
+
+
+### Play audio file with python
+#### Method 1:
+
+```python
+import thread
+import time
+import gobject
+import pygst
+pygst.require("0.10")
+import gst
+
+
+class AudioPlayer:
+    def __init__(self):
+        self.construct_pipeline()
+        self.is_playing = False
+        self.connect_signals()
+
+    def construct_pipeline(self):
+        my_pipeline_string = "filesrc location=/home/kemal/Music/yann_tiersen.mp3 " \
+                             "! decodebin ! audioconvert ! autoaudiosink"
+        self.player = gst.parse_launch(my_pipeline_string)
+
+    def connect_signals(self):
+        # In this case, we only capture the messages and put on the bus.
+        bus = self.player.get_bus()
+        bus.add_signal_watch()
+        bus.connect("message", self.message_handler)
+
+    def play(self):
+        self.is_playing = True
+        self.player.set_state(gst.STATE_PLAYING)
+        while self.is_playing:
+            time.sleep(1)
+        evt_loop.quit()
+
+    def message_handler(self, bus, message):
+        # Capture the messages on the bus a
+        # set the appropriate flag.
+        msg_type = message.type
+        if msg_type == gst.MESSAGE_ERROR:
+            self.player.set_state(gst.STATE_NULL)
+            self.is_playing = False
+            print("\n Unable to play audio. Error: ", message.parse_error())
+        elif msg_type == gst.MESSAGE_EOS:
+            self.player.set_state(gst.STATE_NULL)
+            self.is_playing = False
+
+
+# Now run the program
+player = AudioPlayer()
+thread.start_new_thread(player.play, ())
+gobject.threads_init()
+evt_loop = gobject.MainLoop()
+evt_loop.run()
+
+```
+
+#### Method 2:
+
+```python
+import thread
+import time
+import gobject
+import pygst
+pygst.require("0.10")
+import gst
+
+
+class AudioPlayer:
+    def __init__(self):
+        self.construct_pipeline()
+        self.is_playing = False
+        self.connect_signals()
+
+    def construct_pipeline(self):
+        self.player = gst.Pipeline()
+        self.filesrc = gst.element_factory_make("filesrc")
+        self.filesrc.set_property("location",
+                                  "/home/kemal/Music/yann_tiersen.mp3")
+        self.decodebin = gst.element_factory_make("decodebin", "decodebin")
+
+        # Connect decodebin signal with a method
+        # You can move this call to self.connect_signals
+        self.decodebin.connect("pad_added", self.decodebin_pad_added)
+        self.audioconvert = gst.element_factory_make("audioconvert", "audioconvert")
+        self.audiosink = gst.element_factory_make("autoaudiosink", "a_a_sink")
+
+        # Construct the pipeline
+        self.player.add(self.filesrc, self.decodebin, self.audioconvert, self.audiosink)
+
+        # Link elements in the pipeline.
+        gst.element_link_many(self.filesrc, self.decodebin)
+        gst.element_link_many(self.audioconvert, self.audiosink)
+
+    def connect_signals(self):
+        # In this case, we only capture the messages and put on the bus.
+        bus = self.player.get_bus()
+        bus.add_signal_watch()
+        bus.connect("message", self.message_handler)
+
+    def play(self):
+        self.is_playing = True
+        self.player.set_state(gst.STATE_PLAYING)
+        while self.is_playing:
+            time.sleep(1)
+        evt_loop.quit()
+
+    def message_handler(self, bus, message):
+        # Capture the messages on the bus a
+        # set the appropriate flag.
+        msg_type = message.type
+        if msg_type == gst.MESSAGE_ERROR:
+            self.player.set_state(gst.STATE_NULL)
+            self.is_playing = False
+            print("\n Unable to play audio. Error: ", message.parse_error())
+        elif msg_type == gst.MESSAGE_EOS:
+            self.player.set_state(gst.STATE_NULL)
+            self.is_playing = False
+
+    def decodebin_pad_added(self, decodebin, pad):
+        caps = pad.get_caps()  # caps means capabilities
+        compatible_pad = self.audioconvert.get_compatible_pad(pad, caps)
+        pad.link(compatible_pad)
+
+
+# Now run the program
+player = AudioPlayer()
+thread.start_new_thread(player.play, ())
+gobject.threads_init()
+evt_loop = gobject.MainLoop()
+evt_loop.run()
+
+```
+
+### Önemli :
+
+> In gstreamer-1.0, ffmpegcolorspace was renamed to videoconvert. You need to give your decodebin the name you want to refer to it later. Add name=dec to be able to refer to it when linking the audio branch.
+
+Also, you might want to consider just using playbin if you just need playback. It will assemble the pipeline for you and will support multiple formats automatically.
+
+
+# Faydalı Linkler:
+* [https://github.com/brettviren/pygst-tutorial-org](https://github.com/brettviren/pygst-tutorial-org) : pygst 1.o versiyonu ile ilgili tutoriallar mevcut.
+* [HW accelerated GUI apps on Docker](https://medium.com/@pigiuz/hw-accelerated-gui-apps-on-docker-7fd424fe813e)
+* [We can virtualize even GUI Text Editor with Docker](https://dev.to/acro5piano/we-can-virtualize-even-gui-text-editor-with-docker-container--5bhh)
+* [Running GUI Applications inside Docker Containers](https://medium.com/@SaravSun/running-gui-applications-inside-docker-containers-83d65c0db110)
+* [Python version of official GStreamer tutorials ](https://github.com/gkralik/python-gst-tutorial)
+* [gst0.10 to Gst1.0 Conversion](https://adnanalamkhan.wordpress.com/2015/03/01/using-gstreamer-1-0-with-python/)
+* [Gstreamer streaming server with Docker](https://github.com/mcfletch/gstreamer-tutorial) - Çalışmıyor
+* [Gstreamer Media Player](https://github.com/dschreij/media_player_gst)
+* [Gstreamer h264 streamer](https://github.com/gebart/livestream)
+* [Examples of Programming Multimedia Applications in Gstreamer developed in Python](https://github.com/robertogerson/tutorial-webmedia16-py)
+* [RTP server ve Client kodları var](https://github.com/edipdemirbilek/GStreamerMultimediaQualityTestbed) - Bu çalışabilir temiz koda benziyor...
+* [Python examples for grabbing video devices (e.g. webcam, video, ...) and interacting with GStreamer (Shared Memory, RTP Stream)](https://github.com/madams1337/python-opencv-gstreamer-examples)
+* [Python Gstreamer Video Player with decodebin](https://github.com/dilipshirke/Python_Gstreamer_Player) -- bu çalışmıyor.
+* [PyGTK 2.* notebook](https://github.com/majorsilence/pygtknotebook/tree/master)
+* [Xlib Örnek](https://unix.stackexchange.com/questions/5999/setting-the-window-dimensions-of-a-running-application)
+* [How X Window Managers Work, And How To Write One (Part I)](https://seasonofcode.com/posts/how-x-window-managers-work-and-how-to-write-one-part-i.html)
+* [GStreamer Daemon is a GStreamer framework for controlling audio and video streaming using TCP messages.](https://github.com/RidgeRun/gstd-1.x)
+* [GStreamer Daemon Anasayfası](https://developer.ridgerun.com/wiki/index.php?title=GStreamer_Daemon)
