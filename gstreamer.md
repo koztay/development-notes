@@ -324,3 +324,7 @@ Also, you might want to consider just using playbin if you just need playback. I
 * [How X Window Managers Work, And How To Write One (Part I)](https://seasonofcode.com/posts/how-x-window-managers-work-and-how-to-write-one-part-i.html)
 * [GStreamer Daemon is a GStreamer framework for controlling audio and video streaming using TCP messages.](https://github.com/RidgeRun/gstd-1.x)
 * [GStreamer Daemon Anasayfası](https://developer.ridgerun.com/wiki/index.php?title=GStreamer_Daemon)
+* [https://github.com/UbiCastTeam/gstmanager-1.0 for pipleline manipulation](https://github.com/UbiCastTeam/gstmanager-1.0)
+* [Gstreamer basic real time streaming tutorial](http://www.einarsundgren.se/gstreamer-basic-real-time-streaming-tutorial/)
+* [Vala Gstreamer Examples](https://wiki.gnome.org/Projects/Vala/GStreamerSample)
+* [OPO Python Videowall](https://github.com/douglasbagnall/opo)
