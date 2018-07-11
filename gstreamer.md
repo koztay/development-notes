@@ -305,6 +305,97 @@ evt_loop.run()
 Also, you might want to consider just using playbin if you just need playback. It will assemble the pipeline for you and will support multiple formats automatically.
 
 
+
+## xdmx example 
+* Önce her iki makineye de xdmx kuruyoruz:
+```
+$ sudo apt-get install xdmx
+```
+sonra Xorg.conf dosyasında 24 bit olan renk derinliğini düşürüyoruz. Bu normal cihazlar kullanıldığında gereksiz olacak. Ancak benim cihazımın bir tanesi sanal makine olduğu için 24-bit renk derinliği sağlayamaz ise yapmak gerekecek. Şimdilik pas geçiyorum.
+
+* Benim konfigürasyonumda sanal makine kontroller yani master olacak. Master Cihazımın IP adresi 10.0.0.43. Diğer cihazımın IP adresi ise 10.0.0.100 bu da ikinci makinem olacak. Master makinemde Xubuntu 14 yüklü diğer makinemde de Ubuntu 18.04 yüklü. Ubuntu 18.04  yüklü makinede aşağıdaki komutu veriyoruz :
+```
+$ xhost + 10.0.0.43
+10.0.0.43 being added to access control list # şeklinde çıktı verdi.
+```
+* Şimdi ana kontrol cihazında aşağıdaki komutu ip 'leri yazarak vereceğiz:
+```
+startx `which twm` --         \
+  /usr/bin/X11R6/Xdmx :1      \
+  -display control_node_ip:0  \
+  -display client_node_1_ip:0 \
+  -ignorebadfontpaths     
+```
+yani :
+```
+startx `which twm` -- /usr/bin/Xdmx :1 -display 10.0.0.43:0  -display 10.0.0.100:0 -ignorebadfontpaths +xinerama    
+```
+```
+startx `which twm` -- /usr/bin/Xdmx :1 -display 10.0.0.100:0  -display 10.0.0.43:0 -ignorebadfontpaths +xinerama    
+```
+
+bu şekilde çalışmıyor ama ssh ile bağlanlıp çalıştırıldığında oluyor. Aşağıda nasıl olduğunu anlatan bir video var:
+
+> https://www.youtube.com/watch?v=YOzRCBGDVaE&feature=youtu.be&app=desktop
+> 
+> First thing you want to do is install xdmx on every machine that you are going to use, for me its my main workstation and my old laptop.  The problem is that the xdmx package that is in the ubuntu repositories is broken, it throws seg faults left and right.  So go here http://packages.debian.org/etch/xdmx and download xdmx.
+
+> Install it with
+
+> sudo dpkg -i xdmx_1.1.1-21etch5_i386.deb
+
+> To run xdmx securely you are going to want to run it through an ssh tunnel.  You can also run xdmx by turning on X11 tcp listening but this is a huge security hole.  It will allow anyone on your network to see every keystroke you make in an X environment.  So on the computer that you are going to use as the xserver (my workstation) you need to have an ssh-server installed.
+
+>sudo apt-get install openssh-server
+
+>Now from my old laptop (your second display) ssh into your main workstation.  To make things faster use a blowfish cypher.
+>
+>ssh -X -c blowfish-cbc user@maincomputer
+
+>Now type:
+
+>export |grep DISP
+
+>you see something similar to this: (the numbers might be different)
+
+
+>paradox@griver:~$ export |grep DISP
+>
+>declare -x DISPLAY="localhost:10.0"
+
+
+>Now you need to start an xdmx xserver.  You need to run the command on the main workstation but from the laptop.  So from your ssh shell run:
+
+>startx  -- /usr/bin/Xdmx :1 +xinerama -display :0.0 -display localhost:10.0 -norender -noglxproxy
+
+>the startx  -- /usr/bin/Xdmx starts and Xdmx xserver.  The :1 is the display number.  If you are already running a desktop it is probably on :0.  +xinerama makes both computers act as a giant screen.  The first -display :0.0 is the display for your main machine and the second is the display for the old laptop.  The -norender and -noglxproxy makes everything render smoothly, but it will prevent you from running openGL stuff and you wont have any graphic effects.  I had to do this because my laptop has and ATI card and my workstation has an NVIDIA.  It they both have a similar card you probably don't need these.
+
+* Check open ports ```$ sudo ufw status verbose``` the port number 6000 should be opened
+* Ancak X-server 'ın bu portu dinlemesi için de ayar yapmak gerek. Örneğin Ubuntu 12.04 için aşağıdaki ayarı yapmak lazım :
+
+>
+>After an upgrade to 12.04, I had the same issue. This time, the culprit is the lightdm that the system uses. The file that needs to be updated is /etc/lightdm/lightdm.conf and the required addition is a xserver-allow-tcp=true in the [SeatDefaults] section.
+
+sonrasında ayarın aktif olması için (ubuntu 'da OK, ama diğerlerinde değil):
+
+```
+$ sudo service gdm restart  # veya
+$ sudo systemctl restart lightdm.service
+```
+
+Ubuntu 18.04 içinse aşağıdaki şekilde :
+
+>
+>Then I edited /etc/gdm3/custom.conf and added a line:
+>
+>```
+>[security]
+>DisallowTCP=false
+>```
+
+
+
+
 # Faydalı Linkler:
 * [https://github.com/brettviren/pygst-tutorial-org](https://github.com/brettviren/pygst-tutorial-org) : pygst 1.o versiyonu ile ilgili tutoriallar mevcut.
 * [HW accelerated GUI apps on Docker](https://medium.com/@pigiuz/hw-accelerated-gui-apps-on-docker-7fd424fe813e)
@@ -328,3 +419,12 @@ Also, you might want to consider just using playbin if you just need playback. I
 * [Gstreamer basic real time streaming tutorial](http://www.einarsundgren.se/gstreamer-basic-real-time-streaming-tutorial/)
 * [Vala Gstreamer Examples](https://wiki.gnome.org/Projects/Vala/GStreamerSample)
 * [OPO Python Videowall](https://github.com/douglasbagnall/opo)
+* [Hardware acceleretaed video playback on RaspberryPi](https://wiki.matthiasbock.net/index.php/Hardware-accelerated_video_playback_on_the_Raspberry_Pi)
+* [Streaming H.264 via RTP](https://github.com/matthiasbock/gstreamer-phone/wiki/Streaming-H.264-via-RTP)
+* [Using Gstreamer to capture screen and show it in a window?](https://stackoverflow.com/questions/33747500/using-gstreamer-to-capture-screen-and-show-it-in-a-window)
+* [The DMX server, Xdmx](https://codeyarns.com/2015/07/02/multihead-display-using-xdmx/)
+* [Distributed multihead support with Linux and Xdmx (IBMs tutorial)](https://www.ibm.com/developerworks/library/os-mltihed/index.html)
+* [Sage2 Videowall Projesi](https://sage2.sagecommons.org/)
+* [9 Screen Wall 1](https://nurdspace.nl/9_Screen_Wall_1)
+* [Fake Xdmx](https://www.gilesorr.com/blog/fake-xdmx.html)
+* [Creating a Public Web Server on Raspberry Pi](http://alexdberg.blogspot.com/2012/11/creating-public-web-server-on-raspberry.html)

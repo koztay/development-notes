@@ -364,5 +364,15 @@ $ mount --bind <USB_HDD_PATH> <FTP_USERS_PATH>
 $ mount --bind /media/source_disk/HENKEL /home/admin_henkel/USB_HDD
 ```
  
+## Ubuntu VNC bağlananama sorunu:
+Turn off Vino encryption :
+
+```
+$ gsettings set org.gnome.Vino require-encryption false
+```
+şu linkte de anlatmış : [https://websiteforstudents.com/access-ubuntu-18-04-lts-beta-desktop-via-vnc-from-windows-machines/](https://websiteforstudents.com/access-ubuntu-18-04-lts-beta-desktop-via-vnc-from-windows-machines/)
+
+
+
 
 
