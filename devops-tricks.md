@@ -219,7 +219,32 @@ Tabii bu komutları verebilmek için eval
 ```sh
 eval $(docker-machine env <machine-name>)
 ```
-komutu ile çalışacağımız makinayı önceden seçmiş olmalıyız.
+komutu ile çalışacağımız makinayı önceden seçmiş olmalıyız. Ancak eğer docker-machine silinmişse yani "docker-machine ls" ile göremiyorsak o zaman ssh ile login olmak zorundayız. Bu durumda adımlar aşağıdaki gibi :
+
+1. Önce ssh ile VPS'e login ol. 
+2. docker ps ile çalışan servisler bak. postgres servisini bul. Örneğin '54adxxxx..." olsun. 
+3. sonra postgres backup komutunu çalıştır (cookiecutter ise)
+ 
+```sh
+$ docker -exec 54ad backup
+```
+4. yukarıdaki komut container volume içinde backup yarattı. Örneğin yarattığı dosya 'backup_2018_07_24T13_49_23.sql.gz' olsun. Şimdi bu dosyayı container 'dan lokal (ssh ile bağlandığımız makinenin lokali) sisteme alacağız. Bunun için komut:
+
+```sh
+docker cp 5eb4:/backups/backup_2018_07_24T13_49_23.sql.gz .
+```
+
+5. Şimdi dosya VPS 'in /home/user_name/ klasöründe. Buradan lokale şöyle almak içinse önce logout oluyoruz.
+6. Sonra lokal PC 'mizde aşağıdaki komutu veriyoruz:
+
+```sh
+scp <username>@<IP_ADDRESS>:<PATH> .
+# örnek :
+scp root@165.152.129.79:backup_2018_07_24T13_49_23.sql.gz .
+
+```
+
+İşlem tamam!!!
 
 
 **<a name='9'></a> 9- digital-ocean vestacp :**

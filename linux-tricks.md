@@ -373,6 +373,3 @@ $ gsettings set org.gnome.Vino require-encryption false
 şu linkte de anlatmış : [https://websiteforstudents.com/access-ubuntu-18-04-lts-beta-desktop-via-vnc-from-windows-machines/](https://websiteforstudents.com/access-ubuntu-18-04-lts-beta-desktop-via-vnc-from-windows-machines/)
 
 
-
-
-

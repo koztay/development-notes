@@ -428,3 +428,7 @@ Ubuntu 18.04 içinse aşağıdaki şekilde :
 * [9 Screen Wall 1](https://nurdspace.nl/9_Screen_Wall_1)
 * [Fake Xdmx](https://www.gilesorr.com/blog/fake-xdmx.html)
 * [Creating a Public Web Server on Raspberry Pi](http://alexdberg.blogspot.com/2012/11/creating-public-web-server-on-raspberry.html)
+* [https://www.spice-space.org/](https://www.spice-space.org/) : The SPICE project aims to provide a complete open source solution for remote access to virtual machines in a seamless way so you can play videos, record audio, share usb devices and share folders without complications.
+* [Sample Desktop Recorder with Gtk GUI](http://recordmydesktop.sourceforge.net/about.php)
+* [Desktop recorder with window capture](http://www.kohaupt-online.de/hp/)
+* 

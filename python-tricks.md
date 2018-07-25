@@ -46,6 +46,13 @@ ya da yukarıdaki iki komutun birleşimini tek satırda verebiliriz:
 mkvirtualenv --python=`which python3` nameOfEnvironment
 ```
 
+sistem paketlerini kullanabilmek için aşağıdaki komut ile oluştur:
+
+```sh
+virtualenv --system-site-packages venv
+```
+
+
 
 **<a name='3'></a>3 - Delete all pyc files and __pycache__ folders in a project:**
 
