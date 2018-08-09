@@ -44,6 +44,18 @@ $ dvm use 1.10.3
 yukarıdaki komutu verebilmek içinse dvm kurmak gerekir. Şu linkten kurulabilir:
 https://github.com/getcarina/dvm
 
+* Linode 'da docker-machine yaratmak :
+
+```sh
+docker-machine create \
+             --driver generic \
+             --generic-engine-port=2376 \
+             --generic-ip-address=<IP_ADDRESS_OF_LINODE> \
+             --generic-ssh-user=root \
+             --generic-ssh-port=22 \
+             <MACHINE_NAME>
+```
+
 **<a name='2'></a> 2- docker postgres veritabanı sql yedek alma:**
 
 Aşağıdaki komut coreos 'teki pathe yükler :

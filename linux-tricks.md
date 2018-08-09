@@ -373,3 +373,124 @@ $ gsettings set org.gnome.Vino require-encryption false
 şu linkte de anlatmış : [https://websiteforstudents.com/access-ubuntu-18-04-lts-beta-desktop-via-vnc-from-windows-machines/](https://websiteforstudents.com/access-ubuntu-18-04-lts-beta-desktop-via-vnc-from-windows-machines/)
 
 
+## Restart/Autorestart Script with Supervisor
+https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-supervisor-on-ubuntu-and-debian-vps
+
+The program configuration files for Supervisor programs are found in the ```/etc/supervisor/conf.d``` directory, normally with one program per file and a .conf extension. A simple configuration for our script, saved at ```/etc/supervisor/conf.d/long_script.conf```, would look like so:
+
+for python add it as below:
+
+```
+[program:test]
+command=/usr/bin/python /home/ubuntu/test.py
+directory=/home/ubuntu
+autostart=true
+autorestart=true
+startretries=3
+stderr_logfile=/home/ubuntu/test.err.log
+stdout_logfile=/home/ubuntu/test.out.log
+user=ubuntu
+```
+
+supervisor komutları :
+
+```
+$ sudo supervisorctl reread
+$ sudo supervisorctl update
+$ sudo supervisorctl
+
+
+
+```
+
+To enter the interactive mode, start supervisorctl with no arguments:
+
+```
+$ supervisorctl
+long_script                      RUNNING    pid 12614, uptime 1:49:37
+supervisor>
+```
+
+When started, supervisorctl will initially print the status and uptime of all programs, followed by showing a command prompt. Entering help will reveal all of the available commands that we can use:
+
+```
+supervisor> help
+
+default commands (type help ):
+=====================================
+add    clear  fg        open  quit    remove  restart   start   stop  update
+avail  exit   maintail  pid   reload  reread  shutdown  status  tail  version
+```
+
+To start in a simple manner, we can start, stop and restart a program with the associated commands followed by the program name:
+
+```
+supervisor> stop long_script
+long_script: stopped
+supervisor> start long_script
+long_script: started
+supervisor> restart long_script
+long_script: stopped
+long_script: started
+```
+
+Using the tail command, we can view the most recent entries in the stdout and stderr logs for our program:
+
+```
+supervisor> tail long_script
+Sun Jul 21 00:36:10 UTC 2013
+Sun Jul 21 00:36:11 UTC 2013
+Sun Jul 21 00:36:12 UTC 2013
+Sun Jul 21 00:36:13 UTC 2013
+Sun Jul 21 00:36:14 UTC 2013
+Sun Jul 21 00:36:15 UTC 2013
+Sun Jul 21 00:36:17 UTC 2013
+
+supervisor> tail long_script stderr
+error!
+error!
+error!
+error!
+error!
+error!
+error!
+
+```
+
+Using status we can view again the current execution state of each program after making any changes:
+
+```
+supervisor> status
+long_script                      STOPPED    Jul 21 01:07 AM
+```
+
+Finally, once we are finished, we can exit supervisorctl with Ctrl-C or by entering quit into the prompt:
+
+```
+supervisor> quit
+```
+
+And that's it! You've mastered the basics of managing persistent programs through Supervisor and extending this to your own programs should be a relatively simple task. If you have any questions or further advice, be sure to leave it in the comments section.
+
+## Supervisor Set Environment Variables
+https://stackoverflow.com/questions/17055951/how-to-set-environment-variables-in-supervisor-service
+
+```
+# To add a single environment variable, You can do something like this.
+
+[program:django]
+environment=SITE=domain1
+command = python manage.py command
+
+# But, if you want to export multiple environment variables, you need to separate them by comma.
+
+[program:django]
+environment = 
+    SITE=domain1,
+    DJANGO_SETTINGS_MODULE=foo.settings.local,
+    DB_USER=foo,
+    DB_PASS=bar
+command = python manage.py command
+
+```
+

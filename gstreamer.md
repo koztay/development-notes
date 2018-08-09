@@ -431,4 +431,11 @@ Ubuntu 18.04 içinse aşağıdaki şekilde :
 * [https://www.spice-space.org/](https://www.spice-space.org/) : The SPICE project aims to provide a complete open source solution for remote access to virtual machines in a seamless way so you can play videos, record audio, share usb devices and share folders without complications.
 * [Sample Desktop Recorder with Gtk GUI](http://recordmydesktop.sourceforge.net/about.php)
 * [Desktop recorder with window capture](http://www.kohaupt-online.de/hp/)
+* [Raspberry Pi Gstreamer RTSP Server](https://www.stev.org/post/raspberrypisimplertspserver)
+* [Docker Rtsp Server](https://hub.docker.com/r/ullaakut/rtspatt/) : Çok detaylı özellikleri var ama mUlticast var mı emin değilim...
+* [Gstreamer Komut Satırı Örnekleri](https://developer.gnome.org/gst-plugins-libs/stable/gst-plugins-good-plugins-videomixer.html)
+* [Rapsberry Pi Gstreamer Radio Player](https://github.com/prooney/netradio) Bu player objesini Thread sınıfından türetmiş, daha sağlıklı olabilir.
+* [Synchronized media playback with gstreamer](https://github.com/luisbg/synchronised_media_playback)
+* [GstreamerCodeSnippets](https://github.com/rubenrua/GstreamerCodeSnippets) : Burada bayağı kod örneği var.
+* [GStreamer Dynamic Pipelines](https://coaxion.net/blog/2014/01/gstreamer-dynamic-pipelines/) Burada da güzel C kodu örnekleri var.
 * 
