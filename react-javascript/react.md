@@ -38,7 +38,33 @@ For each piece of state:
 * Either the common owner or another component higher up in the hierarchy should own the state.
 * If you can’t find a component where it makes sense to own the state, create a new component simply for holding the state and add it somewhere in the hierarchy above the common owner component.
 
-### .eslintrc file for book examples:
+### .eslintrc installation and configuration:
+
+Adımlar şöyle:
+
+* Aşağıdaki komut ile eslinti ve bazı gerekli modülleri dev ortamına kur:
+
+```sh
+ npm install --save-dev eslint
+ npm install --save-dev eslint-plugin-prettier
+ npm install --save-dev eslint-config-prettier
+ npm install --save-dev prettier
+```
+
+* eslint --init ile diğer gerekli modülleri (airbnb için) kur:
+
+```sh
+./node_modules/.bin/eslint --init
+# select  below:
+❯ Use a popular style guide
+# after select airbnb:
+❯ Airbnb (https://github.com/airbnb/javascript)
+? Do you use React? (y/N) => select yes
+? What format do you want your config file to be in? => select JSON
+? Would you like to install them now with npm? (Y/n) => select yes
+```
+* it will install the required packages and create eslintrc file. Replace the contents pf the file with below:
+
 ```json
 {
   "extends": ["airbnb", "prettier", "prettier/react"],
@@ -142,31 +168,7 @@ For each piece of state:
   },
   "plugins": ["prettier"]
 }
+
 ```
 
-kitap örneklerinde hata veren özellikler eslint dosyasında disable edilmiş hali.
-Bunun orijinali github 'da mevcut.
-Ayrıca düzgün çalışabilmesi için aşağıdaki modüllerin dev olarak kurulması lazım:
-
-```json
-"devDependencies": {
-    "eslint": "^5.6.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^3.0.1",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-prettier": "^2.6.2",
-    "eslint-plugin-react": "^7.11.1",
-    "prettier": "^1.14.3",
-  },
-```
-
-aslında bunun kaydını tutmak yerine en kolay yöntem `eslint --init` komutu vermek. eslint 'in global olarak yüklenmediği durumlarda ki ben öyle yapıyorum local path 'den direkt olarak çalıştırmak mümkün değil. Bunun için şu komutu vermek gerek:
-
-```sh
-./node_modules/.bin/eslint --init
-```
-
-Ancak yukarıdaki komutun çalışması için de önce `npm install save-dev eslint` komutu verilerek eslint kurulmalı.
-bunun neticesinde airbnb setini kullanacağım deyince kendisi gerekli eklentileri kuruyor. Kurulum tamamlandıktan sonra yukarıdaki konfigürasyon ile otomatik yaratılan dosyayı değiştir. 
 
