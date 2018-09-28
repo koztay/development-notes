@@ -49,6 +49,10 @@ Adımlar şöyle:
  npm install --save-dev eslint-plugin-prettier
  npm install --save-dev eslint-config-prettier
  npm install --save-dev prettier
+ 
+ # veya tek komut ile:
+ npm install --save-dev eslint eslint-plugin-prettier eslint-config-prettier prettier
+ 
 ```
 
 * eslint --init ile diğer gerekli modülleri (airbnb için) kur:
@@ -171,4 +175,11 @@ Adımlar şöyle:
 
 ```
 
+* eğer global olarak tek seferde kurmak  istiyorsak :
 
+```sh
+npm i -g eslint eslint-plugin-import eslint-plugin-react eslint-config-airbnb eslint-plugin-jsx-a11y eslint-plugin-prettier babel-eslint
+```
+
+bu durumda her seferinde yukarıdaki adımları tekrarlamaya gerek yok. Sadece proje root klasörüne .eslintrc.json dosyası oluşturup yukarıdakileri yapıştırmak yeterli...
+ 
