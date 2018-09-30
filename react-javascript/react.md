@@ -178,8 +178,9 @@ Adımlar şöyle:
 * eğer global olarak tek seferde kurmak  istiyorsak :
 
 ```sh
-npm i -g eslint eslint-plugin-import eslint-plugin-react eslint-config-airbnb eslint-plugin-jsx-a11y eslint-plugin-prettier babel-eslint
+npm i -g eslint eslint-plugin-import eslint-plugin-react eslint-config-airbnb eslint-plugin-jsx-a11y eslint-plugin-prettier babel-eslint eslint-config-prettier prettier
 ```
 
 bu durumda her seferinde yukarıdaki adımları tekrarlamaya gerek yok. Sadece proje root klasörüne .eslintrc.json dosyası oluşturup yukarıdakileri yapıştırmak yeterli...
  
+Global olarak kurmak işe yaramadı bir türlü. Ancak --save-dev yapınca oldu. Fakat bu durumda nereye save etti anlamadım. Çünkü proje klasörü içerisinde değilken yaptım ve ne package.json dosyası var ne de node_modules klasörü. Fakat bunu yapınca çalıştı. 
