@@ -183,4 +183,10 @@ npm i -g eslint eslint-plugin-import eslint-plugin-react eslint-config-airbnb es
 
 bu durumda her seferinde yukarıdaki adımları tekrarlamaya gerek yok. Sadece proje root klasörüne .eslintrc.json dosyası oluşturup yukarıdakileri yapıştırmak yeterli...
  
-Global olarak kurmak işe yaramadı bir türlü. Ancak --save-dev yapınca oldu. Fakat bu durumda nereye save etti anlamadım. Çünkü proje klasörü içerisinde değilken yaptım ve ne package.json dosyası var ne de node_modules klasörü. Fakat bunu yapınca çalıştı. 
+Global olarak kurmak işe yaramadı bir türlü. Ancak --save-dev yapınca oldu. Fakat bu durumda nereye save etti anlamadım. Çünkü proje klasörü içerisinde değilken yaptım ve ne package.json dosyası var ne de node_modules klasörü. Fakat bunu yapınca çalıştı. Gitmiş en tepedeki code klasörünün altında oluşturmuş. 
+
+Bu durumda global olarak kesinlikle çalıştıramadım ben. O yüzden yine dönüp dolaşıp save-dev olayına geldik. Yukarıdaki kısayol komutunun save-dev versiyonu aşağıdaki gibi:
+
+```sh
+npm i --save-dev eslint eslint-plugin-import eslint-plugin-react eslint-config-airbnb eslint-plugin-jsx-a11y eslint-plugin-prettier babel-eslint eslint-config-prettier prettier
+``` 
