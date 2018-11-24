@@ -494,3 +494,8 @@ command = python manage.py command
 
 ```
 
+## Klasör size 'larını görmek:
+```
+$ du -sh -- * .*
+```
+

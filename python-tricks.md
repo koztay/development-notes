@@ -1,9 +1,9 @@
-# [100 Awesome Web Development Tools & Resources/](http://www.edumobile.org/web-development/100-awesome-web-development-tools-and-resources/)
+### [100 Awesome Web Development Tools & Resources/](http://www.edumobile.org/web-development/100-awesome-web-development-tools-and-resources/)
 
 
-# [Jupyter Notebook of Complete Python Bootcamp](http://nbviewer.jupyter.org/github/jmportilla/Complete-Python-Bootcamp/tree/master/)
+### [Jupyter Notebook of Complete Python Bootcamp](http://nbviewer.jupyter.org/github/jmportilla/Complete-Python-Bootcamp/tree/master/)
 
-# [Intermediate Python Tips](http://book.pythontips.com/en/latest/index.html)
+### [Intermediate Python Tips](http://book.pythontips.com/en/latest/index.html)
 
 [1 - dictionary 'den en güvenli key çekme yöntemi](#1)
 
@@ -59,4 +59,57 @@ virtualenv --system-site-packages venv
 ```sh
 pyclean .
 ```
- 
+
+**<a name='4'></a>4 - pyenv "zlib not available" error on OSX Mojave:**
+
+It gives the following error :
+```sh
+zipimport.ZipImportError: can't decompress data; zlib not available
+```
+
+The solution is to install MacOS SDK Headers:
+
+```sh
+sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /
+```
+
+**<a name='5'></a>5 - pyenv virtualenv creation activation etc.:**
+
+```sh
+pyenv virtualenv <version> <env_name>
+pyenv virtualenv 2.7.10 my-virtual-env-2.7.10
+
+```
+
+then you can list your environments as below:
+
+```sh
+pyenv virtualenvs
+```
+
+activate/deactivate 
+
+```sh
+$ pyenv activate <name>
+$ pyenv deactivate
+```
+
+Installing requirements works as described in venv. Unlike in venv a rm -r command is not needed to remove an environment, an uninstall command exists.
+
+**<a name='6'></a>6 - cookiecutter django postgres on local development:**
+
+First run postgres server:
+
+```sh
+postgres -D /usr/local/var/postgres
+```
+
+then create db:
+
+```sh
+createdb <what you've entered as the project_slug at setup stage>
+```
+
+
+
+

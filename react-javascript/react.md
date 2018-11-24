@@ -190,3 +190,16 @@ Bu durumda global olarak kesinlikle çalıştıramadım ben. O yüzden yine dön
 ```sh
 npm i --save-dev eslint eslint-plugin-import eslint-plugin-react eslint-config-airbnb eslint-plugin-jsx-a11y eslint-plugin-prettier babel-eslint eslint-config-prettier prettier
 ``` 
+
+Eğer uygulamayı create-react-app ile yaratmışsak bu durumda npm start ile başlayamıyor app. Yukarıdakilerden "eslint" ve "babel-eslint" create-react-app 'ın dependency 'lerinden daha üst versiyonda kuruluyor. Bunu gidermenin iki yolu var. Birincisi eğer applikasyonumuzu create-react-app ile yarattıysak bu durumda aşağıdaki komutu kullanmak:
+
+```sh
+npm i --save-dev eslint-plugin-import eslint-plugin-react eslint-config-airbnb eslint-plugin-jsx-a11y eslint-plugin-prettier eslint-config-prettier prettier
+``` 
+
+diğer çözüm ise .env dosyaı yaratıp içerisine aşağıdaki satırı eklemek:
+
+```
+SKIP_PREFLIGHT_CHECK=true
+```
+
