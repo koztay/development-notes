@@ -330,3 +330,49 @@ $ open htmlconv/index.html
 
 komutu ile coverage.html dosyamızı açıp inceliyoruz.
 
+## Cookiecutter Django Ayarları:
+
+```sh
+You've downloaded /Users/kemal/.cookiecutters/cookiecutter-django before. Is it okay to delete and re-download it? [yes]:
+project_name [Project Name]: my awesome project
+project_slug [ my_awesome_project ]:
+author_name [Daniel Roy Greenfeld]: Kemal OZTAY
+email [you@example.com]: koztay@me.com
+description [A short description of the project.]: my_awesome_project kurumsal web sitesi
+domain_name [example.com]:
+version [0.1.0]:
+timezone [UTC]: "UTC"
+use_whitenoise [y]: n  # compressor ile aynı anda kullanılırsa AWS 'te hata veriyor.
+use_celery [n]: y
+use_mailhog [n]: n
+use_sentry_for_error_reporting [y]: n
+use_opbeat [n]: n
+use_pycharm [n]: n
+windows [n]:
+use_docker [n]: y
+use_heroku [n]: n
+use_elasticbeanstalk_experimental [n]: n
+use_compressor [n]: y
+Select postgresql_version: 
+1 - 10
+2 - 9.6
+3 - 9.5
+4 - 9.4
+5 - 9.3
+6 - 9.2
+Choose from 1, 2, 3, 4, 5, 6 [1]: 1
+Select js_task_runner:
+1 - Gulp
+2 - Grunt
+3 - None
+Choose from 1, 2, 3 [1]: 3
+custom_bootstrap_compilation [n]: n
+Select open_source_license: 1
+1 - MIT
+2 - BSD
+3 - GPLv3
+4 - Apache Software License 2.0
+5 - Not open source
+Choose from 1, 2, 3, 4, 5 [1]: 1
+
+```

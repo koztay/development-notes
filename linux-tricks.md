@@ -333,7 +333,7 @@ $ curl -s https://mailinabox.email/setup.sh | sudo bash
 SpamAssasin whitelist/blacklist ayarları:
 [https://www.akadia.com/services/postfix_spamassassin.html](https://www.akadia.com/services/postfix_spamassassin.html)
 
-```
+```sh
 $ cd /etc/mail/spamassassin
 $ nano local.cf
 
@@ -353,6 +353,22 @@ mailinabox update:
 
 ```
 curl -s https://mailinabox.email/setup.sh | sudo bash
+```
+
+### SSL sertifikası yenileyememe sorunu çözümü:
+```sh
+# ssl klasörünü move et
+mv /home/user-data/ssl /home/user-data/ssl_old
+# boş bir ssl klasörü aç
+mkdir /home/user-data/ssl
+# kurulumu çalıştır
+sudo mailinabox
+# kurulum bitince ssl yenileyemez ise sertifika yaratma programını çalıştır
+cd ~/mailinabox/management
+./ssl_certificates.py
+# şimdi sertifikanın yenilenmiş olması lazım.
+# ssl_old klasörünü sil
+rm -rf /home/user-data/ssl_old
 ```
 
 
