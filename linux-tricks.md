@@ -371,6 +371,55 @@ cd ~/mailinabox/management
 rm -rf /home/user-data/ssl_old
 ```
 
+### Upgrade from ubuntu 14.04 to 18.04 (v0.30 to v0.40):
+1. Create a snapshot on Linode for OLD BOX.
+2. Make a backup on OLD BOX:
+
+```sh
+cd mailinabox
+sudo management/backup.py
+```
+
+3. Copy backup files and folders from OLD BOX to local PC:
+
+```sh
+scp -r root@box.takvim.in:/home/user-data/backup/encrypted .
+scp -r root@box.takvim.in:/home/user-data/backup/secret_key.txt .
+```
+4. Create a new Ubuntu 18.04 machine for your new Mail-in-a-Box
+5. Instal MailInABox with ssh 'in to the machine:
+
+```sh
+curl -s https://mailinabox.email/setup.sh | sudo -E bash
+```
+6. Restore your backup
+
+First, move aside the new machine’s empty Mail-in-a-Box user-data directory.
+
+```sh
+mv /home/user-data /tmp/user-data.empty
+```
+
+then :
+
+```sh
+scp -r encrypted root@172.104.240.118:/home
+scp -r secret_key.txt root@172.104.240.118:/home
+
+ssh root@172.104.240.118
+export PASSPHRASE=$(cat /path/to/secret_key.txt)
+sudo -E duplicity restore --force file:///home/encrypted /home/user-data/
+# bunda şu hatayı verdi çünkü yukarıda user-data klasörünü move etmeyi unutmuşum:
+Error '[Errno 17] File exists' processing ssl/ssl_certificate.pem
+```
+
+7. Re-configure the box:
+
+Re-run Mail-in-a-Box setup now that your old files are back:
+
+```sh
+sudo mailinabox
+```
 
 ## vsftpd ile USB HDD 'ye erişip yazmak:
 hiçbirşekilde başka yere yazmaya izin vermiyor. Bunun için önce home folder da bir klasör açıyoruz. Sonra o klasöre USB HDD 'de yazacağımız yeri mount ediyoruz:
