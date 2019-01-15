@@ -372,6 +372,8 @@ rm -rf /home/user-data/ssl_old
 ```
 
 ### Upgrade from ubuntu 14.04 to 18.04 (v0.30 to v0.40):
+https://discourse.mailinabox.email/t/mail-in-a-box-version-v0-40-and-moving-to-ubuntu-18-04/4289
+
 1. Create a snapshot on Linode for OLD BOX.
 2. Make a backup on OLD BOX:
 
