@@ -303,3 +303,18 @@ require verify = sender/callout
 cookiecutter 'da ```cd $PROJECT_PATH/compose/nginx```sonra aşağıdaki komutu veriyoruz (sertifika request CSR yaratıyoruz):
 ```openssl req -new -newkey rsa:2048 -nodes -keyout yourkeyname.key -out yourkeyname.csr```
 
+## docker-env komutu (bunu kendim yarattım)
+Bunun için .zhrsc dosyasının içerisine aşağıdaki fonksiyonu ekliyoruz:
+
+```sh
+function docker-env(){
+	eval "$(docker-machine env $@)"
+	docker rmi $(docker images --quiet --filter 'dangling=true')
+}
+```
+
+Böylece her docker-env komutunda aynı zamanda dangling image 'lar da temizlenmiş oluyor. Kullanımı şu şekilde :
+
+```sh
+$ docker-env <machine_name>
+```

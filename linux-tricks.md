@@ -415,6 +415,14 @@ sudo -E duplicity restore --force file:///home/encrypted /home/user-data/
 Error '[Errno 17] File exists' processing ssl/ssl_certificate.pem
 ```
 
+restore from amazon (frankfurt için) :
+```sh
+export AWS_ACCESS_KEY_ID=paste your AWS access key ID here
+export AWS_SECRET_ACCESS_KEY=paste your AWS secret access key here
+export PASSPHRASE=$(cat /home/secret_key.txt)
+duplicity restore --force s3://s3.eu-central-1.amazonaws.com/karnas-mailinabox/ /home/user-data/
+```
+
 7. Re-configure the box:
 
 Re-run Mail-in-a-Box setup now that your old files are back:
@@ -565,4 +573,64 @@ command = python manage.py command
 ```
 $ du -sh -- * .*
 ```
+
+## Mailinabox Volume eklemek:
+
+https://discourse.mailinabox.email/t/mailboxes-storage-location-and-quota/3704/7
+
+
+önce ssh root@box.domain.com ile login oluyoruz ve mail server'ı aşağıdaki komutlar ile kapatıyoruz ki, mail vs gelmesin biz işlem yaparken:
+
+```sh
+sudo ufw reset
+sudo ufw allow 22
+sudo ufw enable
+```
+Akabinde Linode 'da Volume yaratıyoruz.
+Yarattığımız Volume 'u önce /mnt/tmp klasörü altına mount edip mevcut user mail datasını buraya kopyalamamız gerekiyor:
+
+```sh
+mkfs.ext4 /dev/disk/by-id/scsi-0Linode_Volume_userdata
+mkdir /mnt/temp
+mount /dev/disk/by-id/scsi-0Linode_Volume_userdata /mnt/temp
+cd /home/user-data
+cp -av * .* /mnt/temp
+```
+
+permissionları fix 'liyoruz:
+
+```sh
+chown user-data.user-data /mnt/temp
+```
+
+şimdi yeni volume 'ümüzü unmount edip mevcut mail datasını backup olarak .old uzantısı ile move ediyoruz.
+
+```sh
+umount /mnt/temp
+cd /home
+mv user-data user-data.old
+```
+
+
+Şimdi yeni Volume 'ü user-data klasörüne mount etmeliyiz:
+
+```sh
+mkdir user-data
+mount /dev/disk/by-id/scsi-0Linode_Volume_userdata user-data
+```
+
+son olarak reboot ettiğimizde de aynı değişkiliklerin geçerli olması için /etc/fstab  dosyasına aşağıdaki satırı ekliyoruz :
+
+```sh
+/dev/disk/by-id/scsi-0Linode_Volume_userdata /home/user-data ext4 defaults,noatime 0 2
+```
+
+son olarak tekrar firewall kurallarını eski haline getirip normal olarak çalışması için mailinabox komutunu çalıştırıyoruz :
+
+```sh
+mailinabox
+```
+akabinde tüm güncellemelerin yapılması ve mail serverımızın normal olarak çalışması gerek.
+
+
 

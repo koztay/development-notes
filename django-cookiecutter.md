@@ -18,6 +18,7 @@
 
 [9.cookiecutter pytest ayarları:](#9)
 
+
 **<a name='1'></a>1. django-cookiecutter docker development "This site can’t be reached 192.168.99.103 refused to connect." hatası :**
 
 Bu hata şundan kaynaklanıyor:
@@ -380,3 +381,15 @@ debug [n]: y
  [SUCCESS]: Project initialized, keep up the good work!
 
 ```
+
+## celery-beat "Starting..." 'de takılı kalıyorsa:
+Bu durumda celerybeat scheduler doğru ayarlanmamış demektir. "settings.py" dosyasına aşağıdaki satırı eklemek gerekiyor:
+
+```python
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
+```
+
+cookicutter 'ın eski versiyonlarında bunu celerybeat 'i başlatırken docker-compose dosyasında set ediyorduk. Ancak yeni versiyonlarda bu ayar mevcut değil. Dolayısıyla ya start dosyasındaki başlatma komutunu değiştirmek gerek, ya da setting.py dosyasına bu ayarı eklemek. Ayar eklemek daha doğru bir çözüm o nednele onu seçtim.
+
+
+ 
