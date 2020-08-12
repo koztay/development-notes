@@ -632,5 +632,31 @@ mailinabox
 ```
 akabinde tüm güncellemelerin yapılması ve mail serverımızın normal olarak çalışması gerek.
 
+## redis transparent huge pages (THP) hatası
+
+Sırasıyla sanal makinede (docker container ile alakalı değil bu konu) aşağıdaki adımları uyguluyoruz.
+
+```sh
+$ echo never > /sys/kernel/mm/transparent_hugepage/enabled
+# satırını çalıştırdık ve sonrasında bu satırı /etc/rc.local
+$ nano /etc/rc.local # ile dosyayı aç
+# echo never > /sys/kernel/mm/transparent_hugepage/enabled
+# satırını yapıştırdık
+
+```
+
+Şimdi ikinci uyarı olarak aşağıdakini verdi:
+WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect. ssh ile sanal makineye tekrar login ol:
+
+```sh
+$ nano /etc/sysctl.conf
+# vm.overcommit_memory = 1
+# satırını ekle
+# ardından da aşağıdaki komutu çalıştır:
+sysctl vm.overcommit_memory=1
+
+```
+
+sonrasında da redis 'i restart ediyoruz.
 
 
